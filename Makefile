@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/06 13:18:43 by naali            ###   ########.fr        #
+#    Updated: 2019/03/06 13:49:32 by naali            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,16 +52,31 @@ $(OBJ_DIR)/%.o:	%.c
 
 all:			$(NAME)
 
-$(NAME):		$(OBJS)
-				make -C ./libraries/libft
+lib:			libft
+# sdl2 sdl2_image freetype sdl2_ttf
+
+$(NAME):		$(OBJS) lib
 				$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(IFLAGS) $(LDLIBS)
 
-lib:	libft sdl2 sdl2_image freetype sdl2_ttf
+libft:
+	@mkdir ./libraries 2> /dev/null || true
+	@if [ -d ./libraries/libft ]; \
+	then \
+		if [ -e ./libraries/libft/libft.a ]; \
+		then \
+			echo "LIBFT EXIST";	\
+		else \
+			make -C ./libraries/libft; \
+		fi; \
+	else \
+		cp -r ./source_lib/libft ./libraries/ \
+		make -C ./libraries/libft; \
+	fi
 
-# libft:
-# 	@mkdir ./libraries 2> /dev/null || true
-# 	cp -r ./source_lib/libft ./libraries/
-# 	make -C ./libraries/libft
+# 		if [ -e ./libraries/libft/libft.a ]; \
+# 		then \
+# 			echo "LIBFT nothing to be done..."; \
+# 		fi
 
 # sdl2:
 # 	@mkdir ./libraries 2> /dev/null || true
