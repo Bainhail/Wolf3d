@@ -6,3 +6,5 @@
 - Creation d'une structure personnage
   - position x et y sur la map
   - image ou renderer de la vu 1er personne
+
+- Editeur de map
