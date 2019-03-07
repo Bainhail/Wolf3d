@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/07 12:24:08 by naali            ###   ########.fr        #
+#    Updated: 2019/03/07 13:22:35 by naali            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,13 +33,13 @@ OBJS		=	$(addprefix $(OBJ_DIR)/, $(OBJ))
 
 INCLUDE_P	=	includes				\
 				libraries/libft			\
-				libraries/SDL2-2.0.9
+				libraries/SDL2-2.0.9/include
 
 IFLAGS		=	$(addprefix -I./, $(INCLUDE_P))
 
 LDFLAGS		=	-L./libraries/libft			\
-				-Llibraries/sdl2/sdl2/lib	\
-				-Llibraries/sdl2_image/sdl2_image/lib
+				-Llibraries/SDL2-2.0.9/lib	\
+				-Llibraries/SDL2_image-2.0.4/lib
 
 LFLAGS		=	-lft			\
 				-lSDL2			\
@@ -50,7 +50,7 @@ LDLIBS		= $(LDFLAGS) $(LFLAGS)
 
 vpath %.c ./srcs/:./srcs/getmap:./srcs/matrice
 
-vpath %.h ./includes/:./libraries/libft:./libraries/SDL2-2.0.9
+vpath %.h ./includes/:./libraries/libft:./libraries/SDL2-2.0.9:./libraries/SDL2_image-2.0.4
 
 $(OBJ_DIR)/%.o:	%.c
 				@mkdir $(OBJ_DIR) 2> /dev/null || true
@@ -84,24 +84,28 @@ libft:
 sdl2:
 	@echo "Lib SDL2... \c"
 	@mkdir ./libraries 2> /dev/null || true
-	@if [ -d ./libraries/SDL2-2.0.9 ]; then	\
+	if [ -d ./libraries/SDL2-2.0.9 ]; then	\
 		echo "Nothing to be done.";	\
-	@else	\
+	else	\
 		tar xzf ./source_lib/SDL2-2.0.9.tar.gz -C ./libraries/	\
-		&& ./configure --prefix=$(shell pwd)/libraries/SDL2-2.0.9	\
-		&& make -C ./libraries/SDL2-2.0.9	\
-		&& make -C ./libraries/SDL2-2.0.9 install	\
+		&& $(shell cd ./libraries/SDL2-2.0.9; ./configure	--prefix=$(shell pwd)/libraries/SDL2-2.0.9) \
+		&& $(MAKE) -C ./libraries/SDL2-2.0.9	\
+		&& $(MAKE) -C ./libraries/SDL2-2.0.9 install	\
 		echo "DONE";	\
 	fi;
 
 sdl2_image:
+	@echo "Lib SDL2_image... \c"
 	@mkdir ./libraries 2> /dev/null || true
-	mkdir ./libraries/sdl2_image 2> /dev/null || true
-	tar xzf ./source_lib/SDL2_image-2.0.4.tar.gz -C ./libraries/sdl2_image/
-	mv ./libraries/sdl2_image/SDL2_image-2.0.4 ./libraries/sdl2_image/sdl2_image
-	cd ./libraries/sdl2_image/sdl2_image/ ; ./configure --prefix=$(shell pwd)/libraries/sdl2_image/sdl2_image --with-sdl-prefix=$(shell pwd)/libraries/sdl2/sdl2
-	make -C ./libraries/sdl2_image/sdl2_image
-	make -C ./libraries/sdl2_image/sdl2_image install
+	if [ -d ./libraries/SDL2_image-2.0.4 ]; then	\
+		echo "Nothing to be done.";	\
+	else	\
+		tar xzf ./source_lib/SDL2_image-2.0.4.tar.gz -C ./libraries/ \
+		&& $(shell cd ./libraries/SDL2_image-2.0.4; ./configure --prefix=$(shell pwd)/libraries/SDL2_image-2.0.4 --with-sdl-prefix=$(shell pwd)/libraries/SDL2-2.0.9) \
+		&& $(MAKE) -C ./libraries/SDL2_image-2.0.4 \
+		&& $(MAKE) -C ./libraries/SDL2_image-2.0.4 install \
+	fi;
+	echo "test"
 
 # freetype:
 # 	@mkdir ./libraries 2> /dev/null || true
