@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/07 11:57:20 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/07 14:22:55 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ int			main(int ac, char **av)
 		return (0);
 	if (file_to_tab(av[1], &m) == -1)
 		printf("ERROR FILE\n");
+	printf("%.1f\n", m.tab[0][0].x);
 	return (0);
 }
