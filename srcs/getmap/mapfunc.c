@@ -6,11 +6,11 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 13:24:08 by naali             #+#    #+#             */
-/*   Updated: 2019/02/28 09:04:09 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/07 11:10:58 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "wolf3d.h"
 
 static t_vertex		*split_nb_to_tab2(t_map *m, char **line, int i, int *lizi)
 {
@@ -19,14 +19,13 @@ static t_vertex		*split_nb_to_tab2(t_map *m, char **line, int i, int *lizi)
 
 	*lizi = 0;
 	if ((tabnb = (t_vertex*)malloc(sizeof(t_vertex) \
-					* (*lizi = tablen((const char**)line)))) == NULL)
+					* (*lizi = tablen((char**)line)))) == NULL)
 		return (NULL);
 	j = 0;
 	while (j < *lizi)
 	{
 		tabnb[j] = init_vtex((double)j, (double)i, \
-								(double)ft_atoi(line[j]), \
-									color_choice(ft_atoi(line[j])));
+								(double)ft_atoi(line[j]));
 		if (m->zmax < ft_atoi(line[j]))
 			m->zmax = ft_atoi(line[j]);
 		j = j + 1;
@@ -50,7 +49,7 @@ static t_vertex		**split_nb_to_tab1(char **tab, t_map *m)
 
 	i = 0;
 	if ((tabnb = (t_vertex**)malloc(sizeof(t_vertex*) \
-					* tablen((const char**)tab))) == NULL)
+					* tablen((char**)tab))) == NULL)
 		return (NULL);
 	line = NULL;
 	while (tab[i] != 0)
@@ -63,7 +62,7 @@ static t_vertex		**split_nb_to_tab1(char **tab, t_map *m)
 	if (m->ymax < i)
 		m->ymax = i;
 	free_useless(&line, NULL, lizi);
-	free_useless(&tab, NULL, tablen((const char**)tab));
+	free_useless(&tab, NULL, tablen((char**)tab));
 	return (tabnb);
 }
 
@@ -72,16 +71,19 @@ static int			check_line(char **l, int *fd)
 	int		i;
 
 	i = 0;
-	while ((*l)[i] >= 0 && (*l)[i] <= 127)
-	{
-		i++;
-		if ((*l)[i] == '\0')
-			return (0);
-	}
-	if ((*l) != NULL)
-		free(*l);
-	if ((*fd) > 0)
-		close(*fd);
+/* 	if (l != NULL && *l != NULL) */
+/* 	{ */
+		while ((*l)[i] >= 0 && (*l)[i] <= 127)
+		{
+			i++;
+			if ((*l)[i] == '\0')
+				return (0);
+		}
+		if ((*l) != NULL)
+			free(*l);
+		if ((*fd) > 0)
+			close(*fd);
+/* 	} */
 	return (-1);
 }
 
@@ -90,8 +92,9 @@ static void			init_image_struct(t_map *m)
 	m->xmax = 0;
 	m->ymax = 0;
 	m->zmax = 0;
-	m->tbline = NULL;
-	m->line = NULL;
+	m->f.nbl = 0;
+	m->f.tbline = NULL;
+	m->f.line = NULL;
 }
 
 int					file_to_tab(char *path, t_map *m)
@@ -99,25 +102,25 @@ int					file_to_tab(char *path, t_map *m)
 	if (ft_strcmp(path, "/dev/zero") == 0)
 		return (-1);
 	init_image_struct(m);
-	if ((m->fd = open(path, O_RDONLY)) <= 0 || m->fd == 0)
+	if ((m->f.fd = open(path, O_RDONLY)) <= 0 || m->f.fd == 0)
 	{
 		ft_putstr(path);
 		ft_putstr(" est invalide\n");
 		return (-1);
 	}
-	while (get_next_line(m->fd, &(m->line)) > 0)
+	while (get_next_line(m->f.fd, &(m->f.line)) > 0)
 	{
-		if (check_line(&(m->line), &(m->fd)) == -1)
+		if (check_line(&(m->f.line), &(m->f.fd)) == -1)
 			return (-1);
-		m->tbline = ft_pushback_str_to_tab(&(m->tbline), &(m->line));
-		m->nbl++;
+		m->f.tbline = ft_pushback_str_to_tab(&(m->f.tbline), &(m->f.line));
+		m->f.nbl++;
 	}
-	if (m->tbline == NULL)
+	if (m->f.tbline == NULL)
 		return (-1);
-	m->tab = split_nb_to_tab1(m->tbline, m);
-	if (m->line != NULL)
-		free(m->line);
-	if (m->fd > 0)
-		close(m->fd);
+	m->tab = split_nb_to_tab1(m->f.tbline, m);
+	if (m->f.line != NULL)
+		free(m->f.line);
+	if (m->f.fd > 0)
+		close(m->f.fd);
 	return (0);
 }
