@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/07 15:48:58 by naali            ###   ########.fr        #
+#    Updated: 2019/03/07 16:00:20 by naali            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,14 +37,14 @@ OBJS		=	$(addprefix $(OBJ_DIR)/, $(OBJ))
 
 LDFLAGS		=	-L./libraries/libft					\
 				-Llibraries/SDL2-2.0.9/lib			\
-				-Llibraries/SDL2_image-2.0.4/lib	\
-				-Llibraries/sdl2_ttf-2.0.15/lib
+				-Llibraries/SDL2_image-2.0.4/lib
+# 				-Llibraries/sdl2_ttf-2.0.15/lib
 
 LFLAGS		=	-lft				\
 				-lSDL2				\
 				-lSDL2_image		\
-				-framework OpenGL	\
-				-lSDL2_ttf
+				-framework OpenGL
+#				-lSDL2_ttf
 
 LDLIBS		=	$(LDFLAGS) $(LFLAGS)
 
@@ -60,7 +60,8 @@ $(OBJ_DIR)/%.o:	%.c
 
 all:			$(NAME)
 
-lib:			libft sdl2 sdl2_image sdl2_ttf
+lib:			libft sdl2 sdl2_image
+#freetype sdl2_ttf
 
 $(NAME):		$(OBJS) lib
 				@echo "Compiling Wolf3D... \c"
@@ -116,24 +117,24 @@ sdl2_image:
 # 		echo "Nothing to be done.";	\
 # 	else	\
 # 		rm -rf ./libraries/freetype-2.4.11	\
-# 		tar xzf ./source_lib/freetype-2.4.11.tar.gz -C ./libraries/ \
+# 		&& tar xzf ./source_lib/freetype-2.4.11.tar.gz -C ./libraries/ \
 # 		&& cd ./libraries/freetype-2.4.11 ; ./configure --prefix=$(shell pwd)/libraries/freetype-2.4.11 \
 # 		&& $(MAKE) \
 # 		&& $(MAKE) install; \
 # 	fi;
 
-sdl2_ttf:
-	@echo "Lib sdl2_ttf... \c"
-	@mkdir ./libraries 2> /dev/null || true
-	@if [ -e ./libraries/SDL2_ttf-2.0.15 ]; then	\
-		echo "Nothing to be done.";	\
-	else	\
-		rm -rf ./libraries/SDL2_ttf-2.0.15	\
-		&& tar xzf ./source_lib/SDL2_ttf-2.0.15.tar.gz -C ./libraries/ \
-		&& cd ./libraries/SDL2_ttf-2.0.15 ;  ./configure --prefix=$(shell pwd)/libraries/SDL2_ttf-2.0.15 --with-sdl-prefix=$(shell pwd)/libraries/SDL2-2.0.9 \
-		&& $(MAKE) \
-		&& $(MAKE) install; \
-	fi;
+# sdl2_ttf:
+# 	@echo "Lib sdl2_ttf... \c"
+# 	@mkdir ./libraries 2> /dev/null || true
+# 	@if [ -e ./libraries/SDL2_ttf-2.0.15 ]; then	\
+# 		echo "Nothing to be done.";	\
+# 	else	\
+# 		rm -rf ./libraries/SDL2_ttf-2.0.15	\
+# 		&& tar xzf ./source_lib/SDL2_ttf-2.0.15.tar.gz -C ./libraries/ \
+# 		&& cd ./libraries/SDL2_ttf-2.0.15 ;  ./configure --prefix=$(shell pwd)/libraries/SDL2_ttf-2.0.15 --with-sdl-prefix=$(shell pwd)/libraries/SDL2-2.0.9 \
+# 		&& $(MAKE) \
+# 		&& $(MAKE) install; \
+# 	fi;
 
 clean:
 		make clean -C ./libraries/libft
