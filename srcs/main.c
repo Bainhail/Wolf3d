@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/11 15:43:51 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:28:59 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	ft_case_four(SDL_Renderer *name_renderer, t_myputtheline *s_line);
 void	ft_case_three(SDL_Renderer *name_renderer, t_myputtheline *s_line);
 void	ft_case_two(SDL_Renderer *name_renderer, t_myputtheline *s_line);
 void	ft_case_one(SDL_Renderer *name_renderer, t_myputtheline *s_line);
+void	ft_draw_grid(SDL_Renderer *name_renderer, int height, int width);
 
 
 int			main(void)
@@ -129,6 +130,7 @@ int			main(void)
 	ft_clear_window_in_blue(height, width, renderer_name);
 	map = ft_init_map(height, width);
 	ft_read_the_map(height, width, map);
+	ft_draw_grid(renderer_name, height, width); 
 	ft_draw_map(map, height, width, renderer_name);
 	ft_draw_triangle(renderer_name, s_triangle, &s_player_pos);
 	SDL_RenderPresent(renderer_name );
@@ -189,6 +191,7 @@ void			ft_move_player(int move, t_my_player_pos *s_player_pos, SDL_Renderer *nam
 
 
 	ft_clear_window_in_blue(height, width, name_renderer);
+	ft_draw_grid(name_renderer, height, width);
 	ft_draw_map(map, height, width, name_renderer);
 	ft_draw_triangle(name_renderer, s_triangle, s_player_pos);
 	SDL_RenderPresent(name_renderer);
@@ -251,6 +254,64 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	s_line.deux.a = (0 * cos((s_player_pos->angle + 30)  * M_PI / 180)) + (-30 * -sin((s_player_pos->angle  + 30)* M_PI / 180)) + s_player_pos->x;
 	s_line.deux.b = (0 * sin((s_player_pos->angle + 30) * M_PI / 180)) + (-30 *  cos((s_player_pos->angle  + 30)* M_PI / 180)) + s_player_pos->y;
 	ft_draw_line(name_renderer, &s_line);
+
+
+	SDL_SetRenderDrawColor(name_renderer, 255, 0, 0, 0);
+	//angle variable = 10
+	s_line.un.a = s_player_pos->x;
+	s_line.un.b = s_player_pos->y;
+
+
+
+
+
+	s_line.deux.a = (0 * cos((s_player_pos->angle + 10)  * M_PI / 180)) + (-50 * -sin((s_player_pos->angle  + 10)* M_PI / 180)) + s_player_pos->x;
+	s_line.deux.b = (0 * sin((s_player_pos->angle + 10) * M_PI / 180)) + (-50 *  cos((s_player_pos->angle  + 10)* M_PI / 180)) + s_player_pos->y;
+	ft_draw_line(name_renderer, &s_line);
+}
+
+
+
+void			ft_draw_grid(SDL_Renderer *name_renderer, int height, int width)
+{
+	int	x1;
+	int	y1;
+	int	x2;
+	int	y2;
+	t_myputtheline line;
+
+	SDL_SetRenderDrawColor(name_renderer, 255, 255, 0, 0);
+
+	y1 = 0;
+	y2 = height;
+	x1 = 0;
+	x2 = x1;
+
+	while (x1 < width)
+	{
+		line.un.a = x1;
+		line.un.b = y1;
+		line.deux.a = x2;
+		line.deux.b = y2;
+		ft_draw_line(name_renderer, &line);
+		x1  += 20;
+		x2 = x1;
+	}
+	y1 = 0;
+	y2 = y1;
+	x1 = 0;
+	x2 = width;
+
+	while (y1 < height)
+	{
+		line.un.a = x1;
+		line.un.b = y1;
+		line.deux.a = x2;
+		line.deux.b = y2;
+		ft_draw_line(name_renderer, &line);
+		y1  += 20;
+		y2 = y1;
+	}
 
 }
 
