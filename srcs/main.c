@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/11 16:28:59 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:33:28 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int			main(void)
 	ft_clear_window_in_blue(height, width, renderer_name);
 	map = ft_init_map(height, width);
 	ft_read_the_map(height, width, map);
-	ft_draw_grid(renderer_name, height, width); 
+	ft_draw_grid(renderer_name, height, width);
 	ft_draw_map(map, height, width, renderer_name);
 	ft_draw_triangle(renderer_name, s_triangle, &s_player_pos);
 	SDL_RenderPresent(renderer_name );
@@ -260,7 +260,6 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	//angle variable = 10
 	s_line.un.a = s_player_pos->x;
 	s_line.un.b = s_player_pos->y;
-
 
 
 
