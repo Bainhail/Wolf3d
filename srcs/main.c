@@ -6,11 +6,38 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/11 14:37:56 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/11 15:43:51 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+
+
+typedef struct			s_xyz_point
+{
+	double				a;
+	double				b;
+}						t_xyz_point;
+
+typedef struct			s_myputtheline
+{
+	int					above;
+	t_xyz_point			un;
+	t_xyz_point			deux;
+	int					ex;
+	int					ey;
+	int					dx;
+	int					dy;
+	int					d_x;
+	int					d_y;
+	int					i;
+	int					j;
+	int					x_incr;
+	int					y_incr;
+	float				ab;
+	float				le_z1;
+	float				le_z2;
+}						t_myputtheline;
 
 typedef struct			s_my_rectangle
 {
@@ -44,6 +71,12 @@ typedef enum			e_my_move
 	ANTITRIGO,
 }						t_my_move;
 
+typedef struct			s_my_rayon
+{
+	int					view_angle;
+
+}						t_my_rayon;
+
 void	ft_clear_window_in_blue(int height, int width, SDL_Renderer *renderer_name);
 void	ft_read_the_map(int height, int width, int **map);
 int		ft_my_atoi(char c);
@@ -52,8 +85,14 @@ void	ft_draw_map(int **map, int height, int width, SDL_Renderer *renderer_name);
 void	ft_draw_rectangle(t_my_rectangle s_rectangle, SDL_Renderer *renderer_name);
 void	ft_update_event_editor(t_my_event *s_event);
 void	ft_init_event_editor(t_my_event *s_event);
-void			ft_move_player(int move, t_my_player_pos *s_player_pos, SDL_Renderer *name_renderer, t_my_rectangle s_triangle, int height, int width, int **map);
-void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t_my_player_pos *s_player_pos);
+void	ft_move_player(int move, t_my_player_pos *s_player_pos, SDL_Renderer *name_renderer, t_my_rectangle s_triangle, int height, int width, int **map, t_my_rayon *s_rayon);
+void	ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t_my_player_pos *s_player_pos);
+void	ft_draw_line(SDL_Renderer *name_renderer, t_myputtheline *s_line);
+void	ft_case_five(SDL_Renderer *name_renderer, t_myputtheline *s_line);
+void	ft_case_four(SDL_Renderer *name_renderer, t_myputtheline *s_line);
+void	ft_case_three(SDL_Renderer *name_renderer, t_myputtheline *s_line);
+void	ft_case_two(SDL_Renderer *name_renderer, t_myputtheline *s_line);
+void	ft_case_one(SDL_Renderer *name_renderer, t_myputtheline *s_line);
 
 
 int			main(void)
@@ -67,6 +106,7 @@ int			main(void)
 	t_my_rectangle	s_triangle;
 	t_my_event		s_event;
 	t_my_player_pos	s_player_pos;
+	t_my_rayon		s_rayon;
 
 	height = 480;
 	width = 640;
@@ -80,6 +120,7 @@ int			main(void)
 	s_triangle.x = 10;
 	s_triangle.y = 10;
 	s_triangle.size = 10;
+	s_rayon.view_angle = 60;
 
 
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -99,12 +140,12 @@ int			main(void)
 		ft_update_event_editor(&s_event);
 
 		s_event.key[SDL_SCANCODE_ESCAPE] ? s_event.quit = SDL_TRUE : 0 ;
-		s_event.key[SDL_SCANCODE_W] ? ft_move_player(UP, &s_player_pos, renderer_name, s_triangle, height, width, map) : 0 ;
-		s_event.key[SDL_SCANCODE_A] ? ft_move_player(LEFT, &s_player_pos, renderer_name, s_triangle, height, width, map) : 0 ;
-		s_event.key[SDL_SCANCODE_D] ? ft_move_player(RIGHT, &s_player_pos, renderer_name, s_triangle, height, width, map) : 0 ;
-		s_event.key[SDL_SCANCODE_S] ? ft_move_player(DOWN, &s_player_pos, renderer_name, s_triangle, height, width, map) : 0 ;
-		s_event.key[SDL_SCANCODE_LEFT] ? ft_move_player(TRIGO, &s_player_pos, renderer_name, s_triangle, height, width, map) : 0 ;
-		s_event.key[SDL_SCANCODE_RIGHT] ? ft_move_player(ANTITRIGO, &s_player_pos, renderer_name, s_triangle, height, width, map) : 0 ;
+		s_event.key[SDL_SCANCODE_W] ? ft_move_player(UP, &s_player_pos, renderer_name, s_triangle, height, width, map, &s_rayon) : 0 ;
+		s_event.key[SDL_SCANCODE_A] ? ft_move_player(LEFT, &s_player_pos, renderer_name, s_triangle, height, width, map, &s_rayon) : 0 ;
+		s_event.key[SDL_SCANCODE_D] ? ft_move_player(RIGHT, &s_player_pos, renderer_name, s_triangle, height, width, map, &s_rayon) : 0 ;
+		s_event.key[SDL_SCANCODE_S] ? ft_move_player(DOWN, &s_player_pos, renderer_name, s_triangle, height, width, map, &s_rayon) : 0 ;
+		s_event.key[SDL_SCANCODE_LEFT] ? ft_move_player(TRIGO, &s_player_pos, renderer_name, s_triangle, height, width, map, &s_rayon) : 0 ;
+		s_event.key[SDL_SCANCODE_RIGHT] ? ft_move_player(ANTITRIGO, &s_player_pos, renderer_name, s_triangle, height, width, map, &s_rayon) : 0 ;
 		SDL_Delay(20);
 	}
 
@@ -114,8 +155,9 @@ int			main(void)
 }
 
 
-void			ft_move_player(int move, t_my_player_pos *s_player_pos, SDL_Renderer *name_renderer, t_my_rectangle s_triangle, int height, int width, int **map)
+void			ft_move_player(int move, t_my_player_pos *s_player_pos, SDL_Renderer *name_renderer, t_my_rectangle s_triangle, int height, int width, int **map, t_my_rayon *s_rayon)
 {
+	(void)s_rayon;
 	int		x;
 	int		y;
 	int		angle;
@@ -183,7 +225,63 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 		y++;
 		i++;
 	}
+
+
+	t_myputtheline s_line;
+
+	//ligne droite
+	s_line.un.a = s_player_pos->x;
+	s_line.un.b = s_player_pos->y;
+	s_line.deux.a = (0 * cos(s_player_pos->angle * M_PI / 180)) + (-30 * -sin(s_player_pos->angle * M_PI / 180)) + s_player_pos->x;
+	s_line.deux.b = (0 * sin(s_player_pos->angle * M_PI / 180)) + (-30 *  cos(s_player_pos->angle * M_PI / 180)) + s_player_pos->y;
+	ft_draw_line(name_renderer, &s_line);
+
+
+	//ligne a -30
+	s_line.un.a = s_player_pos->x;
+	s_line.un.b = s_player_pos->y;
+	s_line.deux.a = (0 * cos((s_player_pos->angle - 30)  * M_PI / 180)) + (-30 * -sin((s_player_pos->angle  - 30)* M_PI / 180)) + s_player_pos->x;
+	s_line.deux.b = (0 * sin((s_player_pos->angle - 30) * M_PI / 180)) + (-30 *  cos((s_player_pos->angle  - 30)* M_PI / 180)) + s_player_pos->y;
+	ft_draw_line(name_renderer, &s_line);
+
+
+	//ligne a +30
+	s_line.un.a = s_player_pos->x;
+	s_line.un.b = s_player_pos->y;
+	s_line.deux.a = (0 * cos((s_player_pos->angle + 30)  * M_PI / 180)) + (-30 * -sin((s_player_pos->angle  + 30)* M_PI / 180)) + s_player_pos->x;
+	s_line.deux.b = (0 * sin((s_player_pos->angle + 30) * M_PI / 180)) + (-30 *  cos((s_player_pos->angle  + 30)* M_PI / 180)) + s_player_pos->y;
+	ft_draw_line(name_renderer, &s_line);
+
 }
+
+void		ft_draw_line(SDL_Renderer *name_renderer, t_myputtheline *s_line)
+{
+	s_line->ex = abs((int)s_line->un.a - (int)s_line->deux.a);
+	s_line->ey = abs((int)s_line->un.b - (int)s_line->deux.b);
+	s_line->dx = 2 * s_line->ex;
+	s_line->dy = 2 * s_line->ey;
+	s_line->d_x = s_line->ex;
+	s_line->d_y = s_line->ey;
+	s_line->i = 0;
+	s_line->x_incr = 1;
+	s_line->y_incr = 1;
+	if (s_line->deux.a > s_line->un.a)
+		s_line->x_incr = -1;
+	if (s_line->deux.b > s_line->un.b)
+		s_line->y_incr = -1;
+	if (s_line->dy == 0)
+		ft_case_one(name_renderer, s_line);
+	if (s_line->d_x > s_line->d_y)
+		ft_case_two(name_renderer, s_line);
+	if (s_line->dx == s_line->dy)
+		ft_case_three(name_renderer, s_line);
+	if (s_line->d_x < s_line->d_y)
+		ft_case_four(name_renderer, s_line);
+	if (s_line->dx == 0)
+		ft_case_five(name_renderer, s_line);
+}
+
+
 
 void			ft_update_event_editor(t_my_event *s_event)
 {
@@ -327,4 +425,72 @@ int				**ft_init_map(int height, int width)
 		y++;
 	}
 	return (map);
+}
+
+void			ft_case_one(SDL_Renderer *name_renderer, t_myputtheline *s_line)
+{
+	while (s_line->i <= s_line->d_x)
+	{
+		(s_line->i)++;
+		SDL_RenderDrawPoint(name_renderer, (int)s_line->deux.a,
+(int)s_line->deux.b);
+		s_line->deux.a += s_line->x_incr;
+	}
+}
+
+void			ft_case_two(SDL_Renderer *name_renderer, t_myputtheline *s_line)
+{
+	while (s_line->i <= s_line->d_x)
+	{
+		SDL_RenderDrawPoint(name_renderer, (int)s_line->deux.a,
+(int)s_line->deux.b);
+		(s_line->i)++;
+		s_line->deux.a += s_line->x_incr;
+		s_line->ex -= s_line->dy;
+		if (s_line->ex < 0)
+		{
+			s_line->deux.b += s_line->y_incr;
+			s_line->ex += s_line->dx;
+		}
+	}
+}
+
+void			ft_case_three(SDL_Renderer *name_renderer, t_myputtheline *s_line)
+{
+	while (s_line->i <= s_line->d_x)
+	{
+		(s_line->i)++;
+		SDL_RenderDrawPoint(name_renderer, (int)s_line->deux.a,
+(int)s_line->deux.b);
+		s_line->deux.a += s_line->x_incr;
+		s_line->deux.b += s_line->y_incr;
+	}
+}
+
+void			ft_case_four(SDL_Renderer *name_renderer, t_myputtheline *s_line)
+{
+	while (s_line->i <= s_line->d_y)
+	{
+		SDL_RenderDrawPoint(name_renderer, (int)s_line->deux.a,
+(int)s_line->deux.b);
+		(s_line->i)++;
+		s_line->deux.b += s_line->y_incr;
+		s_line->ey -= s_line->dx;
+		if (s_line->ey < 0)
+		{
+			s_line->deux.a += s_line->x_incr;
+			s_line->ey += s_line->dy;
+		}
+	}
+}
+
+void			ft_case_five(SDL_Renderer *name_renderer, t_myputtheline *s_line)
+{
+	while (s_line->i <= s_line->d_y)
+	{
+		(s_line->i)++;
+		SDL_RenderDrawPoint(name_renderer, (int)s_line->deux.a,
+(int)s_line->deux.b);
+		s_line->deux.b += s_line->y_incr;
+	}
 }
