@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/07 16:00:20 by naali            ###   ########.fr        #
+#    Updated: 2019/03/11 13:18:47 by naali            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME		=	wolf3d
 
 CC			=	gcc
 
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra
+#-Werror
 
 SRC			=	main.c						\
 				ft_pushback_str_to_tab.c	\
@@ -25,11 +26,10 @@ OBJ			=	$(SRC:.c=.o)
 
 OBJ_DIR		=	./objs
 
-# LIBRARIES	=
-
-INCLUDE_P	=	includes				\
-				libraries/libft			\
-				libraries/SDL2-2.0.9/include
+INCLUDE_P	=	includes						\
+				libraries/libft					\
+				libraries/SDL2-2.0.9/include	\
+				source_lib/libft
 
 IFLAGS		=	$(addprefix -I./, $(INCLUDE_P))
 
@@ -42,15 +42,15 @@ LDFLAGS		=	-L./libraries/libft					\
 
 LFLAGS		=	-lft				\
 				-lSDL2				\
-				-lSDL2_image		\
-				-framework OpenGL
+				-lSDL2_image
+#				-framework OpenGL
 #				-lSDL2_ttf
 
 LDLIBS		=	$(LDFLAGS) $(LFLAGS)
 
 vpath %.c ./srcs/:./srcs/getmap:./srcs/matrice
 
-vpath %.h ./includes/:./libraries/libft:./libraries/SDL2-2.0.9/include:./libraries/SDL2_image-2.0.4/include:SDL2_ttf-2.0.15/include
+vpath %.h ./includes/:./libraries/libft:./libraries/SDL2-2.0.9/include:./libraries/SDL2_image-2.0.4/include:SDL2_ttf-2.0.15/include:./source_lib/libft
 
 $(OBJ_DIR)/%.o:	%.c
 				@mkdir $(OBJ_DIR) 2> /dev/null || true
@@ -166,4 +166,3 @@ exe:
 	./$(NAME)
 
 .PHONY: all clean fclean fclnsdl re resdl
-

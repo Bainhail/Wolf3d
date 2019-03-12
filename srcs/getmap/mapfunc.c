@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 13:24:08 by naali             #+#    #+#             */
-/*   Updated: 2019/03/07 11:10:58 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/12 10:05:16 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ static int			check_line(char **l, int *fd)
 	int		i;
 
 	i = 0;
-/* 	if (l != NULL && *l != NULL) */
-/* 	{ */
+	if (l != NULL && *l != NULL)
+	{
 		while ((*l)[i] >= 0 && (*l)[i] <= 127)
 		{
 			i++;
@@ -83,7 +83,7 @@ static int			check_line(char **l, int *fd)
 			free(*l);
 		if ((*fd) > 0)
 			close(*fd);
-/* 	} */
+	}
 	return (-1);
 }
 
@@ -122,5 +122,7 @@ int					file_to_tab(char *path, t_map *m)
 		free(m->f.line);
 	if (m->f.fd > 0)
 		close(m->f.fd);
+	m->xcase = (float)WINX / (float)(m->xmax);
+	m->ycase = (float)WINY / (float)(m->ymax);
 	return (0);
 }
