@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/12 13:54:43 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/12 14:30:28 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,7 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 //angle du rayon lance par rapport au joueur est de 21 degre catching horizontal line de couleur rouge
 	int Ay;
 	printf("l'angle de calcul alpha =%d\n", (90 + s_player_pos->angle -21) % 360);
-	int angle_alpha = (90 + s_player_pos->angle -21) % 360;
+	int angle_alpha = (90 + s_player_pos->angle - 21) % 360;
 
 	if (angle_alpha < 0)
 		angle_alpha *= -1;
@@ -269,18 +269,11 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	if ((angle_alpha % 360) == 0 || (angle_alpha % 360) == 90)
 		angle_alpha += 1;
 
-
 	//we will find Ya and Xa
 	if (angle_alpha  > 180) // the ray is facing down
-	{
-		printf("the ray is facing down\n");
 		Ay = ((s_player_pos->y / 20) * 20) + 20;
-	}
 	else
-	{
-		printf("the ray is facing up\n");
 		Ay = ((s_player_pos->y / 20) * 20) - 1;
-	}
 	int Ax = (s_player_pos->y - Ay) / tan(((angle_alpha) * M_PI / 180)) + s_player_pos->x;
 
 	if (Ax < 0)
@@ -289,8 +282,28 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	s_line.deux.a = Ax;
 	s_line.deux.b = Ay;
 	ft_draw_line(name_renderer, &s_line);
-}
 
+	//angle du rayon lance par rapport au joueur est de -21 degre catching vertical line de couleur rouge
+	angle_alpha = (s_player_pos->angle - 21) % 360;
+	if (angle_alpha < 0)
+		angle_alpha *= -1;
+	//prblm pour le tan(90) et tan (0)
+	if ((angle_alpha % 360) == 0 || (angle_alpha % 360) == 90)
+		angle_alpha += 1;
+
+	int Bx;
+	if (angle_alpha < 180) // the ray is going left
+		Bx = (s_player_pos->x / 20) * 20 - 1;
+	else
+		Bx = (s_player_pos->x / 20) * 20 + 20;
+	int By = s_player_pos->y + (s_player_pos->x - Ax) * tan(angle_alpha);
+
+	if (By < 0)
+		By = 0;
+	s_line.deux.a = Bx;
+	s_line.deux.b = By;
+	ft_draw_line(name_renderer, &s_line);
+}
 
 
 void			ft_draw_grid(SDL_Renderer *name_renderer, int height, int width)
