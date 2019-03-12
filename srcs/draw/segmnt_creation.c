@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 14:09:53 by naali             #+#    #+#             */
-/*   Updated: 2019/03/12 14:39:54 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/12 17:21:29 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** Ne pas l'ajouter a la compilation pour le moment.
 */
 
-void		init_sgmt(t_sgmt *l, int swp, t_vect start, t_vect end)
+static void		init_sgmt(t_sgmt *l, int swp, t_vect start, t_vect end)
 {
 	l->dx = end.x - start.x;
 	l->dy = fabs(end.y - start.y);
@@ -28,7 +28,7 @@ void		init_sgmt(t_sgmt *l, int swp, t_vect start, t_vect end)
 	l->maxX = (int)(end.x);
 }
 
-void		change_vect(t_win *w, int swp, t_vect *start, t_vect *end)
+static void		change_vect(t_win *w, int swp, t_vect *start, t_vect *end)// Remplacer Win par Print
 {
 	int		color;
 	double	tmp;
@@ -53,21 +53,21 @@ void		change_vect(t_win *w, int swp, t_vect *start, t_vect *end)
 	}
 }
 
-void		print_line2(t_win *w, int swp, t_vect start, t_vect end)
+static void		print_line1(t_win *w, int swp, t_vect start, t_vect end)// Remplacer Win par Print
 {
 	int		color;
 	t_sgmt	l;
 
-	color = w->color;
+	color = w->color;// a supprimer
 	init_sgmt(&l, swp, start, end);
 	while (++l.x < (l.maxX - 1))
 	{
  		if (w->z_start != w->z_end)
  			color = abs(color + w->cstep);
-		if (swp >= 0)
-			put_color_to_pix(w, init_vtex(l.y, l.x, 0, color));
-		else
-			put_color_to_pix(w, init_vtex(l.x, l.y, 0, color));
+		if (swp >= 0)// a supprimer
+			put_color_to_pix(w, init_vtex(l.y, l.x, 0, color));// A remplacer par SDL_RenderDrawPoint
+		else// a supprimer
+			put_color_to_pix(w, init_vtex(l.x, l.y, 0, color));// a supprimer
 		l.error = l.error - l.dy;
 		if (l.error < 0)
 		{
@@ -77,7 +77,7 @@ void		print_line2(t_win *w, int swp, t_vect start, t_vect end)
 	}
 }
 
-void		print_line1(t_win *w, t_vect start, t_vect end)
+void			print_line(t_win *w, t_vect start, t_vect end)// Remplacer Win par Print
 {
 	int		swp;
 
