@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/11 18:33:28 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/12 13:50:49 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,18 @@ typedef struct			s_my_rectangle
 	int					size;
 }						t_my_rectangle;
 
-
 typedef struct			s_my_event
 {
 	SDL_bool			key[SDL_NUM_SCANCODES];
 	SDL_bool			quit;
 }						t_my_event;
 
-
 typedef struct			s_my_player_pos
 {
 	int					x;
 	int					y;
 	int					angle;
+	int					angle_variable;
 }						t_my_player_pos;
 
 typedef enum			e_my_move
@@ -115,6 +114,7 @@ int			main(void)
 	s_player_pos.x = 20;
 	s_player_pos.y = 20;
 	s_player_pos.angle = 0;
+	s_player_pos.angle_variable = 10;
 	s_rectangle.x = 0;
 	s_rectangle.y = 0;
 	s_rectangle.size = 0;
@@ -140,7 +140,6 @@ int			main(void)
 	{
 		ft_init_event_editor(&s_event);
 		ft_update_event_editor(&s_event);
-
 		s_event.key[SDL_SCANCODE_ESCAPE] ? s_event.quit = SDL_TRUE : 0 ;
 		s_event.key[SDL_SCANCODE_W] ? ft_move_player(UP, &s_player_pos, renderer_name, s_triangle, height, width, map, &s_rayon) : 0 ;
 		s_event.key[SDL_SCANCODE_A] ? ft_move_player(LEFT, &s_player_pos, renderer_name, s_triangle, height, width, map, &s_rayon) : 0 ;
@@ -150,12 +149,10 @@ int			main(void)
 		s_event.key[SDL_SCANCODE_RIGHT] ? ft_move_player(ANTITRIGO, &s_player_pos, renderer_name, s_triangle, height, width, map, &s_rayon) : 0 ;
 		SDL_Delay(20);
 	}
-
 	SDL_DestroyWindow(window_name);
 	SDL_Quit();
 	return (0);
 }
-
 
 void			ft_move_player(int move, t_my_player_pos *s_player_pos, SDL_Renderer *name_renderer, t_my_rectangle s_triangle, int height, int width, int **map, t_my_rayon *s_rayon)
 {
@@ -179,15 +176,15 @@ void			ft_move_player(int move, t_my_player_pos *s_player_pos, SDL_Renderer *nam
 	move == DOWN ?		y =  5 : 0 ;
 	move == RIGHT ? 	x =  5 : 0 ;
 	move == LEFT ?		x = -5 : 0 ;
-	move == TRIGO ? 	angle = 5 : 0 ;
-	move == ANTITRIGO ?	angle = -5 : 0 ;
+	move == TRIGO ? 	angle = 3 : 0 ;
+	move == ANTITRIGO ?	angle = -3 : 0 ;
 
 	//s_player_pos->x += x;
 	//s_player_pos->y += y;
 	s_player_pos->angle += angle;
 
-	s_player_pos->x += (x * cos(s_player_pos->angle * M_PI / 180)) + (y * -sin(s_player_pos->angle * M_PI / 180));
-	s_player_pos->y += (x * sin(s_player_pos->angle * M_PI / 180)) + (y *  cos(s_player_pos->angle * M_PI / 180));
+	s_player_pos->x += (x * cos(s_player_pos->angle * M_PI / 180)) + (y * sin(s_player_pos->angle * M_PI / 180));
+	s_player_pos->y += (x * -sin(s_player_pos->angle * M_PI / 180)) + (y *  cos(s_player_pos->angle * M_PI / 180));
 
 
 	ft_clear_window_in_blue(height, width, name_renderer);
@@ -219,8 +216,8 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 
 		while (j < (2 * i))
 		{
-			float x_tmp = (x * cos(s_player_pos->angle * M_PI / 180)) + (y * -sin(s_player_pos->angle * M_PI / 180));
-			float y_tmp = (x * sin(s_player_pos->angle * M_PI / 180)) + (y *  cos(s_player_pos->angle * M_PI / 180));
+			float x_tmp = (x * cos(s_player_pos->angle * M_PI / 180)) + (y * sin(s_player_pos->angle * M_PI / 180));
+			float y_tmp = (x * -sin(s_player_pos->angle * M_PI / 180)) + (y *  cos(s_player_pos->angle * M_PI / 180));
 			SDL_RenderDrawPoint(name_renderer, (int)(x_tmp + s_player_pos->x), (int)(y_tmp + s_player_pos->y));
 			x--;
 			j++;
@@ -235,24 +232,24 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	//ligne droite
 	s_line.un.a = s_player_pos->x;
 	s_line.un.b = s_player_pos->y;
-	s_line.deux.a = (0 * cos(s_player_pos->angle * M_PI / 180)) + (-30 * -sin(s_player_pos->angle * M_PI / 180)) + s_player_pos->x;
-	s_line.deux.b = (0 * sin(s_player_pos->angle * M_PI / 180)) + (-30 *  cos(s_player_pos->angle * M_PI / 180)) + s_player_pos->y;
+	s_line.deux.a = (0 * cos(s_player_pos->angle * M_PI / 180)) + (-30 * sin(s_player_pos->angle * M_PI / 180)) + s_player_pos->x;
+	s_line.deux.b = (0 * -sin(s_player_pos->angle * M_PI / 180)) + (-30 *  cos(s_player_pos->angle * M_PI / 180)) + s_player_pos->y;
 	ft_draw_line(name_renderer, &s_line);
 
 
 	//ligne a -30
 	s_line.un.a = s_player_pos->x;
 	s_line.un.b = s_player_pos->y;
-	s_line.deux.a = (0 * cos((s_player_pos->angle - 30)  * M_PI / 180)) + (-30 * -sin((s_player_pos->angle  - 30)* M_PI / 180)) + s_player_pos->x;
-	s_line.deux.b = (0 * sin((s_player_pos->angle - 30) * M_PI / 180)) + (-30 *  cos((s_player_pos->angle  - 30)* M_PI / 180)) + s_player_pos->y;
+	s_line.deux.a = (0 * cos((s_player_pos->angle - 30)  * M_PI / 180)) + (-30 * sin((s_player_pos->angle  - 30)* M_PI / 180)) + s_player_pos->x;
+	s_line.deux.b = (0 * -sin((s_player_pos->angle - 30) * M_PI / 180)) + (-30 *  cos((s_player_pos->angle  - 30)* M_PI / 180)) + s_player_pos->y;
 	ft_draw_line(name_renderer, &s_line);
 
 
 	//ligne a +30
 	s_line.un.a = s_player_pos->x;
 	s_line.un.b = s_player_pos->y;
-	s_line.deux.a = (0 * cos((s_player_pos->angle + 30)  * M_PI / 180)) + (-30 * -sin((s_player_pos->angle  + 30)* M_PI / 180)) + s_player_pos->x;
-	s_line.deux.b = (0 * sin((s_player_pos->angle + 30) * M_PI / 180)) + (-30 *  cos((s_player_pos->angle  + 30)* M_PI / 180)) + s_player_pos->y;
+	s_line.deux.a = (0 * cos((s_player_pos->angle + 30)  * M_PI / 180)) + (-30 * sin((s_player_pos->angle  + 30)* M_PI / 180)) + s_player_pos->x;
+	s_line.deux.b = (0 * -sin((s_player_pos->angle + 30) * M_PI / 180)) + (-30 *  cos((s_player_pos->angle  + 30)* M_PI / 180)) + s_player_pos->y;
 	ft_draw_line(name_renderer, &s_line);
 
 
@@ -261,11 +258,37 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	s_line.un.a = s_player_pos->x;
 	s_line.un.b = s_player_pos->y;
 
+	//s_player_pos->angle %= 360;
+
+	int Ay;
+	printf("l'angle de calcul alpha =%d\n", (90 + s_player_pos->angle -21) % 360);
+	int angle_alpha = (90 + s_player_pos->angle -21) % 360;
+
+	if (angle_alpha < 0)
+		angle_alpha *= -1;
+	//prblm pour le tan(90) et tan (0)
+	if ((angle_alpha % 360) == 0 || (angle_alpha % 360) == 90)
+		angle_alpha += 1;
 
 
+	//we will find Ya and Xa
+	if (angle_alpha  > 180) // the ray is facing down
+	{
+		printf("the ray is facing down\n");
+		Ay = ((s_player_pos->y / 20) * 20) + 20;
+	}
+	else
+	{
+		printf("the ray is facing up\n");
+		Ay = ((s_player_pos->y / 20) * 20) - 1;
+	}
+	int Ax = (s_player_pos->y - Ay) / tan(((angle_alpha) * M_PI / 180)) + s_player_pos->x;
 
-	s_line.deux.a = (0 * cos((s_player_pos->angle + 10)  * M_PI / 180)) + (-50 * -sin((s_player_pos->angle  + 10)* M_PI / 180)) + s_player_pos->x;
-	s_line.deux.b = (0 * sin((s_player_pos->angle + 10) * M_PI / 180)) + (-50 *  cos((s_player_pos->angle  + 10)* M_PI / 180)) + s_player_pos->y;
+	if (Ax < 0)
+		Ax = 0;
+
+	s_line.deux.a = Ax;
+	s_line.deux.b = Ay;
 	ft_draw_line(name_renderer, &s_line);
 }
 
