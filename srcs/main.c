@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/12 14:30:28 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/12 17:22:48 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,12 +165,12 @@ void			ft_move_player(int move, t_my_player_pos *s_player_pos, SDL_Renderer *nam
 	y = 0;
 	angle = 0;
 
-	move == UP ? printf("je monte\n") : 0 ;
-	move == DOWN ? printf("je descend\n") : 0 ;
-	move == RIGHT ? printf("je vais a droite\n") : 0 ;
-	move == LEFT ? printf("je vais a gauche\n") : 0 ;
-	move == TRIGO ? printf("tourne sens trigo\n") : 0 ;
-	move == ANTITRIGO ? printf("tourne sens antitrigo\n") : 0 ;
+//	move == UP ? printf("je monte\n") : 0 ;
+//	move == DOWN ? printf("je descend\n") : 0 ;
+//	move == RIGHT ? printf("je vais a droite\n") : 0 ;
+//	move == LEFT ? printf("je vais a gauche\n") : 0 ;
+//	move == TRIGO ? printf("tourne sens trigo\n") : 0 ;
+//	move == ANTITRIGO ? printf("tourne sens antitrigo\n") : 0 ;
 
 	move == UP ?		y = -5 : 0 ;
 	move == DOWN ?		y =  5 : 0 ;
@@ -258,15 +258,24 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	s_line.un.a = s_player_pos->x;
 	s_line.un.b = s_player_pos->y;
 
-//angle du rayon lance par rapport au joueur est de 21 degre catching horizontal line de couleur rouge
-	int Ay;
-	printf("l'angle de calcul alpha =%d\n", (90 + s_player_pos->angle -21) % 360);
-	int angle_alpha = (90 + s_player_pos->angle - 21) % 360;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//angle du rayon lance par rapport au joueur est de +21 degre catching horizontal line de couleur rouge
 
+
+	s_player_pos->angle %= 360;
+	if (s_player_pos->angle < 0)
+		s_player_pos->angle += 360;
+
+
+	int Ay;
+	int angle_alpha = (90 + s_player_pos->angle + 21);
+
+	angle_alpha %= 360;
 	if (angle_alpha < 0)
-		angle_alpha *= -1;
+		angle_alpha += 360;
+
 	//prblm pour le tan(90) et tan (0)
-	if ((angle_alpha % 360) == 0 || (angle_alpha % 360) == 90)
+	if (angle_alpha == 0 || angle_alpha == 90)
 		angle_alpha += 1;
 
 	//we will find Ya and Xa
@@ -283,28 +292,48 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	s_line.deux.b = Ay;
 	ft_draw_line(name_renderer, &s_line);
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//angle du rayon lance par rapport au joueur est de -21 degre catching vertical line de couleur rouge
-	angle_alpha = (s_player_pos->angle - 21) % 360;
+
+
+
+	angle_alpha = (90 + s_player_pos->angle - 21);
+
+	angle_alpha %= 360;
 	if (angle_alpha < 0)
-		angle_alpha *= -1;
+		angle_alpha += 360;
+
+
 	//prblm pour le tan(90) et tan (0)
-	if ((angle_alpha % 360) == 0 || (angle_alpha % 360) == 90)
+	if (angle_alpha == 0 ||  angle_alpha == 90)
 		angle_alpha += 1;
 
+
+	printf("l'angle alpha =%d\n", angle_alpha);
+	//printf("l'angle du joueur = %d\n", s_player_pos->angle);
+
 	int Bx;
-	if (angle_alpha < 180) // the ray is going left
+	if (angle_alpha > 90 && angle_alpha < 270) // the ray is going left
 		Bx = (s_player_pos->x / 20) * 20 - 1;
 	else
 		Bx = (s_player_pos->x / 20) * 20 + 20;
-	int By = s_player_pos->y + (s_player_pos->x - Ax) * tan(angle_alpha);
+
+	//prblm avec 270 degre
+	if(angle_alpha == 270)
+		angle_alpha += 1;
+	int By = s_player_pos->y - (tan(angle_alpha * M_PI / 180) * (Bx - s_player_pos->x));
 
 	if (By < 0)
 		By = 0;
 	s_line.deux.a = Bx;
 	s_line.deux.b = By;
 	ft_draw_line(name_renderer, &s_line);
-}
 
+
+
+
+}
 
 void			ft_draw_grid(SDL_Renderer *name_renderer, int height, int width)
 {
