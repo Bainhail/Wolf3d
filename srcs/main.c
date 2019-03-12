@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/12 13:50:49 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/12 13:54:43 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,8 +258,7 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	s_line.un.a = s_player_pos->x;
 	s_line.un.b = s_player_pos->y;
 
-	//s_player_pos->angle %= 360;
-
+//angle du rayon lance par rapport au joueur est de 21 degre catching horizontal line de couleur rouge
 	int Ay;
 	printf("l'angle de calcul alpha =%d\n", (90 + s_player_pos->angle -21) % 360);
 	int angle_alpha = (90 + s_player_pos->angle -21) % 360;
