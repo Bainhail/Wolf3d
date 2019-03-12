@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/12 10:44:31 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/12 11:42:39 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int			draw_square(SDL_Renderer *r, t_map *m, int x, int y)
 	xct = (x + m->xcase >= WINX) ? WINX : (x + m->xcase);
 	yct = y + m->ycase;
 	if (m->tab[(int)(y / m->ycase)][(int)(x / m->xcase)].z == 0)
-		SDL_SetRenderDrawColor(r, 0, 0, 0, 100);
-	else
 		SDL_SetRenderDrawColor(r, 255, 255, 255, 100);
+	else
+		SDL_SetRenderDrawColor(r, 0, 0, 0, 100);
 	while (x <= xct && x < WINX)
 	{
 		y = ytmp;
@@ -35,7 +35,6 @@ int			draw_square(SDL_Renderer *r, t_map *m, int x, int y)
 		}
 		x++;
 	}
-	printf("x = %d, y = %d\n", x, y);
 	return (0);
 }
 
@@ -66,7 +65,10 @@ int			main(int ac, char **av)
 	if (ac != 2)
 		return (0);
 	if (file_to_tab(av[1], &(p.m)) == -1)
+	{
 		printf("ERROR FILE\n");
+		return (-1);
+	}
 	SDL_Init(SDL_INIT_EVERYTHING);
 	p.w = SDL_CreateWindow("test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
 	p.ren = SDL_CreateRenderer(p.w, 0, SDL_RENDERER_SOFTWARE);
