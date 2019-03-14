@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/14 17:27:56 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/14 21:38:48 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 typedef struct			s_xyz_point
 {
-	double				a;
-	double				b;
+	float				a;
+	float				b;
 }						t_xyz_point;
 
 typedef struct			s_myputtheline
@@ -163,12 +163,12 @@ void			ft_move_player(int move, t_my_player_pos *s_player_pos, SDL_Renderer *nam
 	y = 0;
 	angle = 0;
 
-//	move == UP ? printf("je monte\n") : 0 ;
-//	move == DOWN ? printf("je descend\n") : 0 ;
-//	move == RIGHT ? printf("je vais a droite\n") : 0 ;
-//	move == LEFT ? printf("je vais a gauche\n") : 0 ;
-//	move == TRIGO ? printf("tourne sens trigo\n") : 0 ;
-//	move == ANTITRIGO ? printf("tourne sens antitrigo\n") : 0 ;
+	//	move == UP ? printf("je monte\n") : 0 ;
+	//	move == DOWN ? printf("je descend\n") : 0 ;
+	//	move == RIGHT ? printf("je vais a droite\n") : 0 ;
+	//	move == LEFT ? printf("je vais a gauche\n") : 0 ;
+	//	move == TRIGO ? printf("tourne sens trigo\n") : 0 ;
+	//	move == ANTITRIGO ? printf("tourne sens antitrigo\n") : 0 ;
 
 	move == UP ?		y = -5 : 0 ;
 	move == DOWN ?		y =  5 : 0 ;
@@ -255,261 +255,279 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	if (s_player_pos->angle < 0)
 		s_player_pos->angle += 360;
 
-	double Ay;
-	double angle_alpha = (90 + s_player_pos->angle + 21);
 
-	printf("\n\n L'angle alpha =%f\n", angle_alpha);
-	printf("test Horizontal\n");
-	angle_alpha = (int)angle_alpha % 360;
-	if (angle_alpha < 0)
-		angle_alpha += 360;
 
-	//prblm pour le tan(90) et tan (0)
-	if (angle_alpha == 0 || angle_alpha == 90)
-		angle_alpha += 1;
 
-	//we will find Ya and Xa
-	if (angle_alpha  > 180) // the ray is facing down
-		Ay = ((s_player_pos->y / 20) * 20) + 20;
-	else
-		Ay = ((s_player_pos->y / 20) * 20) - 1;
-	double Ax = (s_player_pos->y - Ay) / tan(((angle_alpha) * M_PI / 180)) + s_player_pos->x;
-
-	if (Ax < 0)
-		Ax = 0;
-
-	//calcul de la constante horizontal
-	double const_horizontal_X = 20 / tan(angle_alpha * M_PI / 180);
-	double const_horizontal_Y = 20;
-
-	if(const_horizontal_X < 0)
-		const_horizontal_X *= -1;
-
-	double X = 0;
-	double Y = 0;
-	if ( (angle_alpha - 0) >= 0 && (angle_alpha - 0) < 90)
+	//balayage rayon +30 a -30
+	float angle_rayon;
+	angle_rayon = 30;
+	float step = 0.01;
+	while (angle_rayon > -30)
 	{
-		X = 1;
-		Y = -1;
-	}
-	else if((angle_alpha - 0) >= 90 && (angle_alpha - 0) < 180)
-	{
-		X = -1;
-		Y = -1;
-	}
-	else if((angle_alpha - 0) >= 180 && (angle_alpha - 0) < 270)
-	{
-		X = -1;
-		Y = 1;
-	}
-	else if((angle_alpha - 0) >= 270 && (angle_alpha - 0) <= 360)
-	{
-		X = 1;
-		Y = 1;
-	}
-
-	double k;
-	int colision;
-
-	colision = 0;
-	k  = -1;
-
-	while (colision == 0)
-	{
-		k++;
-
-		s_line.deux.a = Ax + ( X * k * const_horizontal_X);
-		s_line.deux.b = Ay + ( Y * k * const_horizontal_Y);
+		angle_rayon -= step;
 
 
-		if (s_line.deux.b < 0)
+
+		float Ay;
+		float angle_alpha = (90 + s_player_pos->angle + angle_rayon);
+
+		//printf("\n\n L'angle alpha =%f\n", angle_alpha);
+		//printf("test Horizontal\n");
+		//angle_alpha = (int)angle_alpha % 360;
+		if (angle_alpha < 0)
+			angle_alpha += 360;
+		if (angle_alpha < 0)
+			angle_alpha += 360;
+		if (angle_alpha > 360)
+			angle_alpha -= 360;
+		if (angle_alpha > 360)
+			angle_alpha -= 360;
+		if (angle_alpha > 360)
+			printf("++\n");
+		if (angle_alpha < 0)
+			printf("--\n");
+
+		//prblm pour le tan(90) et tan (0)
+		if (angle_alpha == 0 || angle_alpha == 90)
+			angle_alpha += 0.1;
+
+		//we will find Ya and Xa
+		if (angle_alpha  > 180) // the ray is facing down
+			Ay = ((s_player_pos->y / 20) * 20) + 20;
+		else
+			Ay = ((s_player_pos->y / 20) * 20) - 1;
+		float Ax = (s_player_pos->y - Ay) / tan(((angle_alpha) * M_PI / 180)) + s_player_pos->x;
+
+		if (Ax < 0)
+			Ax = 0;
+
+		//calcul de la constante horizontal
+		float const_horizontal_X = 20 / tan(angle_alpha * M_PI / 180);
+		float const_horizontal_Y = 20;
+
+		if(const_horizontal_X < 0)
+			const_horizontal_X *= -1;
+
+		float X = 0;
+		float Y = 0;
+		if ( (angle_alpha - 0) >= 0 && (angle_alpha - 0) < 90)
 		{
-			printf("colision bord gauche\n");
-			colision = 1;
-			s_line.deux.b = 0;
+			X = 1;
+			Y = -1;
 		}
-		if (s_line.deux.a < 0)
+		else if((angle_alpha - 0) >= 90 && (angle_alpha - 0) < 180)
 		{
-			colision = 1;
-			printf("colision bord haut\n");
-			s_line.deux.a = 0;
+			X = -1;
+			Y = -1;
 		}
-		if (s_line.deux.a > (640 - 3))
+		else if((angle_alpha - 0) >= 180 && (angle_alpha - 0) < 270)
 		{
-			colision = 1;
-			printf("colision bord droit\n");
-			s_line.deux.a = 639;
+			X = -1;
+			Y = 1;
 		}
-		if (s_line.deux.b > (480 - 3))
+		else if((angle_alpha - 0) >= 270 && (angle_alpha - 0) <= 360)
 		{
-			colision = 1;
-			printf("colision bord bas\n");
-			s_line.deux.b = 479;
+			X = 1;
+			Y = 1;
 		}
 
+		float k;
+		int colision;
 
-		if (colision != 1)
+		colision = 0;
+		k  = -1;
+
+		while (colision == 0)
 		{
-			if (map[(int)(((s_line.deux.b / 20) + 0))][(int)(((s_line.deux.a / 20 ) + 0))])
+			k++;
+
+			s_line.deux.a = Ax + ( X * k * const_horizontal_X);
+			s_line.deux.b = Ay + ( Y * k * const_horizontal_Y);
+			if (s_line.deux.b < 0)
 			{
-			printf("le a =%d et le b =%d \n", (int)((s_line.deux.b ) / 20), (int)((s_line.deux.a / 20)));
-				printf("colision mur\n");
+				//printf("colision bord gauche\n");
 				colision = 1;
+				s_line.deux.b = 0;
 			}
+			if (s_line.deux.a < 0)
+			{
+				colision = 1;
+				//printf("colision bord haut\n");
+				s_line.deux.a = 0;
+			}
+			if (s_line.deux.a > (640 - 3))
+			{
+				colision = 1;
+				//printf("colision bord droit\n");
+				s_line.deux.a = 639;
+			}
+			if (s_line.deux.b > (480 - 3))
+			{
+				colision = 1;
+				//printf("colision bord bas\n");
+				s_line.deux.b = 479;
+			}
+			if (colision != 1)
+			{
+				if (map[(int)((((s_line.deux.b) / 20) + 0))][(int)((((s_line.deux.a) / 20 ) + 0))])
+					colision = 1;
+			}
+			else
+			{
+				//printf("pas de colison\n");
+			}
+		}
+
+		//pythagore pour avoir la distance
+
+		float cote_x = s_player_pos->x - s_line.deux.a;
+		float cote_y = s_player_pos->x - s_line.deux.b;
+		float distance_horizontal = sqrt((( cote_x) *  (cote_x  ))  +  ((cote_y  ) * (cote_y )));
+		float save_horizontal_x = s_line.deux.a;
+		float save_horizontal_y = s_line.deux.b;
+
+		//ft_draw_line(name_renderer, &s_line);
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//VERTICAL
+		//angle du rayon lance par rapport au joueur est de +21 degre catching vertical line de couleur rouge
+
+
+		//printf("\n\ntest vertical\n");
+		angle_alpha = (90 + s_player_pos->angle + angle_rayon);
+
+		angle_alpha = (int)angle_alpha % 360;
+		if (angle_alpha < 0)
+			angle_alpha += 360;
+
+
+		//prblm pour le tan(90) et tan (0)
+		if (angle_alpha == 0 ||  angle_alpha == 90)
+			angle_alpha += 1;
+
+		float Bx;
+		if (angle_alpha > 90 && angle_alpha < 270) // the ray is going left
+			Bx = (s_player_pos->x / 20) * 20 - 1;
+		else
+			Bx = (s_player_pos->x / 20) * 20 + 20;
+
+		//prblm avec 270 degre
+		if(angle_alpha == 270)
+			angle_alpha += 1;
+		float By = s_player_pos->y - (tan(angle_alpha * M_PI / 180) * (Bx - s_player_pos->x));
+
+		//if (By < 0)
+		//By = 0;
+		//	s_line.deux.a = Bx;
+		//	s_line.deux.b = By;
+		//	ft_draw_line(name_renderer, &s_line);
+
+
+		//calcul de la constante vertical
+		float const_vertical_X = 20;
+		float const_vertical_Y = 20 * tan(angle_alpha * M_PI / 180);
+
+
+		if (const_vertical_Y < 0)
+			const_vertical_Y *= -1;
+		if (const_vertical_X < 0)
+			const_vertical_X *= -1;
+
+		if ( (angle_alpha - 0) >= 0 && (angle_alpha - 0) < 90)
+		{
+			X = 1;
+			Y = -1;
+		}
+		else if((angle_alpha - 0) >= 90 && (angle_alpha - 0) < 180)
+		{
+			X = -1;
+			Y = -1;
+		}
+		else if((angle_alpha - 0) >= 180 && (angle_alpha - 0) < 270)
+		{
+			X = -1;
+			Y = 1;
+		}
+		else if((angle_alpha - 0) >= 270 && (angle_alpha - 0) <= 360)
+		{
+			X = 1;
+			Y = 1;
+		}
+
+
+		colision = 0;
+		k = -1;
+
+		while (colision == 0)
+		{
+			k++;
+
+			s_line.deux.a = Bx + (k *  X * const_vertical_X);
+			s_line.deux.b = By + (k * Y * const_vertical_Y);
+
+			if (s_line.deux.b < 0)
+			{
+				//printf("colision bord gauche\n");
+				colision = 1;
+				s_line.deux.b = 0;
+			}
+			if (s_line.deux.a < 0)
+			{
+				colision = 1;
+				//printf("colision bord haut\n");
+				s_line.deux.a = 0;
+			}
+			if (s_line.deux.a > 640)
+			{
+				colision = 1;
+				//printf("colision bord droit\n");
+				s_line.deux.a = 639;
+			}
+			if (s_line.deux.b > 480)
+			{
+				colision = 1;
+				//printf("colision bord bas\n");
+				s_line.deux.b = 479;
+			}
+
+			//printf("le b =%d et le a =%d \n", (int)((s_line.deux.b ) / 20), (int)((s_line.deux.a / 20)));
+
+			if (colision != 1)
+			{
+				if (map[(int)((s_line.deux.b / 20 ) + 0)][(int)((s_line.deux.a / 20 ) + 0)])
+				{
+					//printf("colision mur\n");
+					colision = 1;
+				}
+			}
+			else
+			{
+				//printf("pas de colison\n");
+			}
+
+		}
+		cote_x = s_player_pos->x - s_line.deux.a;
+		cote_y = s_player_pos->x - s_line.deux.b;
+		float distance_vertical = sqrt((( cote_x) *  (cote_x  ))  +  ((cote_y  ) * (cote_y )));
+		float save_vertical_x = s_line.deux.a;
+		float save_vertical_y = s_line.deux.b;
+
+
+		//printf ("la distance vertical = %f \n la distance horizontal = %f \n", distance_vertical, distance_horizontal);
+
+
+		if (distance_vertical < distance_horizontal)
+		{
+			ft_draw_line(name_renderer, &s_line);
+			//printf ("la distance vertical = %f\n", distance_vertical);
 		}
 		else
 		{
-			printf("pas de colison\n");
+			s_line.deux.a = save_horizontal_x;
+			s_line.deux.b = save_horizontal_y;
+			ft_draw_line(name_renderer, &s_line);
+			//printf ("la distance horizontal = %f\n", distance_horizontal);
 		}
-	}
-
-	//pythagore pour avoir la distance
-
-	float cote_x = s_player_pos->x - s_line.deux.a;
-	float cote_y = s_player_pos->x - s_line.deux.b;
-	float distance_horizontal = sqrt((( cote_x) *  (cote_x  ))  +  ((cote_y  ) * (cote_y )));
-	float save_horizontal_x = s_line.deux.a;
-	float save_horizontal_y = s_line.deux.b;
-
-	//ft_draw_line(name_renderer, &s_line);
-
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//VERTICAL
-	//angle du rayon lance par rapport au joueur est de +21 degre catching vertical line de couleur rouge
-
-
-	printf("\n\ntest vertical\n");
-	angle_alpha = (90 + s_player_pos->angle + 21);
-
-	angle_alpha = (int)angle_alpha % 360;
-	if (angle_alpha < 0)
-		angle_alpha += 360;
-
-
-	//prblm pour le tan(90) et tan (0)
-	if (angle_alpha == 0 ||  angle_alpha == 90)
-		angle_alpha += 1;
-
-	double Bx;
-	if (angle_alpha > 90 && angle_alpha < 270) // the ray is going left
-		Bx = (s_player_pos->x / 20) * 20 - 1;
-	else
-		Bx = (s_player_pos->x / 20) * 20 + 20;
-
-	//prblm avec 270 degre
-	if(angle_alpha == 270)
-		angle_alpha += 1;
-	double By = s_player_pos->y - (tan(angle_alpha * M_PI / 180) * (Bx - s_player_pos->x));
-
-	//if (By < 0)
-	//By = 0;
-	//	s_line.deux.a = Bx;
-	//	s_line.deux.b = By;
-	//	ft_draw_line(name_renderer, &s_line);
-
-
-	//calcul de la constante vertical
-	double const_vertical_X = 20;
-	double const_vertical_Y = 20 * tan(angle_alpha * M_PI / 180);
-
-
-	if (const_vertical_Y < 0)
-		const_vertical_Y *= -1;
-	if (const_vertical_X < 0)
-		const_vertical_X *= -1;
-
-	if ( (angle_alpha - 0) >= 0 && (angle_alpha - 0) < 90)
-	{
-		X = 1;
-		Y = -1;
-	}
-	else if((angle_alpha - 0) >= 90 && (angle_alpha - 0) < 180)
-	{
-		X = -1;
-		Y = -1;
-	}
-	else if((angle_alpha - 0) >= 180 && (angle_alpha - 0) < 270)
-	{
-		X = -1;
-		Y = 1;
-	}
-	else if((angle_alpha - 0) >= 270 && (angle_alpha - 0) <= 360)
-	{
-		X = 1;
-		Y = 1;
-	}
-
-
-	colision = 0;
-	k = -1;
-
-	while (colision == 0)
-	{
-		k++;
-
-		s_line.deux.a = Bx + (k *  X * const_vertical_X);
-		s_line.deux.b = By + (k * Y * const_vertical_Y);
-
-		if (s_line.deux.b < 0)
-		{
-			printf("colision bord gauche\n");
-			colision = 1;
-			s_line.deux.b = 0;
-		}
-		if (s_line.deux.a < 0)
-		{
-			colision = 1;
-			printf("colision bord haut\n");
-			s_line.deux.a = 0;
-		}
-		if (s_line.deux.a > 640)
-		{
-			colision = 1;
-			printf("colision bord droit\n");
-			s_line.deux.a = 639;
-		}
-		if (s_line.deux.b > 480)
-		{
-			colision = 1;
-			printf("colision bord bas\n");
-			s_line.deux.b = 479;
-		}
-
-		printf("le b =%d et le a =%d \n", (int)((s_line.deux.b ) / 20), (int)((s_line.deux.a / 20)));
-
-		if (colision != 1)
-		{
-			if (map[(int)(s_line.deux.b / 20 )][(int)(s_line.deux.a / 20 )])
-			{
-				printf("colision mur\n");
-				colision = 1;
-			}
-		}
-		else
-		{
-			printf("pas de colison\n");
-		}
-
-	}
-	cote_x = s_player_pos->x - s_line.deux.a;
-	cote_y = s_player_pos->x - s_line.deux.b;
-	float distance_vertical = sqrt((( cote_x) *  (cote_x  ))  +  ((cote_y  ) * (cote_y )));
-	float save_vertical_x = s_line.deux.a;
-	float save_vertical_y = s_line.deux.b;
-
-
-	printf ("la distance vertical = %f \n la distance horizontal = %f \n", distance_vertical, distance_horizontal);
-
-
-	if (distance_vertical < distance_horizontal)
-	{
-		ft_draw_line(name_renderer, &s_line);
-	}
-	else
-	{
-		s_line.deux.a = save_horizontal_x;
-		s_line.deux.b = save_horizontal_y;
-		ft_draw_line(name_renderer, &s_line);
 	}
 }
 
