@@ -5,8 +5,14 @@
   - Sauvegarde du render de la map - DONE
 
 - Positionnement du Personnage - IN PROGRESS
+  - Recuperation de la position - DONE
+  - Dessin du personnage - DONE
+  - Orientation du personnage - DONE
+  - Deplacement du personnage - NEXT STEP
 
 - Raycasting 2D
+  - En 2 etapes:
+    - Dessin de la carte autours du perso
 
 - Affichage basique de la vu a la 1er personne
 
