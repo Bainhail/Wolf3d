@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/14 14:48:59 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/14 17:27:56 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,18 +247,20 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	s_line.un.a = s_player_pos->x;
 	s_line.un.b = s_player_pos->y;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// HORIZONTAL
-//angle du rayon lance par rapport au joueur est de +21 degre catching horizontal line de couleur rouge
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// HORIZONTAL
+	//angle du rayon lance par rapport au joueur est de +21 degre catching horizontal line de couleur rouge
 
 	s_player_pos->angle %= 360;
 	if (s_player_pos->angle < 0)
 		s_player_pos->angle += 360;
 
-	int Ay;
-	int angle_alpha = (90 + s_player_pos->angle + 21);
+	double Ay;
+	double angle_alpha = (90 + s_player_pos->angle + 21);
 
-	angle_alpha %= 360;
+	printf("\n\n L'angle alpha =%f\n", angle_alpha);
+	printf("test Horizontal\n");
+	angle_alpha = (int)angle_alpha % 360;
 	if (angle_alpha < 0)
 		angle_alpha += 360;
 
@@ -271,20 +273,20 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 		Ay = ((s_player_pos->y / 20) * 20) + 20;
 	else
 		Ay = ((s_player_pos->y / 20) * 20) - 1;
-	int Ax = (s_player_pos->y - Ay) / tan(((angle_alpha) * M_PI / 180)) + s_player_pos->x;
+	double Ax = (s_player_pos->y - Ay) / tan(((angle_alpha) * M_PI / 180)) + s_player_pos->x;
 
 	if (Ax < 0)
 		Ax = 0;
 
 	//calcul de la constante horizontal
-	float const_horizontal_X = 20 / tan(angle_alpha * M_PI / 180);
-	float const_horizontal_Y = 20;
+	double const_horizontal_X = 20 / tan(angle_alpha * M_PI / 180);
+	double const_horizontal_Y = 20;
 
 	if(const_horizontal_X < 0)
 		const_horizontal_X *= -1;
 
-	int X = 0;
-	int Y = 0;
+	double X = 0;
+	double Y = 0;
 	if ( (angle_alpha - 0) >= 0 && (angle_alpha - 0) < 90)
 	{
 		X = 1;
@@ -306,60 +308,80 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 		Y = 1;
 	}
 
-	int k;
+	double k;
 	int colision;
 
-	colision = SDL_FALSE;
-	k  = 0;
+	colision = 0;
+	k  = -1;
 
-	while (colision == SDL_FALSE)
+	while (colision == 0)
 	{
-		x = (int)((Ax + ( X * k * const_horizontal_X)) / 20) + 0.5;
-		y = (int)((Ay + ( Y * k * const_horizontal_Y)) / 20) + 0.5;
+		k++;
 
-		printf(" =%d  =%d \n", x, y);
-		if (x > ((640 / 20) - 1) || y > ((480 / 20) - 1) || x < 0 || y < 0)
-			colision = SDL_TRUE;
-		else if (map[y][x] == 1)
-			colision = SDL_TRUE;
+		s_line.deux.a = Ax + ( X * k * const_horizontal_X);
+		s_line.deux.b = Ay + ( Y * k * const_horizontal_Y);
+
+
+		if (s_line.deux.b < 0)
+		{
+			printf("colision bord gauche\n");
+			colision = 1;
+			s_line.deux.b = 0;
+		}
+		if (s_line.deux.a < 0)
+		{
+			colision = 1;
+			printf("colision bord haut\n");
+			s_line.deux.a = 0;
+		}
+		if (s_line.deux.a > (640 - 3))
+		{
+			colision = 1;
+			printf("colision bord droit\n");
+			s_line.deux.a = 639;
+		}
+		if (s_line.deux.b > (480 - 3))
+		{
+			colision = 1;
+			printf("colision bord bas\n");
+			s_line.deux.b = 479;
+		}
+
+
+		if (colision != 1)
+		{
+			if (map[(int)(((s_line.deux.b / 20) + 0))][(int)(((s_line.deux.a / 20 ) + 0))])
+			{
+			printf("le a =%d et le b =%d \n", (int)((s_line.deux.b ) / 20), (int)((s_line.deux.a / 20)));
+				printf("colision mur\n");
+				colision = 1;
+			}
+		}
 		else
-			k++;
+		{
+			printf("pas de colison\n");
+		}
 	}
-		x = (int)((Ax + ( X * k * const_horizontal_X))  ) + 0.5;
-		y = (int)((Ay + ( Y * k * const_horizontal_Y))  ) + 0.5;
 
-		if (x < 0)
-			x = 0;
-		if (y < 0)
-			y = 0;
-		if (x > 640)
-			x = 639;
-		if (y > 480)
-			y = 479;
-	s_line.deux.a = x;
-	s_line.deux.b = y;
+	//pythagore pour avoir la distance
 
-	//printf("le deux.a =%d,et le deux .b =%d \n", (int)(Ax + ( X * k * const_horizontal_X)) , (int)(Ay + ( Y * k * const_horizontal_Y)) );
-
-//	if (s_line.deux.a > width)
-//		s_line.deux.a = width;
-//	if (s_line.deux.a < 0)
-//		s_line.deux.a = 0;
-//	printf("\n\nl'angle alpha =%d\n", angle_alpha);
-//	printf("l'angle du joueur = %d\n", s_player_pos->angle);
-//	printf("la const =%f\n", const_horizontal_Y);
-//	printf("le x =%d et le y =%d\n", X, Y);
+	float cote_x = s_player_pos->x - s_line.deux.a;
+	float cote_y = s_player_pos->x - s_line.deux.b;
+	float distance_horizontal = sqrt((( cote_x) *  (cote_x  ))  +  ((cote_y  ) * (cote_y )));
+	float save_horizontal_x = s_line.deux.a;
+	float save_horizontal_y = s_line.deux.b;
 
 	//ft_draw_line(name_renderer, &s_line);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//VERTICAL
-	//angle du rayon lance par rapport au joueur est de -21 degre catching vertical line de couleur rouge
+	//angle du rayon lance par rapport au joueur est de +21 degre catching vertical line de couleur rouge
 
 
-	angle_alpha = (90 + s_player_pos->angle - 21);
+	printf("\n\ntest vertical\n");
+	angle_alpha = (90 + s_player_pos->angle + 21);
 
-	angle_alpha %= 360;
+	angle_alpha = (int)angle_alpha % 360;
 	if (angle_alpha < 0)
 		angle_alpha += 360;
 
@@ -368,7 +390,7 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	if (angle_alpha == 0 ||  angle_alpha == 90)
 		angle_alpha += 1;
 
-	int Bx;
+	double Bx;
 	if (angle_alpha > 90 && angle_alpha < 270) // the ray is going left
 		Bx = (s_player_pos->x / 20) * 20 - 1;
 	else
@@ -377,18 +399,18 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	//prblm avec 270 degre
 	if(angle_alpha == 270)
 		angle_alpha += 1;
-	int By = s_player_pos->y - (tan(angle_alpha * M_PI / 180) * (Bx - s_player_pos->x));
+	double By = s_player_pos->y - (tan(angle_alpha * M_PI / 180) * (Bx - s_player_pos->x));
 
 	//if (By < 0)
-		//By = 0;
-//	s_line.deux.a = Bx;
-//	s_line.deux.b = By;
-//	ft_draw_line(name_renderer, &s_line);
+	//By = 0;
+	//	s_line.deux.a = Bx;
+	//	s_line.deux.b = By;
+	//	ft_draw_line(name_renderer, &s_line);
 
 
 	//calcul de la constante vertical
-	float const_vertical_X = 20;
-	float const_vertical_Y = 20 * tan(angle_alpha * M_PI / 180);
+	double const_vertical_X = 20;
+	double const_vertical_Y = 20 * tan(angle_alpha * M_PI / 180);
 
 
 	if (const_vertical_Y < 0)
@@ -417,44 +439,78 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 		Y = 1;
 	}
 
-//	s_line.deux.a = Bx + (3 *  X * const_vertical_X);
-//
-//	s_line.deux.b = By + ( 3 * Y * const_vertical_Y);
-//	if (s_line.deux.b < 0)
-//		s_line.deux.b = 0;
-//
 
+	colision = 0;
+	k = -1;
 
-	colision = SDL_FALSE;
-	k  = 0;
-
-	while (colision == SDL_FALSE)
+	while (colision == 0)
 	{
-		x = (int)((Ax + ( X * k * const_horizontal_X)) / 20) + 0.5;
-		y = (int)((Ay + ( Y * k * const_horizontal_Y)) / 20) + 0.5;
+		k++;
 
-		printf(" =%d  =%d \n", x, y);
-		if (x > ((640 / 20) - 1) || y > ((480 / 20) - 1) || x < 0 || y < 0)
-			colision = SDL_TRUE;
-		else if (map[y][x] == 1)
-			colision = SDL_TRUE;
+		s_line.deux.a = Bx + (k *  X * const_vertical_X);
+		s_line.deux.b = By + (k * Y * const_vertical_Y);
+
+		if (s_line.deux.b < 0)
+		{
+			printf("colision bord gauche\n");
+			colision = 1;
+			s_line.deux.b = 0;
+		}
+		if (s_line.deux.a < 0)
+		{
+			colision = 1;
+			printf("colision bord haut\n");
+			s_line.deux.a = 0;
+		}
+		if (s_line.deux.a > 640)
+		{
+			colision = 1;
+			printf("colision bord droit\n");
+			s_line.deux.a = 639;
+		}
+		if (s_line.deux.b > 480)
+		{
+			colision = 1;
+			printf("colision bord bas\n");
+			s_line.deux.b = 479;
+		}
+
+		printf("le b =%d et le a =%d \n", (int)((s_line.deux.b ) / 20), (int)((s_line.deux.a / 20)));
+
+		if (colision != 1)
+		{
+			if (map[(int)(s_line.deux.b / 20 )][(int)(s_line.deux.a / 20 )])
+			{
+				printf("colision mur\n");
+				colision = 1;
+			}
+		}
 		else
-			k++;
-	}
-		x = (int)((Ax + ( X * k * const_horizontal_X))  ) + 0.5;
-		y = (int)((Ay + ( Y * k * const_horizontal_Y))  ) + 0.5;
+		{
+			printf("pas de colison\n");
+		}
 
-		if (x < 0)
-			x = 0;
-		if (y < 0)
-			y = 0;
-		if (x > 640)
-			x = 639;
-		if (y > 480)
-			y = 479;
-	s_line.deux.a = x;
-	s_line.deux.b = y;
-	ft_draw_line(name_renderer, &s_line);
+	}
+	cote_x = s_player_pos->x - s_line.deux.a;
+	cote_y = s_player_pos->x - s_line.deux.b;
+	float distance_vertical = sqrt((( cote_x) *  (cote_x  ))  +  ((cote_y  ) * (cote_y )));
+	float save_vertical_x = s_line.deux.a;
+	float save_vertical_y = s_line.deux.b;
+
+
+	printf ("la distance vertical = %f \n la distance horizontal = %f \n", distance_vertical, distance_horizontal);
+
+
+	if (distance_vertical < distance_horizontal)
+	{
+		ft_draw_line(name_renderer, &s_line);
+	}
+	else
+	{
+		s_line.deux.a = save_horizontal_x;
+		s_line.deux.b = save_horizontal_y;
+		ft_draw_line(name_renderer, &s_line);
+	}
 }
 
 void			ft_draw_grid(SDL_Renderer *name_renderer, int height, int width)
@@ -517,16 +573,12 @@ void		ft_draw_line(SDL_Renderer *name_renderer, t_myputtheline *s_line)
 		s_line->y_incr = -1;
 	if (s_line->dy == 0)
 		ft_case_one(name_renderer, s_line);
-	printf("hello1\n");
 	if (s_line->d_x > s_line->d_y)
 		ft_case_two(name_renderer, s_line);
-	printf("hello2\n");
 	if (s_line->dx == s_line->dy)
 		ft_case_three(name_renderer, s_line);
-	printf("hello3\n");
 	if (s_line->d_x < s_line->d_y)
 		ft_case_four(name_renderer, s_line);
-	printf("hello4\n");
 	if (s_line->dx == 0)
 		ft_case_five(name_renderer, s_line);
 }
@@ -683,7 +735,7 @@ void			ft_case_one(SDL_Renderer *name_renderer, t_myputtheline *s_line)
 	{
 		(s_line->i)++;
 		SDL_RenderDrawPoint(name_renderer, (int)s_line->deux.a,
-(int)s_line->deux.b);
+				(int)s_line->deux.b);
 		s_line->deux.a += s_line->x_incr;
 	}
 }
@@ -693,7 +745,7 @@ void			ft_case_two(SDL_Renderer *name_renderer, t_myputtheline *s_line)
 	while (s_line->i <= s_line->d_x)
 	{
 		SDL_RenderDrawPoint(name_renderer, (int)s_line->deux.a,
-(int)s_line->deux.b);
+				(int)s_line->deux.b);
 		(s_line->i)++;
 		s_line->deux.a += s_line->x_incr;
 		s_line->ex -= s_line->dy;
@@ -711,7 +763,7 @@ void			ft_case_three(SDL_Renderer *name_renderer, t_myputtheline *s_line)
 	{
 		(s_line->i)++;
 		SDL_RenderDrawPoint(name_renderer, (int)s_line->deux.a,
-(int)s_line->deux.b);
+				(int)s_line->deux.b);
 		s_line->deux.a += s_line->x_incr;
 		s_line->deux.b += s_line->y_incr;
 	}
@@ -722,7 +774,7 @@ void			ft_case_four(SDL_Renderer *name_renderer, t_myputtheline *s_line)
 	while (s_line->i <= s_line->d_y)
 	{
 		SDL_RenderDrawPoint(name_renderer, (int)s_line->deux.a,
-(int)s_line->deux.b);
+				(int)s_line->deux.b);
 		(s_line->i)++;
 		s_line->deux.b += s_line->y_incr;
 		s_line->ey -= s_line->dx;
@@ -740,7 +792,7 @@ void			ft_case_five(SDL_Renderer *name_renderer, t_myputtheline *s_line)
 	{
 		(s_line->i)++;
 		SDL_RenderDrawPoint(name_renderer, (int)s_line->deux.a,
-(int)s_line->deux.b);
+				(int)s_line->deux.b);
 		s_line->deux.b += s_line->y_incr;
 	}
 }
