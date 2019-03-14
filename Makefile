@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/11 13:18:47 by naali            ###   ########.fr        #
+#    Updated: 2019/03/14 15:38:22 by naali            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,16 @@ CFLAGS		=	-Wall -Wextra
 SRC			=	main.c						\
 				ft_pushback_str_to_tab.c	\
 				mapfunc.c					\
+				drawsquare.c				\
+				playerposition.c			\
+				segmnt_creation.c			\
+				convert.c					\
+				matrice_init.c				\
+				matrice_rot.c				\
+				matrice_scal.c				\
+				matrice_trans.c				\
+				multiply.c					\
+				mult_matrice.c				\
 				t_vertex.c
 
 OBJ			=	$(SRC:.c=.o)
@@ -42,13 +52,14 @@ LDFLAGS		=	-L./libraries/libft					\
 
 LFLAGS		=	-lft				\
 				-lSDL2				\
-				-lSDL2_image
+				-lSDL2_image		\
+				-lm
 #				-framework OpenGL
 #				-lSDL2_ttf
 
 LDLIBS		=	$(LDFLAGS) $(LFLAGS)
 
-vpath %.c ./srcs/:./srcs/getmap:./srcs/matrice
+vpath %.c ./srcs/:./srcs/getmap:./srcs/matrice:./srcs/draw:./srcs/player
 
 vpath %.h ./includes/:./libraries/libft:./libraries/SDL2-2.0.9/include:./libraries/SDL2_image-2.0.4/include:SDL2_ttf-2.0.15/include:./source_lib/libft
 
