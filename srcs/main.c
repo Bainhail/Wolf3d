@@ -6,12 +6,11 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/12 19:39:08 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/14 14:48:59 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-
 
 typedef struct			s_xyz_point
 {
@@ -85,7 +84,7 @@ void	ft_draw_rectangle(t_my_rectangle s_rectangle, SDL_Renderer *renderer_name);
 void	ft_update_event_editor(t_my_event *s_event);
 void	ft_init_event_editor(t_my_event *s_event);
 void	ft_move_player(int move, t_my_player_pos *s_player_pos, SDL_Renderer *name_renderer, t_my_rectangle s_triangle, int height, int width, int **map, t_my_rayon *s_rayon);
-void	ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t_my_player_pos *s_player_pos, int height, int width);
+void	ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t_my_player_pos *s_player_pos, int height, int width, int **map);
 void	ft_draw_line(SDL_Renderer *name_renderer, t_myputtheline *s_line);
 void	ft_case_five(SDL_Renderer *name_renderer, t_myputtheline *s_line);
 void	ft_case_four(SDL_Renderer *name_renderer, t_myputtheline *s_line);
@@ -123,7 +122,6 @@ int			main(void)
 	s_triangle.size = 10;
 	s_rayon.view_angle = 60;
 
-
 	SDL_Init(SDL_INIT_EVERYTHING);
 	window_name = SDL_CreateWindow("test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
 	renderer_name = SDL_CreateRenderer(window_name, 0, SDL_RENDERER_SOFTWARE);
@@ -132,7 +130,7 @@ int			main(void)
 	ft_read_the_map(height, width, map);
 	ft_draw_grid(renderer_name, height, width);
 	ft_draw_map(map, height, width, renderer_name);
-	ft_draw_triangle(renderer_name, s_triangle, &s_player_pos, height, width);
+	ft_draw_triangle(renderer_name, s_triangle, &s_player_pos, height, width, map);
 	SDL_RenderPresent(renderer_name );
 
 	s_event.quit = SDL_FALSE;
@@ -186,21 +184,14 @@ void			ft_move_player(int move, t_my_player_pos *s_player_pos, SDL_Renderer *nam
 	s_player_pos->x += (x * cos(s_player_pos->angle * M_PI / 180)) + (y * sin(s_player_pos->angle * M_PI / 180));
 	s_player_pos->y += (x * -sin(s_player_pos->angle * M_PI / 180)) + (y *  cos(s_player_pos->angle * M_PI / 180));
 
-
 	ft_clear_window_in_blue(height, width, name_renderer);
 	ft_draw_grid(name_renderer, height, width);
 	ft_draw_map(map, height, width, name_renderer);
-	ft_draw_triangle(name_renderer, s_triangle, s_player_pos, height, width);
+	ft_draw_triangle(name_renderer, s_triangle, s_player_pos, height, width, map);
 	SDL_RenderPresent(name_renderer);
-	//incrementation player pos
-	//incrementation angle
-
-	//clear l'ecran
-	//afficher la map
-	//afficher la fleche
 }
 
-void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t_my_player_pos *s_player_pos, int height, int width)
+void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t_my_player_pos *s_player_pos, int height, int width, int **map)
 {
 	int		x;
 	int		y;
@@ -236,14 +227,12 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	s_line.deux.b = (0 * -sin(s_player_pos->angle * M_PI / 180)) + (-30 *  cos(s_player_pos->angle * M_PI / 180)) + s_player_pos->y;
 	ft_draw_line(name_renderer, &s_line);
 
-
 	//ligne a -30
 	s_line.un.a = s_player_pos->x;
 	s_line.un.b = s_player_pos->y;
 	s_line.deux.a = (0 * cos((s_player_pos->angle - 30)  * M_PI / 180)) + (-30 * sin((s_player_pos->angle  - 30)* M_PI / 180)) + s_player_pos->x;
 	s_line.deux.b = (0 * -sin((s_player_pos->angle - 30) * M_PI / 180)) + (-30 *  cos((s_player_pos->angle  - 30)* M_PI / 180)) + s_player_pos->y;
 	ft_draw_line(name_renderer, &s_line);
-
 
 	//ligne a +30
 	s_line.un.a = s_player_pos->x;
@@ -262,15 +251,12 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 // HORIZONTAL
 //angle du rayon lance par rapport au joueur est de +21 degre catching horizontal line de couleur rouge
 
-
 	s_player_pos->angle %= 360;
 	if (s_player_pos->angle < 0)
 		s_player_pos->angle += 360;
 
-
 	int Ay;
 	int angle_alpha = (90 + s_player_pos->angle + 21);
-
 
 	angle_alpha %= 360;
 	if (angle_alpha < 0)
@@ -297,10 +283,8 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	if(const_horizontal_X < 0)
 		const_horizontal_X *= -1;
 
-
 	int X = 0;
 	int Y = 0;
-
 	if ( (angle_alpha - 0) >= 0 && (angle_alpha - 0) < 90)
 	{
 		X = 1;
@@ -322,28 +306,55 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 		Y = 1;
 	}
 
+	int k;
+	int colision;
 
+	colision = SDL_FALSE;
+	k  = 0;
 
-	s_line.deux.a = Ax + ( X * 3 * const_horizontal_X);
-	s_line.deux.b = Ay + ( Y * 3 * const_horizontal_Y);
+	while (colision == SDL_FALSE)
+	{
+		x = (int)((Ax + ( X * k * const_horizontal_X)) / 20) + 0.5;
+		y = (int)((Ay + ( Y * k * const_horizontal_Y)) / 20) + 0.5;
 
+		printf(" =%d  =%d \n", x, y);
+		if (x > ((640 / 20) - 1) || y > ((480 / 20) - 1) || x < 0 || y < 0)
+			colision = SDL_TRUE;
+		else if (map[y][x] == 1)
+			colision = SDL_TRUE;
+		else
+			k++;
+	}
+		x = (int)((Ax + ( X * k * const_horizontal_X))  ) + 0.5;
+		y = (int)((Ay + ( Y * k * const_horizontal_Y))  ) + 0.5;
 
-	if (s_line.deux.a > width)
-		s_line.deux.a = width;
-	if (s_line.deux.a < 0)
-		s_line.deux.a = 0;
-	printf("\n\nl'angle alpha =%d\n", angle_alpha);
-	printf("l'angle du joueur = %d\n", s_player_pos->angle);
-	printf("la const =%f\n", const_horizontal_Y);
-	printf("le x =%d et le y =%d\n", X, Y);
+		if (x < 0)
+			x = 0;
+		if (y < 0)
+			y = 0;
+		if (x > 640)
+			x = 639;
+		if (y > 480)
+			y = 479;
+	s_line.deux.a = x;
+	s_line.deux.b = y;
 
-	ft_draw_line(name_renderer, &s_line);
+	//printf("le deux.a =%d,et le deux .b =%d \n", (int)(Ax + ( X * k * const_horizontal_X)) , (int)(Ay + ( Y * k * const_horizontal_Y)) );
 
+//	if (s_line.deux.a > width)
+//		s_line.deux.a = width;
+//	if (s_line.deux.a < 0)
+//		s_line.deux.a = 0;
+//	printf("\n\nl'angle alpha =%d\n", angle_alpha);
+//	printf("l'angle du joueur = %d\n", s_player_pos->angle);
+//	printf("la const =%f\n", const_horizontal_Y);
+//	printf("le x =%d et le y =%d\n", X, Y);
+
+	//ft_draw_line(name_renderer, &s_line);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//VERTICAL
 	//angle du rayon lance par rapport au joueur est de -21 degre catching vertical line de couleur rouge
-
 
 
 	angle_alpha = (90 + s_player_pos->angle - 21);
@@ -356,8 +367,6 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	//prblm pour le tan(90) et tan (0)
 	if (angle_alpha == 0 ||  angle_alpha == 90)
 		angle_alpha += 1;
-
-
 
 	int Bx;
 	if (angle_alpha > 90 && angle_alpha < 270) // the ray is going left
@@ -382,14 +391,10 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	float const_vertical_Y = 20 * tan(angle_alpha * M_PI / 180);
 
 
-
-
 	if (const_vertical_Y < 0)
 		const_vertical_Y *= -1;
 	if (const_vertical_X < 0)
 		const_vertical_X *= -1;
-
-
 
 	if ( (angle_alpha - 0) >= 0 && (angle_alpha - 0) < 90)
 	{
@@ -412,12 +417,43 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 		Y = 1;
 	}
 
-	s_line.deux.a = Bx + (3 *  X * const_vertical_X);
+//	s_line.deux.a = Bx + (3 *  X * const_vertical_X);
+//
+//	s_line.deux.b = By + ( 3 * Y * const_vertical_Y);
+//	if (s_line.deux.b < 0)
+//		s_line.deux.b = 0;
+//
 
-	s_line.deux.b = By + ( 3 * Y * const_vertical_Y);
-	if (s_line.deux.b < 0)
-		s_line.deux.b = 0;
 
+	colision = SDL_FALSE;
+	k  = 0;
+
+	while (colision == SDL_FALSE)
+	{
+		x = (int)((Ax + ( X * k * const_horizontal_X)) / 20) + 0.5;
+		y = (int)((Ay + ( Y * k * const_horizontal_Y)) / 20) + 0.5;
+
+		printf(" =%d  =%d \n", x, y);
+		if (x > ((640 / 20) - 1) || y > ((480 / 20) - 1) || x < 0 || y < 0)
+			colision = SDL_TRUE;
+		else if (map[y][x] == 1)
+			colision = SDL_TRUE;
+		else
+			k++;
+	}
+		x = (int)((Ax + ( X * k * const_horizontal_X))  ) + 0.5;
+		y = (int)((Ay + ( Y * k * const_horizontal_Y))  ) + 0.5;
+
+		if (x < 0)
+			x = 0;
+		if (y < 0)
+			y = 0;
+		if (x > 640)
+			x = 639;
+		if (y > 480)
+			y = 479;
+	s_line.deux.a = x;
+	s_line.deux.b = y;
 	ft_draw_line(name_renderer, &s_line);
 }
 
@@ -481,12 +517,16 @@ void		ft_draw_line(SDL_Renderer *name_renderer, t_myputtheline *s_line)
 		s_line->y_incr = -1;
 	if (s_line->dy == 0)
 		ft_case_one(name_renderer, s_line);
+	printf("hello1\n");
 	if (s_line->d_x > s_line->d_y)
 		ft_case_two(name_renderer, s_line);
+	printf("hello2\n");
 	if (s_line->dx == s_line->dy)
 		ft_case_three(name_renderer, s_line);
+	printf("hello3\n");
 	if (s_line->d_x < s_line->d_y)
 		ft_case_four(name_renderer, s_line);
+	printf("hello4\n");
 	if (s_line->dx == 0)
 		ft_case_five(name_renderer, s_line);
 }
