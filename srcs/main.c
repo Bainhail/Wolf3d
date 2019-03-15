@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/15 17:06:40 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/15 21:59:31 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,445 +254,588 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	//DDA AVEC DES VECTEURS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	float	field_of_view = 60;
-	float	dir_x = cos(s_player_pos->angle * M_PI / 180);
-	float	dir_y = -sin(s_player_pos->angle * M_PI / 180);
+
+	float dir_x = cos(s_player_pos->angle * M_PI / 180);
+	float dir_y = -sin(s_player_pos->angle * M_PI / 180);
+
+	float right_x = -dir_y;
+	float right_y =  dir_x;
 
 
-	float	screen_x = -dir_y;
-	float	screen_y =  dir_x;
+	printf("\n\n\n");
+	printf("l'angle du joueur =%d\n", s_player_pos->angle);
+	printf("affichage des vecteur\n");
+	printf("dir_x =%f\n", dir_x);
+	printf("dir_y =%f\n", dir_y);
+	printf("right_x =%f\n", right_x);
+	printf("right_y =%f\n", right_y);
 
-	float	tangante_fov = tan(field_of_view / 2.0 * M_PI / 180.0);
+	float camPlaneMag = tan(60 / 2.0 * (M_PI / 180));
 
-	float 	ray_dir_x;
-	float 	ray_dir_y;
+	//for (x = 0; x < width; x++)
+	//{
 
-	float	screen_scale;
+	x = width / 2;
+	float	currCamScale = (2.0 * (float)x / (float)(width) - 1.0);
+	printf("Le currCamScale =%f\n", currCamScale);
 
 
-	float	colision_array[width + 1];
+	float	ray_dir_x = dir_x + (right_x * camPlaneMag) * currCamScale;
+	float	ray_dir_y = dir_y + (right_y * camPlaneMag) * currCamScale;
+	printf("le rayDirX =%f et le rayDirY =%f\n", ray_dir_x, ray_dir_y);
 
-	x = -1;
+
+	float	magBetweenXEdges_x = 1;
+	float	magBetweenXEdges_y = sqrt(((1.0)*(1.0))+((ray_dir_y * (1.0 / ray_dir_x))*(ray_dir_y * (1.0 / ray_dir_x))));//*20
+
+	float	magBetweenYEdges_x = sqrt(((ray_dir_x * (1.0/ ray_dir_y)) * (ray_dir_x * (1.0/ ray_dir_y))) + ((1) * (1)));//*20
+	float	magBetweenYEdges_y = 1;
+
+	printf("magBetweenXEdges_y =%f\n", magBetweenXEdges_y);
+	printf("magBetweenYEdges_x =%f\n", magBetweenYEdges_x);
+
+	int		world_index_x = (int)(s_player_pos->x / 20);
+	int		world_index_y = (int)(s_player_pos->y / 20);
+	printf("POS JOUEUR = %d %d\n", world_index_x, world_index_y);
+
+
+	float magToXedge_x;
+	float magToYedge_y;
+	float dirStepX;
+	float dirStepY;
+
+	if (ray_dir_x > 0)
+	{
+		magToXedge_x = (1 - (((float)s_player_pos->x / 20) - (s_player_pos->x / 20)));
+		dirStepX = 1.0;
+	}
+	else
+	{
+		magToXedge_x = ((((float)s_player_pos->x / 20) - (s_player_pos->x / 20)));
+		dirStepX = -1.0;
+	}
+	if (ray_dir_y > 0)
+	{
+		magToYedge_y = (1 - (((float)s_player_pos->y / 20) - (s_player_pos->y / 20))) ;
+		dirStepY = 1.0;
+	}
+	else
+	{
+		magToYedge_y = ((((float)s_player_pos->y / 20) - (s_player_pos->y / 20)));
+		dirStepY = -1.0;
+	}
+
+	printf("magToYedge_x = %f\n", magToYedge_y);
+	printf("magToXedge_x = %f\n", magToXedge_x);
+
+	//}
+
+
+
+	float vertical_distance_x = (magToXedge_x + magBetweenXEdges_x) * dirStepX * 20;
+
+
+
+	float hypo = sqrt( ((magBetweenXEdges_y) * (magBetweenXEdges_y) ) + 1);
+
+	float h = magToXedge_x * hypo;
+
+	printf("le h =%f\n", h);
+	
+	float b = sqrt ((h *h ) - (magToXedge_x *magToXedge_x ) );
+
+	printf("Le b = %f\n", b);
+
+
+
+	float vertical_distance_y =   ( b    +  magBetweenXEdges_y) * dirStepY * 20 ;
+
+	printf("## Le x = %f\n", vertical_distance_x);
+	printf("## Le y = %f\n", vertical_distance_y);
+
+
+	s_line.deux.a = magToXedge_x * dirStepX * 20 + s_player_pos->x;
+	s_line.deux.b = b * dirStepY * 20 + s_player_pos->y;
+
+
+
+	if (s_line.deux.b < 400 && s_line.deux.b > 0)
+	ft_draw_line(name_renderer, &s_line);
+
+
+
+
+
+
+
+
+
+
+
+	/*
+
+	   float	field_of_view = 60;
+	   float	dir_x = cos(s_player_pos->angle * M_PI / 180);
+	   float	dir_y = -sin(s_player_pos->angle * M_PI / 180);
+
+
+	   float	screen_x = -dir_y;
+	   float	screen_y =  dir_x;
+
+	   float	tangante_fov = tan(field_of_view / 2.0 * M_PI / 180.0);
+
+	   float 	ray_dir_x;
+	   float 	ray_dir_y;
+
+	   float	screen_scale;
+
+
+	   float	colision_array[width + 1];
+
+	   x = -1;
 	//while (++x < width)
 	//{
 
 	x = width / 2 + 1; //
 
-		screen_scale = (float)((2 * x / width) - 1);
+	screen_scale = (float)((2 * x / width) - 1);
 
-		ray_dir_x = dir_x + (screen_x * screen_scale) * tangante_fov;
-		ray_dir_y = dir_y + (screen_y * screen_scale) * tangante_fov;
-		printf("\nl'angle du joueur =%d\n", s_player_pos->angle);
-		printf(" ray_dir_x =%f\n", ray_dir_x);
-		printf(" ray_dir_y =%f\n", ray_dir_y);
-
-
-		float	distance_vertical_in_cell;
-		float	distance_btw_vertical_line_x = 1 * 20;
-		float	distance_btw_vertical_line_y = ((float)ray_dir_y * (1.0 / (float)ray_dir_x)) * 20;
-		float 	distance_btw_vertical =
- 		   	sqrt((distance_btw_vertical_line_x ) * (distance_btw_vertical_line_x ) + (distance_btw_vertical_line_y ) * (distance_btw_vertical_line_y));
+	ray_dir_x = dir_x + (screen_x * screen_scale) * tangante_fov;
+	ray_dir_y = dir_y + (screen_y * screen_scale) * tangante_fov;
+	printf("\nl'angle du joueur =%d\n", s_player_pos->angle);
+	printf(" ray_dir_x =%f\n", ray_dir_x);
+	printf(" ray_dir_y =%f\n", ray_dir_y);
 
 
-		printf("La distance entre ligne vertical_x =%f\n", distance_btw_vertical_line_x);
-		printf("La distance entre ligne vertical_y =%f\n", distance_btw_vertical_line_y);
-		printf("L'hypotenuse =%f\n", distance_btw_vertical);
-
-		float	distance_horizontal_in_cell;
-		float	distance_btw_horizontal_line_x = ((float)ray_dir_x * (1.0 / (float)ray_dir_y)) * 20;
-		float	distance_btw_horizontal_line_y = 1 * 20;
-		float	distance_btw_horizontal
-			= sqrt((distance_btw_horizontal_line_x) * (distance_btw_horizontal_line_x) + (distance_btw_horizontal_line_y) * (distance_btw_horizontal_line_y));
-
-		printf("\nLa distance entre ligne horizontal_x =%f\n", distance_btw_horizontal_line_x);
-		printf("La distance entre ligne horizontal_y =%f\n", distance_btw_horizontal_line_y);
-		printf("L'hypotenuse =%f\n\n", distance_btw_horizontal);
+	float	distance_vertical_in_cell;
+	float	distance_btw_vertical_line_x = 1 * 20;
+	float	distance_btw_vertical_line_y = ((float)ray_dir_y * (1.0 / (float)ray_dir_x)) * 20;
+	float 	distance_btw_vertical =
+ 	sqrt((distance_btw_vertical_line_x ) * (distance_btw_vertical_line_x ) + (distance_btw_vertical_line_y ) * (distance_btw_vertical_line_y));
 
 
+	printf("La distance entre ligne vertical_x =%f\n", distance_btw_vertical_line_x);
+	printf("La distance entre ligne vertical_y =%f\n", distance_btw_vertical_line_y);
+	printf("L'hypotenuse =%f\n", distance_btw_vertical);
 
-		int	dir_step_x;
-		int	dir_step_y;
-		if(ray_dir_x > 0)
-		{
-			distance_vertical_in_cell = (1 - (((float)s_player_pos->x / 20) - (s_player_pos->x / 20))) * distance_btw_vertical; 
-			dir_step_x = 1;
-		}
-		else
-		{
-			distance_vertical_in_cell = ((((float)s_player_pos->x / 20) - (s_player_pos->x / 20))) * distance_btw_vertical;
-			dir_step_x = -1;
-		}
+	float	distance_horizontal_in_cell;
+	float	distance_btw_horizontal_line_x = ((float)ray_dir_x * (1.0 / (float)ray_dir_y)) * 20;
+	float	distance_btw_horizontal_line_y = 1 * 20;
+	float	distance_btw_horizontal
+	= sqrt((distance_btw_horizontal_line_x) * (distance_btw_horizontal_line_x) + (distance_btw_horizontal_line_y) * (distance_btw_horizontal_line_y));
 
-		if(ray_dir_y > 0)
-		{
-			distance_horizontal_in_cell = (1 - (((float)s_player_pos->y / 20) - (s_player_pos->y / 20))) * distance_btw_horizontal; 
-			dir_step_y = 1;
-		}
-		else
-		{
-			distance_horizontal_in_cell = ((((float)s_player_pos->y / 20) - (s_player_pos->y / 20))) * distance_btw_horizontal;
-			dir_step_y = -1;
-		}
-
-		int sideHit;
-		int colision = 0;;
-		float	vertical_distance = distance_vertical_in_cell;
-		float	horizontal_distance = distance_horizontal_in_cell;
-
-		printf("La distance vertical in cell =%f\n", distance_vertical_in_cell);
-		printf("La distance horizontal in cell =%f\n", distance_horizontal_in_cell);
+	printf("\nLa distance entre ligne horizontal_x =%f\n", distance_btw_horizontal_line_x);
+	printf("La distance entre ligne horizontal_y =%f\n", distance_btw_horizontal_line_y);
+	printf("L'hypotenuse =%f\n\n", distance_btw_horizontal);
 
 
-		int		world_index_x = (int)(s_player_pos->x / 20);
-		int		world_index_y = (int)(s_player_pos->y / 20);
-		printf("POS JOUEUR = %d %d\n", world_index_x, world_index_y);
+	int		world_index_x = (int)(s_player_pos->x / 20);
+	int		world_index_y = (int)(s_player_pos->y / 20);
+	printf("POS JOUEUR = %d %d\n", world_index_x, world_index_y);
+
+	int	dir_step_x;
+	int	dir_step_y;
+	if(ray_dir_x > 0)
+	{
+	//distance_vertical_in_cell = (1 - (((float)s_player_pos->x / 20) - (s_player_pos->x / 20))) * distance_btw_vertical; 
+	distance_vertical_in_cell = (world_index_x + 1.0 - s_player_pos->x) * distance_btw_vertical;
+	dir_step_x = 1;
+	}
+	else
+	{
+	//distance_vertical_in_cell = ((((float)s_player_pos->x / 20) - (s_player_pos->x / 20))) * distance_btw_vertical;
+	distance_vertical_in_cell = (s_player_pos->x - world_index_x) * distance_btw_vertical;
+	dir_step_x = -1;
+}
+
+if(ray_dir_y > 0)
+{
+	//distance_horizontal_in_cell = (1 - (((float)s_player_pos->y / 20) - (s_player_pos->y / 20))) * distance_btw_horizontal; 
+	distance_horizontal_in_cell = (world_index_y + 1.0 - s_player_pos->y) * distance_btw_horizontal;
+	dir_step_y = 1;
+}
+else
+{
+	//distance_horizontal_in_cell = ((((float)s_player_pos->y / 20) - (s_player_pos->y / 20))) * distance_btw_horizontal;
+	distance_horizontal_in_cell = (s_player_pos->y - world_index_y) * distance_btw_horizontal;
+	dir_step_y = -1;
+}
+
+int sideHit;
+int colision = 0;;
+float	vertical_distance = distance_vertical_in_cell;
+float	horizontal_distance = distance_horizontal_in_cell;
 
 
-		int first_step = 1;
-		while (colision == 0)
-		{
-			if (first_step == 1)
-			{
-				if(vertical_distance < horizontal_distance)
-				{
-					world_index_x += dir_step_x;
-					sideHit = 0; // north or south
-				}
-				else
-				{
-					world_index_y += dir_step_y;
-					sideHit = 1; //ouest or east
-				}
-			}
-			else
-			{
-				if(vertical_distance < horizontal_distance)
-				{
-					vertical_distance += distance_btw_vertical;
-					world_index_x += dir_step_x;
-					sideHit = 0; // north or south
-				}
-				else
-				{
-					horizontal_distance += distance_btw_horizontal;
-					world_index_y += dir_step_y;
-					sideHit = 1; //ouest or east
-				}
-			}
-			first_step = 0;
-			printf("Les test = %d  %d\n", world_index_x, world_index_y);
-			if(world_index_x > width / 20 || world_index_y > height / 20)
-				colision = 1;
-			else if(world_index_x < 0 || world_index_y < 0)
-				colision = 1;
-			else if (map[world_index_y][world_index_x] == 1)
-				colision = 1;
-		}
+//		float	cell_x;
+//		float	cell_y;
+
+//		printf("*******La distance vertical in cell X =%f\n", cell_x = distance_vertical_in_cell / distance_btw_vertical * 20);
+//		float a = distance_vertical_in_cell / distance_btw_vertical * 20;
+//		float h = distance_btw_vertical;
+//		printf("*******La distance vertical in cell Y =%f\n", cell_y =   sqrt((h * h) - (a * a)));
 
 
+int first_step = 1;
+
+int cmp_vertical = 0;
+int cmp_horizontal = 0;
+while (colision == 0)
+{
+	if (first_step == 1)
+	{
 		if(vertical_distance < horizontal_distance)
-			colision_array[x] = vertical_distance;
+		{
+			world_index_x += dir_step_x;
+			sideHit = 0; // north or south
+		}
 		else
-			colision_array[x] = horizontal_distance;
+		{
+			world_index_y += dir_step_y;
+			sideHit = 1; //ouest or east
+		}
+	}
+	else
+	{
+		if(vertical_distance < horizontal_distance)
+		{
+			vertical_distance += distance_btw_vertical;
+			world_index_x += dir_step_x;
+			sideHit = 0; // north or south
+			cmp_vertical++;
+		}
+		else
+		{
+			horizontal_distance += distance_btw_horizontal;
+			world_index_y += dir_step_y;
+			sideHit = 1; //ouest or east
+			cmp_horizontal++;
+		}
+	}
+	first_step = 0;
+	printf("Les test = %d  %d\n", world_index_x, world_index_y);
+	if(world_index_x > width / 20 || world_index_y > height / 20)
+		colision = 1;
+	else if(world_index_x < 0 || world_index_y < 0)
+		colision = 1;
+	else if (map[world_index_y][world_index_x] == 1)
+		colision = 1;
+}
 
-		printf("=%d distance to colision =%f\n\n\n\n",x ,  colision_array[x]);
 
-//////////////////////////////////////////////////////////////////////////////////////
-//tracage du rayon
-//
+if(vertical_distance < horizontal_distance)
+	colision_array[x] = vertical_distance;
+	else
+	colision_array[x] = horizontal_distance;
+
+	printf("=%d distance to colision =%f\n\n\n\n",x ,  colision_array[x]);
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	//tracage du rayon
+	//
+
+if(vertical_distance < horizontal_distance)
+{
+	//			s_line.deux.a = ((cell_x + (cmp_vertical * distance_btw_vertical_line_x)) * dir_step_x ) + s_player_pos->x; 
+	//			s_line.deux.b = ((cell_y + (cmp_vertical * distance_btw_vertical_line_y)) * dir_step_y ) + s_player_pos->y;
+	//ft_draw_line(name_renderer, &s_line);
+	printf("#####vertical  \n");
+}
+else
+{
+	printf("#####horizontal  \n");
+
+}
 
 
-
-
-
-		//}
+//}
 
 
 /*
 
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// HORIZONTAL
-	//angle du rayon lance par rapport au joueur est de +21 degre catching horizontal line de couleur rouge
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// HORIZONTAL
+//angle du rayon lance par rapport au joueur est de +21 degre catching horizontal line de couleur rouge
 
-	s_player_pos->angle %= 360;
-	if (s_player_pos->angle < 0)
-		s_player_pos->angle += 360;
-
-
+s_player_pos->angle %= 360;
+if (s_player_pos->angle < 0)
+s_player_pos->angle += 360;
 
 
-	//balayage rayon +30 a -30
-	float angle_rayon;
-	angle_rayon = 30;
-	float step = 0.01;
-	while (angle_rayon > -30)
+
+
+//balayage rayon +30 a -30
+float angle_rayon;
+angle_rayon = 30;
+float step = 0.01;
+while (angle_rayon > -30)
+{
+angle_rayon -= step;
+
+
+
+float Ay;
+float angle_alpha = (90 + s_player_pos->angle + angle_rayon);
+
+//printf("\n\n L'angle alpha =%f\n", angle_alpha);
+//printf("test Horizontal\n");
+//angle_alpha = (int)angle_alpha % 360;
+if (angle_alpha < 0)
+angle_alpha += 360;
+if (angle_alpha < 0)
+angle_alpha += 360;
+if (angle_alpha > 360)
+angle_alpha -= 360;
+if (angle_alpha > 360)
+angle_alpha -= 360;
+if (angle_alpha > 360)
+printf("++\n");
+if (angle_alpha < 0)
+printf("--\n");
+
+//prblm pour le tan(90) et tan (0)
+if (angle_alpha == 0 || angle_alpha == 90)
+angle_alpha += 0.1;
+
+//we will find Ya and Xa
+if (angle_alpha  > 180) // the ray is facing down
+Ay = ((s_player_pos->y / 20) * 20) + 20;
+else
+Ay = ((s_player_pos->y / 20) * 20) - 1;
+float Ax = (s_player_pos->y - Ay) / tan(((angle_alpha) * M_PI / 180)) + s_player_pos->x;
+
+if (Ax < 0)
+Ax = 0;
+
+//calcul de la constante horizontal
+float const_horizontal_X = 20 / tan(angle_alpha * M_PI / 180);
+float const_horizontal_Y = 20;
+
+if(const_horizontal_X < 0)
+const_horizontal_X *= -1;
+
+float X = 0;
+float Y = 0;
+if ( (angle_alpha - 0) >= 0 && (angle_alpha - 0) < 90)
+{
+X = 1;
+Y = -1;
+}
+else if((angle_alpha - 0) >= 90 && (angle_alpha - 0) < 180)
+{
+	X = -1;
+	Y = -1;
+}
+else if((angle_alpha - 0) >= 180 && (angle_alpha - 0) < 270)
+{
+	X = -1;
+	Y = 1;
+}
+else if((angle_alpha - 0) >= 270 && (angle_alpha - 0) <= 360)
+{
+	X = 1;
+	Y = 1;
+}
+
+float k;
+int colision;
+
+colision = 0;
+k  = -1;
+
+while (colision == 0)
+{
+	k++;
+
+	s_line.deux.a = Ax + ( X * k * const_horizontal_X);
+	s_line.deux.b = Ay + ( Y * k * const_horizontal_Y);
+	if (s_line.deux.b < 0)
 	{
-		angle_rayon -= step;
+		//printf("colision bord gauche\n");
+		colision = 1;
+		s_line.deux.b = 0;
+	}
+	if (s_line.deux.a < 0)
+	{
+		colision = 1;
+		//printf("colision bord haut\n");
+		s_line.deux.a = 0;
+	}
+	if (s_line.deux.a > (640 - 3))
+	{
+		colision = 1;
+		//printf("colision bord droit\n");
+		s_line.deux.a = 639;
+	}
+	if (s_line.deux.b > (480 - 3))
+	{
+		colision = 1;
+		//printf("colision bord bas\n");
+		s_line.deux.b = 479;
+	}
+	if (colision != 1)
+	{
+		if (map[(int)((((s_line.deux.b) / 20) + 0))][(int)((((s_line.deux.a) / 20 ) + 0))])
+			colision = 1;
+	}
+	else
+	{
+		//printf("pas de colison\n");
+	}
+}
+
+//pythagore pour avoir la distance
+
+float cote_x = s_player_pos->x - s_line.deux.a;
+float cote_y = s_player_pos->x - s_line.deux.b;
+float distance_horizontal = sqrt((( cote_x) *  (cote_x  ))  +  ((cote_y  ) * (cote_y )));
+float save_horizontal_x = s_line.deux.a;
+float save_horizontal_y = s_line.deux.b;
+
+//ft_draw_line(name_renderer, &s_line);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//VERTICAL
+//angle du rayon lance par rapport au joueur est de +21 degre catching vertical line de couleur rouge
 
 
+//printf("\n\ntest vertical\n");
+angle_alpha = (90 + s_player_pos->angle + angle_rayon);
 
-		float Ay;
-		float angle_alpha = (90 + s_player_pos->angle + angle_rayon);
+angle_alpha = (int)angle_alpha % 360;
+if (angle_alpha < 0)
+	angle_alpha += 360;
 
-		//printf("\n\n L'angle alpha =%f\n", angle_alpha);
-		//printf("test Horizontal\n");
-		//angle_alpha = (int)angle_alpha % 360;
-		if (angle_alpha < 0)
-			angle_alpha += 360;
-		if (angle_alpha < 0)
-			angle_alpha += 360;
-		if (angle_alpha > 360)
-			angle_alpha -= 360;
-		if (angle_alpha > 360)
-			angle_alpha -= 360;
-		if (angle_alpha > 360)
-			printf("++\n");
-		if (angle_alpha < 0)
-			printf("--\n");
 
-		//prblm pour le tan(90) et tan (0)
-		if (angle_alpha == 0 || angle_alpha == 90)
-			angle_alpha += 0.1;
+	//prblm pour le tan(90) et tan (0)
+if (angle_alpha == 0 ||  angle_alpha == 90)
+	angle_alpha += 1;
 
-		//we will find Ya and Xa
-		if (angle_alpha  > 180) // the ray is facing down
-			Ay = ((s_player_pos->y / 20) * 20) + 20;
-		else
-			Ay = ((s_player_pos->y / 20) * 20) - 1;
-		float Ax = (s_player_pos->y - Ay) / tan(((angle_alpha) * M_PI / 180)) + s_player_pos->x;
+	float Bx;
+if (angle_alpha > 90 && angle_alpha < 270) // the ray is going left
+	Bx = (s_player_pos->x / 20) * 20 - 1;
+	else
+	Bx = (s_player_pos->x / 20) * 20 + 20;
 
-		if (Ax < 0)
-			Ax = 0;
+	//prblm avec 270 degre
+if(angle_alpha == 270)
+	angle_alpha += 1;
+	float By = s_player_pos->y - (tan(angle_alpha * M_PI / 180) * (Bx - s_player_pos->x));
 
-		//calcul de la constante horizontal
-		float const_horizontal_X = 20 / tan(angle_alpha * M_PI / 180);
-		float const_horizontal_Y = 20;
+	//if (By < 0)
+	//By = 0;
+	//	s_line.deux.a = Bx;
+	//	s_line.deux.b = By;
+	//	ft_draw_line(name_renderer, &s_line);
 
-		if(const_horizontal_X < 0)
-			const_horizontal_X *= -1;
 
-		float X = 0;
-		float Y = 0;
-		if ( (angle_alpha - 0) >= 0 && (angle_alpha - 0) < 90)
+	//calcul de la constante vertical
+	float const_vertical_X = 20;
+	float const_vertical_Y = 20 * tan(angle_alpha * M_PI / 180);
+
+
+if (const_vertical_Y < 0)
+	const_vertical_Y *= -1;
+if (const_vertical_X < 0)
+	const_vertical_X *= -1;
+
+if ( (angle_alpha - 0) >= 0 && (angle_alpha - 0) < 90)
+{
+	X = 1;
+	Y = -1;
+}
+else if((angle_alpha - 0) >= 90 && (angle_alpha - 0) < 180)
+{
+	X = -1;
+	Y = -1;
+}
+else if((angle_alpha - 0) >= 180 && (angle_alpha - 0) < 270)
+{
+	X = -1;
+	Y = 1;
+}
+else if((angle_alpha - 0) >= 270 && (angle_alpha - 0) <= 360)
+{
+	X = 1;
+	Y = 1;
+}
+
+
+colision = 0;
+k = -1;
+
+while (colision == 0)
+{
+	k++;
+
+	s_line.deux.a = Bx + (k *  X * const_vertical_X);
+	s_line.deux.b = By + (k * Y * const_vertical_Y);
+
+	if (s_line.deux.b < 0)
+	{
+		//printf("colision bord gauche\n");
+		colision = 1;
+		s_line.deux.b = 0;
+	}
+	if (s_line.deux.a < 0)
+	{
+		colision = 1;
+		//printf("colision bord haut\n");
+		s_line.deux.a = 0;
+	}
+	if (s_line.deux.a > 640)
+	{
+		colision = 1;
+		//printf("colision bord droit\n");
+		s_line.deux.a = 639;
+	}
+	if (s_line.deux.b > 480)
+	{
+		colision = 1;
+		//printf("colision bord bas\n");
+		s_line.deux.b = 479;
+	}
+
+	//printf("le b =%d et le a =%d \n", (int)((s_line.deux.b ) / 20), (int)((s_line.deux.a / 20)));
+
+	if (colision != 1)
+	{
+		if (map[(int)((s_line.deux.b / 20 ) + 0)][(int)((s_line.deux.a / 20 ) + 0)])
 		{
-			X = 1;
-			Y = -1;
-		}
-		else if((angle_alpha - 0) >= 90 && (angle_alpha - 0) < 180)
-		{
-			X = -1;
-			Y = -1;
-		}
-		else if((angle_alpha - 0) >= 180 && (angle_alpha - 0) < 270)
-		{
-			X = -1;
-			Y = 1;
-		}
-		else if((angle_alpha - 0) >= 270 && (angle_alpha - 0) <= 360)
-		{
-			X = 1;
-			Y = 1;
-		}
-
-		float k;
-		int colision;
-
-		colision = 0;
-		k  = -1;
-
-		while (colision == 0)
-		{
-			k++;
-
-			s_line.deux.a = Ax + ( X * k * const_horizontal_X);
-			s_line.deux.b = Ay + ( Y * k * const_horizontal_Y);
-			if (s_line.deux.b < 0)
-			{
-				//printf("colision bord gauche\n");
-				colision = 1;
-				s_line.deux.b = 0;
-			}
-			if (s_line.deux.a < 0)
-			{
-				colision = 1;
-				//printf("colision bord haut\n");
-				s_line.deux.a = 0;
-			}
-			if (s_line.deux.a > (640 - 3))
-			{
-				colision = 1;
-				//printf("colision bord droit\n");
-				s_line.deux.a = 639;
-			}
-			if (s_line.deux.b > (480 - 3))
-			{
-				colision = 1;
-				//printf("colision bord bas\n");
-				s_line.deux.b = 479;
-			}
-			if (colision != 1)
-			{
-				if (map[(int)((((s_line.deux.b) / 20) + 0))][(int)((((s_line.deux.a) / 20 ) + 0))])
-					colision = 1;
-			}
-			else
-			{
-				//printf("pas de colison\n");
-			}
-		}
-
-		//pythagore pour avoir la distance
-
-		float cote_x = s_player_pos->x - s_line.deux.a;
-		float cote_y = s_player_pos->x - s_line.deux.b;
-		float distance_horizontal = sqrt((( cote_x) *  (cote_x  ))  +  ((cote_y  ) * (cote_y )));
-		float save_horizontal_x = s_line.deux.a;
-		float save_horizontal_y = s_line.deux.b;
-
-		//ft_draw_line(name_renderer, &s_line);
-
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//VERTICAL
-		//angle du rayon lance par rapport au joueur est de +21 degre catching vertical line de couleur rouge
-
-
-		//printf("\n\ntest vertical\n");
-		angle_alpha = (90 + s_player_pos->angle + angle_rayon);
-
-		angle_alpha = (int)angle_alpha % 360;
-		if (angle_alpha < 0)
-			angle_alpha += 360;
-
-
-		//prblm pour le tan(90) et tan (0)
-		if (angle_alpha == 0 ||  angle_alpha == 90)
-			angle_alpha += 1;
-
-		float Bx;
-		if (angle_alpha > 90 && angle_alpha < 270) // the ray is going left
-			Bx = (s_player_pos->x / 20) * 20 - 1;
-		else
-			Bx = (s_player_pos->x / 20) * 20 + 20;
-
-		//prblm avec 270 degre
-		if(angle_alpha == 270)
-			angle_alpha += 1;
-		float By = s_player_pos->y - (tan(angle_alpha * M_PI / 180) * (Bx - s_player_pos->x));
-
-		//if (By < 0)
-		//By = 0;
-		//	s_line.deux.a = Bx;
-		//	s_line.deux.b = By;
-		//	ft_draw_line(name_renderer, &s_line);
-
-
-		//calcul de la constante vertical
-		float const_vertical_X = 20;
-		float const_vertical_Y = 20 * tan(angle_alpha * M_PI / 180);
-
-
-		if (const_vertical_Y < 0)
-			const_vertical_Y *= -1;
-		if (const_vertical_X < 0)
-			const_vertical_X *= -1;
-
-		if ( (angle_alpha - 0) >= 0 && (angle_alpha - 0) < 90)
-		{
-			X = 1;
-			Y = -1;
-		}
-		else if((angle_alpha - 0) >= 90 && (angle_alpha - 0) < 180)
-		{
-			X = -1;
-			Y = -1;
-		}
-		else if((angle_alpha - 0) >= 180 && (angle_alpha - 0) < 270)
-		{
-			X = -1;
-			Y = 1;
-		}
-		else if((angle_alpha - 0) >= 270 && (angle_alpha - 0) <= 360)
-		{
-			X = 1;
-			Y = 1;
-		}
-
-
-		colision = 0;
-		k = -1;
-
-		while (colision == 0)
-		{
-			k++;
-
-			s_line.deux.a = Bx + (k *  X * const_vertical_X);
-			s_line.deux.b = By + (k * Y * const_vertical_Y);
-
-			if (s_line.deux.b < 0)
-			{
-				//printf("colision bord gauche\n");
-				colision = 1;
-				s_line.deux.b = 0;
-			}
-			if (s_line.deux.a < 0)
-			{
-				colision = 1;
-				//printf("colision bord haut\n");
-				s_line.deux.a = 0;
-			}
-			if (s_line.deux.a > 640)
-			{
-				colision = 1;
-				//printf("colision bord droit\n");
-				s_line.deux.a = 639;
-			}
-			if (s_line.deux.b > 480)
-			{
-				colision = 1;
-				//printf("colision bord bas\n");
-				s_line.deux.b = 479;
-			}
-
-			//printf("le b =%d et le a =%d \n", (int)((s_line.deux.b ) / 20), (int)((s_line.deux.a / 20)));
-
-			if (colision != 1)
-			{
-				if (map[(int)((s_line.deux.b / 20 ) + 0)][(int)((s_line.deux.a / 20 ) + 0)])
-				{
-					//printf("colision mur\n");
-					colision = 1;
-				}
-			}
-			else
-			{
-				//printf("pas de colison\n");
-			}
-
-		}
-		cote_x = s_player_pos->x - s_line.deux.a;
-		cote_y = s_player_pos->x - s_line.deux.b;
-		float distance_vertical = sqrt((( cote_x) *  (cote_x  ))  +  ((cote_y  ) * (cote_y )));
-		float save_vertical_x = s_line.deux.a;
-		float save_vertical_y = s_line.deux.b;
-
-
-		//printf ("la distance vertical = %f \n la distance horizontal = %f \n", distance_vertical, distance_horizontal);
-
-
-		if (distance_vertical < distance_horizontal)
-		{
-			ft_draw_line(name_renderer, &s_line);
-			//printf ("la distance vertical = %f\n", distance_vertical);
-		}
-		else
-		{
-			s_line.deux.a = save_horizontal_x;
-			s_line.deux.b = save_horizontal_y;
-			ft_draw_line(name_renderer, &s_line);
-			//printf ("la distance horizontal = %f\n", distance_horizontal);
+			//printf("colision mur\n");
+			colision = 1;
 		}
 	}
+	else
+	{
+		//printf("pas de colison\n");
+	}
+
+}
+cote_x = s_player_pos->x - s_line.deux.a;
+cote_y = s_player_pos->x - s_line.deux.b;
+float distance_vertical = sqrt((( cote_x) *  (cote_x  ))  +  ((cote_y  ) * (cote_y )));
+float save_vertical_x = s_line.deux.a;
+float save_vertical_y = s_line.deux.b;
+
+
+//printf ("la distance vertical = %f \n la distance horizontal = %f \n", distance_vertical, distance_horizontal);
+
+
+if (distance_vertical < distance_horizontal)
+{
+	ft_draw_line(name_renderer, &s_line);
+	//printf ("la distance vertical = %f\n", distance_vertical);
+}
+else
+{
+	s_line.deux.a = save_horizontal_x;
+	s_line.deux.b = save_horizontal_y;
+	ft_draw_line(name_renderer, &s_line);
+	//printf ("la distance horizontal = %f\n", distance_horizontal);
+}
+}
 */
 }
 
