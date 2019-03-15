@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/14 21:38:48 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/15 17:06:40 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int			main(void)
 
 	s_player_pos.x = 20;
 	s_player_pos.y = 20;
-	s_player_pos.angle = 0;
+	s_player_pos.angle = (M_PI / 2) / M_PI * 180;
 	s_player_pos.angle_variable = 10;
 	s_rectangle.x = 0;
 	s_rectangle.y = 0;
@@ -181,8 +181,9 @@ void			ft_move_player(int move, t_my_player_pos *s_player_pos, SDL_Renderer *nam
 	//s_player_pos->y += y;
 	s_player_pos->angle += angle;
 
-	s_player_pos->x += (x * cos(s_player_pos->angle * M_PI / 180)) + (y * sin(s_player_pos->angle * M_PI / 180));
-	s_player_pos->y += (x * -sin(s_player_pos->angle * M_PI / 180)) + (y *  cos(s_player_pos->angle * M_PI / 180));
+	//je sais pas pk les 90 et le -=
+	s_player_pos->x -= (x * cos((s_player_pos->angle + 90) * M_PI / 180)) + (y * sin((s_player_pos->angle + 90) * M_PI / 180));
+	s_player_pos->y -= (x * -sin((s_player_pos->angle + 90) * M_PI / 180)) + (y *  cos((s_player_pos->angle + 90) * M_PI / 180));
 
 	ft_clear_window_in_blue(height, width, name_renderer);
 	ft_draw_grid(name_renderer, height, width);
@@ -198,11 +199,11 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	int		i;
 	int		j;
 
-	y = 0;
+	x = 0;
 	i = 0;
 	while (i < s_triangle.size)
 	{
-		x = i;
+		y = i;
 		j = 0;
 
 		while (j < (2 * i))
@@ -210,10 +211,10 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 			float x_tmp = (x * cos(s_player_pos->angle * M_PI / 180)) + (y * sin(s_player_pos->angle * M_PI / 180));
 			float y_tmp = (x * -sin(s_player_pos->angle * M_PI / 180)) + (y *  cos(s_player_pos->angle * M_PI / 180));
 			SDL_RenderDrawPoint(name_renderer, (int)(x_tmp + s_player_pos->x), (int)(y_tmp + s_player_pos->y));
-			x--;
+			y--;
 			j++;
 		}
-		y++;
+		x--;
 		i++;
 	}
 
@@ -223,22 +224,22 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	//ligne droite
 	s_line.un.a = s_player_pos->x;
 	s_line.un.b = s_player_pos->y;
-	s_line.deux.a = (0 * cos(s_player_pos->angle * M_PI / 180)) + (-30 * sin(s_player_pos->angle * M_PI / 180)) + s_player_pos->x;
-	s_line.deux.b = (0 * -sin(s_player_pos->angle * M_PI / 180)) + (-30 *  cos(s_player_pos->angle * M_PI / 180)) + s_player_pos->y;
+	s_line.deux.a = (30 * cos(s_player_pos->angle * M_PI / 180)) + (0 * sin(s_player_pos->angle * M_PI / 180)) + s_player_pos->x;
+	s_line.deux.b = (30 * -sin(s_player_pos->angle * M_PI / 180)) + (0 *  cos(s_player_pos->angle * M_PI / 180)) + s_player_pos->y;
 	ft_draw_line(name_renderer, &s_line);
 
 	//ligne a -30
 	s_line.un.a = s_player_pos->x;
 	s_line.un.b = s_player_pos->y;
-	s_line.deux.a = (0 * cos((s_player_pos->angle - 30)  * M_PI / 180)) + (-30 * sin((s_player_pos->angle  - 30)* M_PI / 180)) + s_player_pos->x;
-	s_line.deux.b = (0 * -sin((s_player_pos->angle - 30) * M_PI / 180)) + (-30 *  cos((s_player_pos->angle  - 30)* M_PI / 180)) + s_player_pos->y;
+	s_line.deux.a = (30 * cos((s_player_pos->angle - 30)  * M_PI / 180)) + (0 * sin((s_player_pos->angle  - 30)* M_PI / 180)) + s_player_pos->x;
+	s_line.deux.b = (30 * -sin((s_player_pos->angle - 30) * M_PI / 180)) + (0 *  cos((s_player_pos->angle  - 30)* M_PI / 180)) + s_player_pos->y;
 	ft_draw_line(name_renderer, &s_line);
 
 	//ligne a +30
 	s_line.un.a = s_player_pos->x;
 	s_line.un.b = s_player_pos->y;
-	s_line.deux.a = (0 * cos((s_player_pos->angle + 30)  * M_PI / 180)) + (-30 * sin((s_player_pos->angle  + 30)* M_PI / 180)) + s_player_pos->x;
-	s_line.deux.b = (0 * -sin((s_player_pos->angle + 30) * M_PI / 180)) + (-30 *  cos((s_player_pos->angle  + 30)* M_PI / 180)) + s_player_pos->y;
+	s_line.deux.a = (30 * cos((s_player_pos->angle + 30)  * M_PI / 180)) + (0 * sin((s_player_pos->angle  + 30)* M_PI / 180)) + s_player_pos->x;
+	s_line.deux.b = (30 * -sin((s_player_pos->angle + 30) * M_PI / 180)) + (0 *  cos((s_player_pos->angle  + 30)* M_PI / 180)) + s_player_pos->y;
 	ft_draw_line(name_renderer, &s_line);
 
 
@@ -246,6 +247,169 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 	//angle variable = 10
 	s_line.un.a = s_player_pos->x;
 	s_line.un.b = s_player_pos->y;
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+	//DDA AVEC DES VECTEURS
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	float	field_of_view = 60;
+	float	dir_x = cos(s_player_pos->angle * M_PI / 180);
+	float	dir_y = -sin(s_player_pos->angle * M_PI / 180);
+
+
+	float	screen_x = -dir_y;
+	float	screen_y =  dir_x;
+
+	float	tangante_fov = tan(field_of_view / 2.0 * M_PI / 180.0);
+
+	float 	ray_dir_x;
+	float 	ray_dir_y;
+
+	float	screen_scale;
+
+
+	float	colision_array[width + 1];
+
+	x = -1;
+	//while (++x < width)
+	//{
+
+	x = width / 2 + 1; //
+
+		screen_scale = (float)((2 * x / width) - 1);
+
+		ray_dir_x = dir_x + (screen_x * screen_scale) * tangante_fov;
+		ray_dir_y = dir_y + (screen_y * screen_scale) * tangante_fov;
+		printf("\nl'angle du joueur =%d\n", s_player_pos->angle);
+		printf(" ray_dir_x =%f\n", ray_dir_x);
+		printf(" ray_dir_y =%f\n", ray_dir_y);
+
+
+		float	distance_vertical_in_cell;
+		float	distance_btw_vertical_line_x = 1 * 20;
+		float	distance_btw_vertical_line_y = ((float)ray_dir_y * (1.0 / (float)ray_dir_x)) * 20;
+		float 	distance_btw_vertical =
+ 		   	sqrt((distance_btw_vertical_line_x ) * (distance_btw_vertical_line_x ) + (distance_btw_vertical_line_y ) * (distance_btw_vertical_line_y));
+
+
+		printf("La distance entre ligne vertical_x =%f\n", distance_btw_vertical_line_x);
+		printf("La distance entre ligne vertical_y =%f\n", distance_btw_vertical_line_y);
+		printf("L'hypotenuse =%f\n", distance_btw_vertical);
+
+		float	distance_horizontal_in_cell;
+		float	distance_btw_horizontal_line_x = ((float)ray_dir_x * (1.0 / (float)ray_dir_y)) * 20;
+		float	distance_btw_horizontal_line_y = 1 * 20;
+		float	distance_btw_horizontal
+			= sqrt((distance_btw_horizontal_line_x) * (distance_btw_horizontal_line_x) + (distance_btw_horizontal_line_y) * (distance_btw_horizontal_line_y));
+
+		printf("\nLa distance entre ligne horizontal_x =%f\n", distance_btw_horizontal_line_x);
+		printf("La distance entre ligne horizontal_y =%f\n", distance_btw_horizontal_line_y);
+		printf("L'hypotenuse =%f\n\n", distance_btw_horizontal);
+
+
+
+		int	dir_step_x;
+		int	dir_step_y;
+		if(ray_dir_x > 0)
+		{
+			distance_vertical_in_cell = (1 - (((float)s_player_pos->x / 20) - (s_player_pos->x / 20))) * distance_btw_vertical; 
+			dir_step_x = 1;
+		}
+		else
+		{
+			distance_vertical_in_cell = ((((float)s_player_pos->x / 20) - (s_player_pos->x / 20))) * distance_btw_vertical;
+			dir_step_x = -1;
+		}
+
+		if(ray_dir_y > 0)
+		{
+			distance_horizontal_in_cell = (1 - (((float)s_player_pos->y / 20) - (s_player_pos->y / 20))) * distance_btw_horizontal; 
+			dir_step_y = 1;
+		}
+		else
+		{
+			distance_horizontal_in_cell = ((((float)s_player_pos->y / 20) - (s_player_pos->y / 20))) * distance_btw_horizontal;
+			dir_step_y = -1;
+		}
+
+		int sideHit;
+		int colision = 0;;
+		float	vertical_distance = distance_vertical_in_cell;
+		float	horizontal_distance = distance_horizontal_in_cell;
+
+		printf("La distance vertical in cell =%f\n", distance_vertical_in_cell);
+		printf("La distance horizontal in cell =%f\n", distance_horizontal_in_cell);
+
+
+		int		world_index_x = (int)(s_player_pos->x / 20);
+		int		world_index_y = (int)(s_player_pos->y / 20);
+		printf("POS JOUEUR = %d %d\n", world_index_x, world_index_y);
+
+
+		int first_step = 1;
+		while (colision == 0)
+		{
+			if (first_step == 1)
+			{
+				if(vertical_distance < horizontal_distance)
+				{
+					world_index_x += dir_step_x;
+					sideHit = 0; // north or south
+				}
+				else
+				{
+					world_index_y += dir_step_y;
+					sideHit = 1; //ouest or east
+				}
+			}
+			else
+			{
+				if(vertical_distance < horizontal_distance)
+				{
+					vertical_distance += distance_btw_vertical;
+					world_index_x += dir_step_x;
+					sideHit = 0; // north or south
+				}
+				else
+				{
+					horizontal_distance += distance_btw_horizontal;
+					world_index_y += dir_step_y;
+					sideHit = 1; //ouest or east
+				}
+			}
+			first_step = 0;
+			printf("Les test = %d  %d\n", world_index_x, world_index_y);
+			if(world_index_x > width / 20 || world_index_y > height / 20)
+				colision = 1;
+			else if(world_index_x < 0 || world_index_y < 0)
+				colision = 1;
+			else if (map[world_index_y][world_index_x] == 1)
+				colision = 1;
+		}
+
+
+		if(vertical_distance < horizontal_distance)
+			colision_array[x] = vertical_distance;
+		else
+			colision_array[x] = horizontal_distance;
+
+		printf("=%d distance to colision =%f\n\n\n\n",x ,  colision_array[x]);
+
+//////////////////////////////////////////////////////////////////////////////////////
+//tracage du rayon
+//
+
+
+
+
+
+		//}
+
+
+/*
+
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// HORIZONTAL
@@ -529,6 +693,7 @@ void		ft_draw_triangle(SDL_Renderer *name_renderer, t_my_rectangle s_triangle, t
 			//printf ("la distance horizontal = %f\n", distance_horizontal);
 		}
 	}
+*/
 }
 
 void			ft_draw_grid(SDL_Renderer *name_renderer, int height, int width)
