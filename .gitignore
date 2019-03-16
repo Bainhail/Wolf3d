@@ -2,3 +2,4 @@ libraries
 objs
 wolf3d
 test
+.*

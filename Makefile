@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/14 15:38:22 by naali            ###   ########.fr        #
+#    Updated: 2019/03/16 12:20:54 by jchardin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRC			=	main.c						\
 				matrice_trans.c				\
 				multiply.c					\
 				mult_matrice.c				\
-				t_vertex.c
+				t_vertex.c					\
+file_event_loop.c
 
 OBJ			=	$(SRC:.c=.o)
 

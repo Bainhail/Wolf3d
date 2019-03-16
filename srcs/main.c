@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/14 18:41:35 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/16 12:32:09 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,16 @@ int			main(int ac, char **av)
 	get_player_pos(&p, &(p.pl), &(p.m));
 	SDL_RenderPresent(p.ren);
 
-	SDL_Delay(3000);
+	ft_event_loop();
+
+
+	//SDL_Delay(3000);
 
 /* Refresh Render START */
-	refresh_screen(&p);
+	//refresh_screen(&p);
 /* Refresh Render END */
 
-	SDL_Delay(3000);
+	//SDL_Delay(30000);
 
 	SDL_DestroyRenderer(p.ren);
 	SDL_DestroyWindow(p.w);

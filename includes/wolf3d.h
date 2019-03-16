@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 10:15:38 by naali             #+#    #+#             */
-/*   Updated: 2019/03/14 18:31:37 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/16 12:18:02 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,9 @@ int			file_to_tab(char *path, t_map *m);
 int			draw_square(SDL_Renderer *r, t_map *m, int x, int y);
 int			get_player_pos(t_print *w, t_player *p, t_map *m);
 void		print_line(t_print *w, t_vertex start, t_vertex end);
+void		ft_event_loop(void);
+
+
+
 
 #endif
