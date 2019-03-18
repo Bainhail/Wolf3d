@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/16 12:20:54 by jchardin         ###   ########.fr        #
+#    Updated: 2019/03/18 16:39:30 by naali            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ SRC			=	main.c						\
 				mapfunc.c					\
 				drawsquare.c				\
 				playerposition.c			\
+				calc_player_form.c			\
+				wall_detect.c				\
 				segmnt_creation.c			\
 				convert.c					\
 				matrice_init.c				\
@@ -31,7 +33,7 @@ SRC			=	main.c						\
 				multiply.c					\
 				mult_matrice.c				\
 				t_vertex.c					\
-file_event_loop.c
+				file_event_loop.c
 
 OBJ			=	$(SRC:.c=.o)
 
@@ -60,9 +62,9 @@ LFLAGS		=	-lft				\
 
 LDLIBS		=	$(LDFLAGS) $(LFLAGS)
 
-vpath %.c ./srcs/:./srcs/getmap:./srcs/matrice:./srcs/draw:./srcs/player
+vpath %.c ./srcs/:./srcs/getmap:./srcs/matrice:./srcs/draw:./srcs/player:./srcs/event
 
-vpath %.h ./includes/:./libraries/libft:./libraries/SDL2-2.0.9/include:./libraries/SDL2_image-2.0.4/include:SDL2_ttf-2.0.15/include:./source_lib/libft
+#vpath %.h ./includes/:./libraries/libft:./libraries/SDL2-2.0.9/include:./libraries/SDL2_image-2.0.4/include:SDL2_ttf-2.0.15/include:./source_lib/libft
 
 $(OBJ_DIR)/%.o:	%.c
 				@mkdir $(OBJ_DIR) 2> /dev/null || true
@@ -152,8 +154,6 @@ clean:
 		make clean -C ./libraries/libft
 		make clean -C ./libraries/SDL2-2.0.9
 		make clean -C ./libraries/SDL2_image-2.0.4
-		make clean -C ./libraries/freetype-2.4.11
-		make clean -C ./libraries/SDL2_ttf-2.0.15
 		rm -rf $(OBJ_Dir)
 
 fclean:	clean
@@ -163,8 +163,6 @@ fclean:	clean
 fclnsdl:
 		rm -rf ./libraries/SDL2-2.0.9/lib/libSDL2.la
 		rm -rf ./libraries/SDL2_image-2.0.4/lib/libSDL2_image.la
-		rm -rf ./libraries/freetype-2.4.11
-		rm -rf ./libraries/SDL2_ttf-2.0.15
 
 re:		fclean all
 

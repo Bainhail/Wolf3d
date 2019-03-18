@@ -6,11 +6,31 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 14:08:50 by naali             #+#    #+#             */
-/*   Updated: 2019/03/14 12:16:47 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/18 14:39:57 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_struct.h"
+
+t_vertex	add_vtex(t_vertex v1, t_vertex v2)
+{
+	t_vertex	vres;
+
+	vres.x = v1.x + v2.x;
+	vres.y = v1.y + v2.y;
+	vres.z = v1.z + v2.z;
+	return (vres);
+}
+
+t_vertex	sub_vtex(t_vertex v1, t_vertex v2)
+{
+	t_vertex	vres;
+
+	vres.x = v1.x - v2.x;
+	vres.y = v1.y - v2.y;
+	vres.z = v1.z - v2.z;
+	return (vres);
+}
 
 t_vertex	init_vtex(double p_x, double p_y, double p_z)
 {

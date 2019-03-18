@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 15:36:30 by naali             #+#    #+#             */
-/*   Updated: 2019/03/14 15:19:48 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/18 14:40:13 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void			refresh_vect(t_vect *vect, double p_x, double p_y);
 t_vertex		init_vtex(double p_x, double p_y, double p_z);
 void			refresh_vtex(t_vertex *vect, double p_x,\
 							double p_y, double p_z);
+t_vertex		add_vtex(t_vertex v1, t_vertex v2);
+t_vertex		sub_vtex(t_vertex v1, t_vertex v2);
 
 /*
 ** Fichier:

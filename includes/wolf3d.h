@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 10:15:38 by naali             #+#    #+#             */
-/*   Updated: 2019/03/16 12:18:02 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/18 15:54:12 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # define WINX 800
 # define WINY 600
 # define PLAYER -42
-# define NORD 0
-# define SUD 180
-# define EST 90
-# define OUEST -90
+# define NORD 90
+# define SUD -90
+# define EST 0
+# define OUEST 180
 
 # include "includes.h"
 # include "t_struct.h"
@@ -56,9 +56,6 @@ typedef struct		s_map
 
 typedef struct		s_player
 {
-//	float			posx;// Position dans le tableau a traduire en position fenetre
-//	float			posy;// Position dans le tableau a traduire en position fenetre
-//	float			eye;//  Position de l'oeil (posz) <-- Modification possible
 	int				x;
 	int				y;
 	t_vertex		pos;//  Remplace posX posY eye (Centre du personnage)
@@ -69,11 +66,6 @@ typedef struct		s_player
 	t_vertex		s2;//   Sommet 2 triangle personnage
 	t_vertex		s3;//   Sommet 3 triangle personnage
 	double			dist;// Distance de vu max du joueur
-/*
-**  (Le Z de la direction permettra d'orienter le regard du
-**  personnage vers le HAUT ou le BAS par la suite)
-*/
-//	SDL_Renderer	*vu;//  Vu du personnage (Remplit par Raycasting) <-- Multi render impossible
 }					t_player;
 
 typedef struct		s_print
@@ -88,9 +80,10 @@ int			file_to_tab(char *path, t_map *m);
 int			draw_square(SDL_Renderer *r, t_map *m, int x, int y);
 int			get_player_pos(t_print *w, t_player *p, t_map *m);
 void		print_line(t_print *w, t_vertex start, t_vertex end);
-void		ft_event_loop(void);
-
-
-
+void		ft_event_loop(t_print *w);
+int			init_renderer(SDL_Renderer *r, t_map *m);
+void		calc_player_pos(t_map *m, t_player *p, int x, int y);
+void		refresh_player_pos(t_map *m, t_player *p);
+void		refresh_screen(t_print *w);
 
 #endif
