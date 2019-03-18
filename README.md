@@ -11,6 +11,13 @@
   - Deplacement du personnage - NEXT STEP
 
 - Raycasting 2D
+  - Mini-Algo:
+    - distance = 0
+    - tant que distance < dist_max
+      - x = cos(angle_rayon) * distance
+      - y = sin(angle_rayon) * distance
+      - afficher pixel de coordonnees { x ; y }
+      - distance++
   - En 2 etapes:
     - Dessin de la carte autours du perso
     - Puis uniquement ce que le personnage vois
