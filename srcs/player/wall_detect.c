@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/18 18:05:08 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/18 18:25:57 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ void		wall_detect(t_print *w, t_player *p, t_map *m)
 	double		x;
 	double		y;
 
+
+	int tmp_x;
+	int tmp_y;
+
 	dist = 0;
 	distmax = 20.0;
 	x = 0;//p->pos.x;
@@ -29,26 +33,29 @@ void		wall_detect(t_print *w, t_player *p, t_map *m)
 	{
 		x = cos(conv_deg_to_rad(p->flg_dir - 90)) * dist;
 		y = sin(conv_deg_to_rad(p->flg_dir - 90)) * dist;
-		printf("\n\nz = %.1f\n\n", m->tab[(int)(y / m->ycase)][(int)(x / m->xcase)].z);
-		if (m->tab[(int)(y / WINY)][(int)(x / WINY)].z >= 1)
-			printf("WALL\n");
-/* 		printf("\n\nx = %.1f, y = %.1f\n", p->pos.x + x, p->pos.y + y); */
-/* 		printf("x = %d, y = %d\n", (int)((p->pos.x + x)/m->xcase), (int)((p->pos.y + y)/m->ycase)); */
-		SDL_RenderDrawPoint(w->ren, (p->pos.x + x), (p->pos.y + y));
+		tmp_x = p->pos.x + x;
+		tmp_y = p->pos.y + y;
+		SDL_RenderDrawPoint(w->ren, tmp_x, tmp_y);
 		dist++;
 	}
-	int		x1, y1;
-	y1 = 0;
-	while (y1 < 10)
-	{
-		x1 = 0;
-		while (x1 < 18)
-		{
-			printf("%.1f\t", m->tab[y1][x1].z);
-			x1++;
-		}
-		printf("\n");
-		y1++;
-	}
-//	print_tab(m->tab);
+	if (m->tab[(int)(tmp_y / m->ycase)][(int)(tmp_x / m->xcase)].z >= 1)
+		printf("WALL\n");
+	else
+		printf("no WALL\n");
+
+
+	//affichage tab
+//	int		x1, y1;
+//	y1 = 0;
+//	while (y1 < 10)
+//	{
+//		x1 = 0;
+//		while (x1 < 18)
+//		{
+//			printf("%.1f\t", m->tab[y1][x1].z);
+//			x1++;
+//		}
+//		printf("\n");
+//		y1++;
+//	}
 }
