@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/18 17:25:43 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/18 17:59:08 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		refresh_screen(t_print *w)
 	print_line(w, w->pl.s1, w->pl.s2);
 	print_line(w, w->pl.s1, w->pl.s3);
 	print_line(w, w->pl.s3, w->pl.s2);
-	wall_detect(w, &(w->pl));
+	wall_detect(w, &(w->pl), &(w->m));
 	SDL_RenderPresent(w->ren);
 /* Refresh Render END */
 }
@@ -46,6 +46,23 @@ int			init_renderer(SDL_Renderer *r, t_map *m)
 	return (0);
 }
 
+void		print_tab(t_vertex **tab)
+{
+	int		x, y;
+	y = 0;
+	while (y < 10)
+	{
+		x = 0;
+		while (x < 18)
+		{
+			printf("%.1f\t", tab[y][x].z);
+			x++;
+		}
+		printf("\n");
+		y++;
+	}
+}
+
 int			main(int ac, char **av)
 {
 	t_print			p;
@@ -57,6 +74,7 @@ int			main(int ac, char **av)
 		printf("ERROR FILE\n");
 		return (-1);
 	}
+//	print_tab(p.m.tab);
 	SDL_Init(SDL_INIT_EVERYTHING);
 	p.w = SDL_CreateWindow("test", SDL_WINDOWPOS_CENTERED, \
 						   SDL_WINDOWPOS_CENTERED, WINX, WINY, \
