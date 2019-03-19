@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/19 14:14:33 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/19 15:28:41 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void		refresh_screen(t_print *w)
 	print_line(w, w->pl.s1, w->pl.s2);
 	print_line(w, w->pl.s1, w->pl.s3);
 	print_line(w, w->pl.s3, w->pl.s2);
-	wall_detect(w, &(w->pl), &(w->m));
+	ft_raycast(w, &(w->pl), &(w->m), w->pl.flg_dir);
+	SDL_SetRenderDrawColor(w->ren, 0, 0, 0, 100);
 	SDL_RenderPresent(w->ren);
 /* Refresh Render END */
 }
@@ -31,17 +32,17 @@ int			init_renderer(SDL_Renderer *r, t_map *m)
 	int		x;
 	int		y;
 
-	x = 0;
-	while (x < m->xmax)
+	y = 0;
+	while (y < m->ymax)
 	{
-		y = 0;
-		while (y < m->ymax)
+		x = 0;
+		while (x < m->xmax)
 		{
-			if (draw_square(r, m, (x * m->xcase), (y * m->ycase)) == -1)
+			if (draw_square(r, m, x, y) == -1)
 				return (-1);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 11:39:03 by naali             #+#    #+#             */
-/*   Updated: 2019/03/18 16:37:21 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/19 15:06:14 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,19 @@ int			draw_square(SDL_Renderer *r, t_map *m, int x, int y)
 	int		xct;
 	int		yct;
 
-	ytmp = y;
-	xct = (x + m->xcase > WINX) ? WINX : (x + m->xcase);
-	yct = y + m->ycase;
-	if (m->tab[(int)(y / m->ycase)][(int)(x / m->xcase)].z > 0)
+	ytmp = y * m->ycase;
+	if (m->tab[y][x].z >= 1)
 		SDL_SetRenderDrawColor(r, 0, 0, 0, 100);
 	else
 		SDL_SetRenderDrawColor(r, 255, 255, 255, 100);
-	while (x <= xct && x < WINX)
+	x *= m->xcase;
+	y *= m->ycase;
+	xct = x + (int)(m->xcase - 1);
+	yct = y + (int)(m->ycase - 1);
+	while (x < xct && x < WINX)
 	{
 		y = ytmp;
-		while (y <= yct && y <= WINY)
+		while (y < yct && y <= WINY)
 		{
 			SDL_RenderDrawPoint(r, x, y);
 			y++;

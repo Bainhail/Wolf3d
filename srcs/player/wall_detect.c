@@ -6,58 +6,47 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/19 14:20:04 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/19 15:40:57 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-void		wall_detect(t_print *w, t_player *p, t_map *m)
+void		wall_detect(t_print *w, t_player *p, t_map *m, int alpha)
 {
 	double		dist;
 	double		distmax;
 	double		x;
 	double		y;
-
-
 	int tmp_x;
 	int tmp_y;
 
 	dist = 0;
-	distmax = 20.0;
-	x = 0;//p->pos.x;
-	y = 0;//p->pos.y;
-	SDL_SetRenderDrawColor(w->ren, 0, 0, 255, 100);
-	printf("x = %.1f, y = %.1f\n", p->pos.x, p->pos.y);
+	distmax = 40.0;
+	x = 0;
+	y = 0;
 	while (dist < distmax)
 	{
-		x = cos(conv_deg_to_rad(p->flg_dir - 90)) * dist;
-		y = sin(conv_deg_to_rad(p->flg_dir - 90)) * dist;
+		x = cos(conv_deg_to_rad(alpha - 90)) * dist;
+		y = sin(conv_deg_to_rad(alpha - 90)) * dist;
 		tmp_x = p->pos.x + x;
 		tmp_y = p->pos.y + y;
 		SDL_RenderDrawPoint(w->ren, tmp_x, tmp_y);
 		dist++;
-	}
-	tmp_x = (int)(x / m->xcase);
-	tmp_y = (int)(y / m->ycase);
-	if (m->tab[tmp_y][tmp_x].z >= 1)
-		printf("WALL\n");
-	else
-		printf("no WALL\n");
-
-
-	//affichage tab
-	int		x1, y1;
-	y1 = 0;
-	while (y1 < 10)
-	{
-		x1 = 0;
-		while (x1 < 18)
+		if (m->tab[(int)(tmp_y / m->ycase)][(int)(tmp_x / m->xcase)].z >= 1)
 		{
-			printf("%.1f\t", m->tab[y1][x1].z);
-			x1++;
+			printf("alpha = %d, WALL\n", alpha - 90);
+			return;
 		}
-		printf("\n");
-		y1++;
 	}
+}
+
+void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha)
+{
+	SDL_SetRenderDrawColor(w->ren, 255, 0, 0, 100);
+	wall_detect(w, p, m, alpha);
+	SDL_SetRenderDrawColor(w->ren, 255, 0, 255, 100);
+	wall_detect(w, p, m, alpha - 30);
+	SDL_SetRenderDrawColor(w->ren, 0, 0, 255, 100);
+	wall_detect(w, p, m, alpha + 30);
 }

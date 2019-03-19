@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 12:19:33 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/18 17:14:33 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/19 15:09:38 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,24 @@ void		ft_update_event_editor(t_my_event *s_event, t_print *w)
 		{
 			if (event.key.keysym.scancode == SDL_SCANCODE_W)
 			{
-				w->pl.pos.x += cos(conv_deg_to_rad(w->pl.flg_dir - 90)) * 1;
-				w->pl.pos.y += sin(conv_deg_to_rad(w->pl.flg_dir - 90)) * 1;
+				w->pl.pos.x += cos(conv_deg_to_rad(w->pl.flg_dir - 90)) * 3;
+				w->pl.pos.y += sin(conv_deg_to_rad(w->pl.flg_dir - 90)) * 3;
 				refresh_screen(w);
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_S)
 			{
-				w->pl.pos.x -= cos(conv_deg_to_rad(w->pl.flg_dir - 90)) * 1;
-				w->pl.pos.y -= sin(conv_deg_to_rad(w->pl.flg_dir - 90)) * 1;
+				w->pl.pos.x -= cos(conv_deg_to_rad(w->pl.flg_dir - 90)) * 3;
+				w->pl.pos.y -= sin(conv_deg_to_rad(w->pl.flg_dir - 90)) * 3;
 				refresh_screen(w);
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_D)
 			{
-				w->pl.flg_dir += 5;
+				w->pl.flg_dir += 15;
 				refresh_screen(w);
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_A)
 			{
-				w->pl.flg_dir -= 5;
+				w->pl.flg_dir -= 15;
 				refresh_screen(w);
 			}
 			s_event->key[event.key.keysym.scancode] = SDL_TRUE;
