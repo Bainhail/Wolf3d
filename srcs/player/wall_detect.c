@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/18 18:25:57 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/19 14:20:04 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,26 @@ void		wall_detect(t_print *w, t_player *p, t_map *m)
 		SDL_RenderDrawPoint(w->ren, tmp_x, tmp_y);
 		dist++;
 	}
-	if (m->tab[(int)(tmp_y / m->ycase)][(int)(tmp_x / m->xcase)].z >= 1)
+	tmp_x = (int)(x / m->xcase);
+	tmp_y = (int)(y / m->ycase);
+	if (m->tab[tmp_y][tmp_x].z >= 1)
 		printf("WALL\n");
 	else
 		printf("no WALL\n");
 
 
 	//affichage tab
-//	int		x1, y1;
-//	y1 = 0;
-//	while (y1 < 10)
-//	{
-//		x1 = 0;
-//		while (x1 < 18)
-//		{
-//			printf("%.1f\t", m->tab[y1][x1].z);
-//			x1++;
-//		}
-//		printf("\n");
-//		y1++;
-//	}
+	int		x1, y1;
+	y1 = 0;
+	while (y1 < 10)
+	{
+		x1 = 0;
+		while (x1 < 18)
+		{
+			printf("%.1f\t", m->tab[y1][x1].z);
+			x1++;
+		}
+		printf("\n");
+		y1++;
+	}
 }

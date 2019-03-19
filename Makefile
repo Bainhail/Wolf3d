@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/18 16:39:30 by naali            ###   ########.fr        #
+#    Updated: 2019/03/19 14:14:09 by naali            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ vpath %.c ./srcs/:./srcs/getmap:./srcs/matrice:./srcs/draw:./srcs/player:./srcs/
 
 #vpath %.h ./includes/:./libraries/libft:./libraries/SDL2-2.0.9/include:./libraries/SDL2_image-2.0.4/include:SDL2_ttf-2.0.15/include:./source_lib/libft
 
-$(OBJ_DIR)/%.o:	%.c
+$(OBJ_DIR)/%.o:	%.c $(IFLAGS)
 				@mkdir $(OBJ_DIR) 2> /dev/null || true
 				@echo "Compiling $< ...\c"
 				$(CC) $(CFLAGS) -o $@ -c $^ $(IFLAGS)
