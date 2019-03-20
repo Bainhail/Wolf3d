@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 10:15:38 by naali             #+#    #+#             */
-/*   Updated: 2019/03/18 15:54:12 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/20 15:46:43 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define SUD -90
 # define EST 0
 # define OUEST 180
+# define WALL 600
+# define EYE 100
 
 # include "includes.h"
 # include "t_struct.h"

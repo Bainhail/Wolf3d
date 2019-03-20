@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/19 14:29:25 by naali            ###   ########.fr        #
+#    Updated: 2019/03/20 15:46:10 by naali            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,7 @@ vpath %.c ./srcs/:./srcs/getmap:./srcs/matrice:./srcs/draw:./srcs/player:./srcs/
 $(OBJ_DIR)/%.o:	%.c
 				@mkdir $(OBJ_DIR) 2> /dev/null || true
 				@echo "Compiling $< ...\c"
-				$(CC) $(CFLAGS) -o $@ -c $^ $(IFLAGS)
+				$(CC) $(CFLAGS) -o $@ -c $^ $(IFLAGS) $(LDLIBS)
 				@echo " DONE"
 
 all:			$(NAME)
