@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 14:09:53 by naali             #+#    #+#             */
-/*   Updated: 2019/03/21 13:30:04 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/21 14:34:28 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void		print_line1(t_print *w, int swp, t_vertex start, t_vertex end)
 	t_sgmt	l;
 
 	init_sgmt(&l, start, end);
-	SDL_SetRenderDrawColor(w->ren, 255, 0, 0, 100);
+	SDL_SetRenderDrawColor(w->renderer_3d, 255, 0, 0, 100);
 	while (++l.x < (l.maxX - 1))
 	{
 		if (swp >= 0)

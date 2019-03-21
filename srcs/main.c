@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/21 13:37:48 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/21 14:21:14 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,26 @@ void		refresh_screen(t_print *w)
 /* Refresh Render START */
 	SDL_RenderClear(w->ren);
 	SDL_RenderClear(w->renderer_3d);
+
+
 	init_renderer(w->ren, &(w->m));
 	refresh_player_pos(&(w->m), &(w->pl));
 	print_line(w, w->pl.s1, w->pl.s2);
 	print_line(w, w->pl.s1, w->pl.s3);
 	print_line(w, w->pl.s3, w->pl.s2);
 	ft_raycast(w, &(w->pl), &(w->m), w->pl.flg_dir);
+
+
+
 	SDL_SetRenderDrawColor(w->ren, 0, 0, 0, 100);
-	SDL_RenderPresent(w->ren);
 	SDL_SetRenderDrawColor(w->renderer_3d, 0, 0, 0, 100);
+
+
+	SDL_RenderPresent(w->ren);
 	SDL_RenderPresent(w->renderer_3d);
+
+
+
 
 /* Refresh Render END */
 }

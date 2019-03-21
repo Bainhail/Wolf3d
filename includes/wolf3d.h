@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 10:15:38 by naali             #+#    #+#             */
-/*   Updated: 2019/03/21 13:16:02 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/21 14:00:06 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ typedef enum		e_renderer
 	MAP_2D,
 	MAP_3D,
 }					t_renderer;
+
+typedef enum		e_bool
+{
+	FALSE = 0,
+	TRUE = 1,
+}					t_bool;
+
 
 typedef struct		s_file
 {
