@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 10:15:38 by naali             #+#    #+#             */
-/*   Updated: 2019/03/21 15:13:24 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/21 18:53:20 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # define SUD -90
 # define EST 0
 # define OUEST 180
-# define WALL 600
-# define EYE 100
+# define WALL 100
+# define EYE 300
 
 # include "includes.h"
 # include "t_struct.h"
@@ -92,16 +92,18 @@ typedef struct		s_print
 	SDL_Renderer	*ren;//   Pointeur du renderer sauvegarder de la carte
 	SDL_Window		*window_3d;
 	SDL_Renderer	*renderer_3d;
+	SDL_Renderer	*ren_flg;
 }					t_print;
 
 int			file_to_tab(char *path, t_map *m);
 int			draw_square(SDL_Renderer *r, t_map *m, int x, int y);
 int			get_player_pos(t_print *w, t_player *p, t_map *m);
-void		print_line(t_print *w, t_vertex start, t_vertex end);
+void		print_line(t_print *w, SDL_Renderer *r, t_vertex start, t_vertex end);
 void		ft_event_loop(t_print *w);
 int			init_renderer(SDL_Renderer *r, t_map *m);
 void		calc_player_pos(t_map *m, t_player *p, int x, int y);
 void		refresh_player_pos(t_map *m, t_player *p);
 void		refresh_screen(t_print *w);
+void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha);
 
 #endif
