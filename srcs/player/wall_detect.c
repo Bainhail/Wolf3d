@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/21 14:39:46 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/21 14:46:50 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,17 @@ double		dist_calc(double xa, double ya, double xb, double yb)
 
 int		static ft_colision_detection(t_map *m, int tmp_x, int tmp_y)
 {
-	if (m->tab[(int)(tmp_y / m->ycase)][(int)(tmp_x / m->xcase)].z >= 1)
+	if(tmp_x < 0 || tmp_x > (WINX - 1))
+		return(TRUE);
+	else if (tmp_y < 0 || tmp_y > (WINY - 1))
+		return(TRUE);
+	else if (m->tab[(int)(tmp_y / m->ycase)][(int)(tmp_x / m->xcase)].z >= 1)
 		return (TRUE);
 	return (FALSE);
 }
 
 void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int window_x)
-{
-	double		dist;
-	double		distmax;
+{ double		dist; double		distmax;
 	double		x;
 	double		y;
 	int tmp_x;
@@ -45,7 +47,7 @@ void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int window_x)
 
 	dist = 0;
 	colision = FALSE;
-	distmax = m->xcase * 2;
+	distmax = 99999; //m->xcase * 2;
 	x = 0;
 	y = 0;
 	while (dist < distmax && colision == FALSE)
