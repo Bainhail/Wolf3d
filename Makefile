@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/21 14:34:10 by jchardin         ###   ########.fr        #
+#    Updated: 2019/03/21 16:45:40 by naali            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,9 +40,10 @@ OBJ			=	$(SRC:.c=.o)
 
 OBJ_DIR		=	./objs
 
-INCLUDE_P	=	includes						\
-				libraries/libft					\
-				libraries/SDL2-2.0.9/include	\
+INCLUDE_P	=	includes/							\
+				libraries/libft/					\
+				libraries/SDL2-2.0.9/include/		\
+				libraries/SDL2_image-2.0.4/include/	\
 				source_lib/libft
 
 IFLAGS		=	$(addprefix -I./, $(INCLUDE_P))
@@ -70,7 +71,7 @@ vpath %.c ./srcs/:./srcs/getmap:./srcs/matrice:./srcs/draw:./srcs/player:./srcs/
 $(OBJ_DIR)/%.o:	%.c
 				@mkdir $(OBJ_DIR) 2> /dev/null || true
 				@echo "Compiling $< ...\c"
-				$(CC) $(CFLAGS) -o $@ -c $^ $(IFLAGS) $(LDLIBS)
+				@$(CC) $(CFLAGS) -o $@ -c $^ $(IFLAGS)
 				@echo " DONE"
 
 all:			$(NAME)
@@ -155,7 +156,7 @@ clean:
 		make clean -C ./libraries/libft
 		make clean -C ./libraries/SDL2-2.0.9
 		make clean -C ./libraries/SDL2_image-2.0.4
-		rm -rf $(OBJ_Dir)
+		rm -rf $(OBJS)
 
 fclean:	clean
 		make fclean -C ./libraries/libft
