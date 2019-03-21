@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 14:09:53 by naali             #+#    #+#             */
-/*   Updated: 2019/03/14 18:19:44 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/21 13:30:04 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static void		print_line1(t_print *w, int swp, t_vertex start, t_vertex end)
 	while (++l.x < (l.maxX - 1))
 	{
 		if (swp >= 0)
-			SDL_RenderDrawPoint(w->ren, l.y, l.x);
+			SDL_RenderDrawPoint(w->renderer_3d, l.y, l.x);
 		else
-			SDL_RenderDrawPoint(w->ren, l.x, l.y);
+			SDL_RenderDrawPoint(w->renderer_3d, l.x, l.y);
 		l.error = l.error - l.dy;
 		if (l.error < 0)
 		{

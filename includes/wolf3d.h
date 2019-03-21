@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 10:15:38 by naali             #+#    #+#             */
-/*   Updated: 2019/03/20 15:46:43 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/21 13:16:02 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@
 
 # include "includes.h"
 # include "t_struct.h"
+
+
+typedef enum		e_renderer
+{
+	MAP_2D,
+	MAP_3D,
+}					t_renderer;
 
 typedef struct		s_file
 {
@@ -76,6 +83,8 @@ typedef struct		s_print
 	t_map			m;//      (Voir s_map)
 	SDL_Window		*w;//     Pointeur de la fenetre
 	SDL_Renderer	*ren;//   Pointeur du renderer sauvegarder de la carte
+	SDL_Window		*window_3d;
+	SDL_Renderer	*renderer_3d;
 }					t_print;
 
 int			file_to_tab(char *path, t_map *m);

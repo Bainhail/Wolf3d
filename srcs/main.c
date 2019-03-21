@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/20 15:42:29 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/21 13:37:48 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void		refresh_screen(t_print *w)
 {
 /* Refresh Render START */
 	SDL_RenderClear(w->ren);
+	SDL_RenderClear(w->renderer_3d);
 	init_renderer(w->ren, &(w->m));
 	refresh_player_pos(&(w->m), &(w->pl));
 	print_line(w, w->pl.s1, w->pl.s2);
@@ -24,6 +25,9 @@ void		refresh_screen(t_print *w)
 	ft_raycast(w, &(w->pl), &(w->m), w->pl.flg_dir);
 	SDL_SetRenderDrawColor(w->ren, 0, 0, 0, 100);
 	SDL_RenderPresent(w->ren);
+	SDL_SetRenderDrawColor(w->renderer_3d, 0, 0, 0, 100);
+	SDL_RenderPresent(w->renderer_3d);
+
 /* Refresh Render END */
 }
 
@@ -80,13 +84,26 @@ int			main(int ac, char **av)
 	p.w = SDL_CreateWindow("test", SDL_WINDOWPOS_CENTERED, \
 						   SDL_WINDOWPOS_CENTERED, WINX, WINY, \
 						   SDL_WINDOW_SHOWN);
+
+
+	p.window_3d = SDL_CreateWindow("Window 3D", SDL_WINDOWPOS_CENTERED, \
+						   SDL_WINDOWPOS_CENTERED, WINX, WINY, \
+						   SDL_WINDOW_SHOWN);
+
+	p.renderer_3d = SDL_CreateRenderer(p.window_3d, 0, SDL_RENDERER_SOFTWARE);
+	SDL_RenderPresent(p.renderer_3d);
+
+
+
+
 	p.ren = SDL_CreateRenderer(p.w, 0, SDL_RENDERER_SOFTWARE);
 	init_renderer(p.ren, &(p.m));
 	get_player_pos(&p, &(p.pl), &(p.m));
 	SDL_RenderPresent(p.ren);
 	ft_event_loop(&p);
 	SDL_DestroyRenderer(p.ren);
-	SDL_DestroyWindow(p.w);
+	SDL_DestroyRenderer(p.renderer_3d);
+	SDL_DestroyWindow(p.window_3d);
 	SDL_Quit();
 	return (0);
 }

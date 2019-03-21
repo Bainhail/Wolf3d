@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/20 15:46:10 by naali            ###   ########.fr        #
+#    Updated: 2019/03/21 13:29:36 by jchardin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ SRC			=	main.c						\
 				multiply.c					\
 				mult_matrice.c				\
 				t_vertex.c					\
-				file_event_loop.c
+				file_event_loop.c			\
+				file_3d_map.c
 
 OBJ			=	$(SRC:.c=.o)
 
@@ -77,7 +78,7 @@ all:			$(NAME)
 lib:			libft sdl2 sdl2_image
 #freetype sdl2_ttf
 
-$(NAME):		$(OBJS) lib
+$(NAME):		jerome_tag $(OBJS) lib
 				@echo "Compiling Wolf3D... \c"
 				@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(IFLAGS) $(LDLIBS)
 				@echo "DONE"
@@ -174,5 +175,11 @@ norme:	clear
 
 exe:
 	./$(NAME)
+
+jerome_tag:
+	clear
+	/Users/jchardin/.brew/bin/ctags -R ./srcs
+	/Users/jchardin/.brew/bin/ctags -R ./includes
+
 
 .PHONY: all clean fclean fclnsdl re resdl

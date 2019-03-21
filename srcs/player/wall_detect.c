@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/20 15:42:42 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/21 13:27:03 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void		wall_function(t_print *w, double dist, double x)
 	hmp = (((double)EYE * (double)WALL) / dist) / 2.0;
 	w_up = init_vtex(x, ((double)WINY / 2.0) - hmp, 0);
 	w_bot = init_vtex(x, ((double)WINY / 2.0) + hmp, 0);
-	SDL_SetRenderDrawColor(w->ren, 127, 0, 127, 75);
+	SDL_SetRenderDrawColor(w->renderer_3d, 127, 0, 127, 75);
 	print_line(w, w_up, w_bot);
 }
 
