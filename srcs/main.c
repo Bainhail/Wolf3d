@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/21 15:13:37 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/21 18:22:51 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int			main(int ac, char **av)
 {
 	t_print			p;
 
+	
+
 	if (ac != 2)
 		return (0);
 	if (file_to_tab(av[1], &(p.m)) == -1)
@@ -91,6 +93,7 @@ int			main(int ac, char **av)
 	}
 //	print_tab(p.m.tab);
 	SDL_Init(SDL_INIT_EVERYTHING);
+	loadBMP();
 	p.w = SDL_CreateWindow("test", SDL_WINDOWPOS_CENTERED, \
 						   SDL_WINDOWPOS_CENTERED, WINX, WINY, \
 						   SDL_WINDOW_SHOWN);

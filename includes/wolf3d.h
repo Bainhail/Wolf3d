@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 10:15:38 by naali             #+#    #+#             */
-/*   Updated: 2019/03/21 15:13:24 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/21 16:54:11 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ int			init_renderer(SDL_Renderer *r, t_map *m);
 void		calc_player_pos(t_map *m, t_player *p, int x, int y);
 void		refresh_player_pos(t_map *m, t_player *p);
 void		refresh_screen(t_print *w);
+void		loadBMP();
 
 #endif
