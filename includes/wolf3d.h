@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/22 11:21:12 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/22 15:19:06 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,20 @@ typedef struct		s_print
 	SDL_Renderer	*renderer_3d;
 	SDL_Renderer	*ren_flg;
 	SDL_Texture		*txt;
+	SDL_Texture		*txt_x;
+	SDL_Texture		*txt_y;
 }					t_print;
 
-int			file_to_tab(char *path, t_map *m);
-int			draw_square(SDL_Renderer *r, t_map *m, int x, int y);
-int			get_player_pos(t_print *w, t_player *p, t_map *m);
-void		print_line(t_print *w, SDL_Renderer *r, t_vertex start, t_vertex end);
-void		ft_event_loop(t_print *w);
-int			init_renderer(SDL_Renderer *r, t_map *m);
-void		calc_player_pos(t_map *m, t_player *p, int x, int y);
-void		refresh_player_pos(t_map *m, t_player *p);
-void		refresh_screen(t_print *w);
-SDL_Texture		*loadBMP(SDL_Window *window, SDL_Renderer *tmp_renderer);
-void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha, SDL_Texture *txt);
+int					file_to_tab(char *path, t_map *m);
+int					draw_square(SDL_Renderer *r, t_map *m, int x, int y);
+int					get_player_pos(t_print *w, t_player *p, t_map *m);
+void				print_line(t_print *w, SDL_Renderer *r, t_vertex start, t_vertex end);
+void				ft_event_loop(t_print *w);
+int					init_renderer(SDL_Renderer *r, t_map *m);
+void				calc_player_pos(t_map *m, t_player *p, int x, int y);
+void				refresh_player_pos(t_map *m, t_player *p);
+void				refresh_screen(t_print *w);
+SDL_Texture		*loadBMP(SDL_Renderer *tmp_renderer, char *path);
+void				ft_raycast(t_print *w, t_player *p, t_map *m, int alpha, SDL_Texture *txt);
 
 #endif
