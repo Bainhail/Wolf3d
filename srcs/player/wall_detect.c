@@ -6,31 +6,63 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/21 18:51:58 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/22 11:59:17 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
 
-static void		ft_draw_wall(t_print *w, double dist, double x)
+static void		ft_draw_wall(t_print *w, double distance_ray, double x_window)
 {
 	t_vertex	w_up;
 	t_vertex	w_bot;
 	double		hmp;// hauteur du mur percu par le joueur.
 
-	hmp = (((double)EYE * (double)WALL) / dist) / 2.0;
-	w_up = init_vtex(x, ((double)WINY / 2.0) - hmp, 0);
-	w_bot = init_vtex(x, ((double)WINY / 2.0) + hmp, 0);
 
+
+	hmp = (((double)EYE * (double)WALL) / distance_ray) / 2.0;
+	w_up = init_vtex(x_window, ((double)WINY / 2.0) - hmp, 0);
+	w_bot = init_vtex(x_window, ((double)WINY / 2.0) + hmp, 0);
+
+
+
+	if (w->txt == NULL)
+	{
+		printf("LA TEXTURE ?!\n");
+		exit(0);
+	}
 	SDL_SetRenderDrawColor(w->renderer_3d, 50, 50, 200, 75);
-	print_line(w, w->renderer_3d, init_vtex(x, 0, 0), w_up);
+	print_line(w, w->renderer_3d, init_vtex(x_window, 0, 0), w_up);
 
-	SDL_SetRenderDrawColor(w->renderer_3d, 127, 0, 127, 75);
-	print_line(w, w->renderer_3d, w_up, w_bot);
+
+
+	//SDL_SetRenderDrawColor(w->renderer_3d, 27, 0, 127, 75);
+	//print_line(w, w->renderer_3d, w_up, w_bot);
+
+
 
 	SDL_SetRenderDrawColor(w->renderer_3d, 200, 200, 200, 75);
-	print_line(w, w->renderer_3d, w_bot, init_vtex(x, WINY, 0));
+	print_line(w, w->renderer_3d, w_bot, init_vtex(x_window, WINY, 0));
+
+
+	 SDL_Rect	srcrect;
+	 SDL_Rect	dstrect;
+
+	srcrect.x = (int)x_window % 42; //delta_y  // ou delta x
+	printf("le x =%d\n", srcrect.x);
+	srcrect.y = 0;  // ok
+	srcrect.w = 1; //ok
+	srcrect.h = 54; //ok 
+
+	dstrect.x = x_window;  //ok
+	dstrect.h = (int)hmp * 2;  //  ok
+	dstrect.y = (int)((double)WINY / 2.0) - (hmp / 2.0);  // ok
+	dstrect.w = 1;// ok
+
+
+	SDL_RenderCopy(w->renderer_3d, w->txt, &srcrect, &dstrect);//&dstrect);
+	//SDL_RenderPresent(w->renderer_3d);
 }
 
 static int		ft_colision_detection(t_map *m, int tmp_x, int tmp_y)
@@ -103,12 +135,14 @@ static void		 wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int w
 	}
 }
 
-void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha)
+void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha, SDL_Texture *txt)
 {
 	double	step;
 	double	angle;
 	double	max;
 	int		window_x;
+
+	(void)txt;
 
 	window_x = 0;
 	step = 60.0 / (double)WINX;

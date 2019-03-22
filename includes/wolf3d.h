@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/21 18:58:07 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/22 11:21:12 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct		s_print
 	SDL_Window		*window_3d;
 	SDL_Renderer	*renderer_3d;
 	SDL_Renderer	*ren_flg;
+	SDL_Texture		*txt;
 }					t_print;
 
 int			file_to_tab(char *path, t_map *m);
@@ -105,7 +106,7 @@ int			init_renderer(SDL_Renderer *r, t_map *m);
 void		calc_player_pos(t_map *m, t_player *p, int x, int y);
 void		refresh_player_pos(t_map *m, t_player *p);
 void		refresh_screen(t_print *w);
-void		loadBMP();
-void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha);
+SDL_Texture		*loadBMP(SDL_Window *window, SDL_Renderer *tmp_renderer);
+void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha, SDL_Texture *txt);
 
 #endif
