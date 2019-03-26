@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/22 15:19:06 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/26 13:54:31 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ typedef struct		s_print
 	SDL_Renderer	*renderer_3d;
 	SDL_Renderer	*ren_flg;
 	SDL_Texture		*txt;
-	SDL_Texture		*txt_x;
+	SDL_Texture		*txt_x_west;
+	SDL_Texture		*txt_x_east;
+	SDL_Texture		*txt_y_north;
+	SDL_Texture		*txt_y_south;
 	SDL_Texture		*txt_y;
 }					t_print;
 

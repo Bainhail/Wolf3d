@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/26 12:12:59 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/26 13:53:59 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,10 @@ int			main(int ac, char **av)
 
 
 	p.txt = loadBMP(p.renderer_3d, "untitled.bmp");
-	p.txt_x = loadBMP(p.renderer_3d, "image_x.bmp");
-	p.txt_y = loadBMP(p.renderer_3d, "imagey.bmp");
+	p.txt_x_west = loadBMP(p.renderer_3d, "west_x.bmp");
+	p.txt_x_east = loadBMP(p.renderer_3d, "east_x.bmp");
+	p.txt_y_south = loadBMP(p.renderer_3d, "south_y.bmp");
+	p.txt_y_north = loadBMP(p.renderer_3d, "north_y.bmp");
 
 
 

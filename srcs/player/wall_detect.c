@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/26 12:14:04 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/26 13:54:54 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,33 @@ typedef struct		s_secteur_rayon
 	int				actuel_y;
 }					t_secteur_rayon;
 
-static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_secteur_rayon s_secteur, int x, int y, t_map *m)
+static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_secteur_rayon s_secteur, int x, int y, t_map *m, double angle)
 {
 	t_vertex	w_up;
 	t_vertex	w_bot;
 	double		hmp;// hauteur du mur percu par le joueur.
 	int		le_delta;
 
+	printf("AAAAAA l'angle =%f\n", angle - 90);
+
+
 	le_delta = 0;
 	int orientation = -1;   //0 pour X  // 1 pour y
+	if (y < 0)
+		y = 0;
+	if (x < 0)
+		x = 0;
 
 
-	if (s_secteur.actuel_x == 0)
+	if (x == 0)
 	{
-		printf("X colision au bord");
+		printf("X colision");
 		le_delta = y % (int)m->ycase;
 		orientation = 0;
 	}
-	else if (s_secteur.actuel_y == 0)
+	else if (y == 0)
 	{
-		printf("Y colision au bord");
+		printf("Y colision");
 		le_delta = x % (int)m->xcase;
 		orientation = 1;
 	}
@@ -63,7 +70,12 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 	{
 		printf("AUCUN");
 	}
-	printf("\nle xy =%d =%d le secteur =%d =%d le delta =%d\n", x, y, s_secteur.actuel_x, s_secteur.actuel_y, le_delta);
+	printf("\nle secteur =%d =%d\n", s_secteur.actuel_x, s_secteur.actuel_y);
+	printf("le secteur prec =%d =%d \n", s_secteur.precedent_x, s_secteur.precedent_y);
+	printf("le x y =%d =%d\n", x, y);
+	printf("le delta =%d\n\n", le_delta);
+
+
 
 
 	hmp = (((double)EYE * (double)WALL) / distance_ray) / 2.0;
@@ -80,12 +92,8 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 	SDL_SetRenderDrawColor(w->renderer_3d, 50, 50, 200, 75);
 	print_line(w, w->renderer_3d, init_vtex(x_window, 0, 0), w_up);
 
-
-
 	//SDL_SetRenderDrawColor(w->renderer_3d, 27, 0, 127, 75);
 	//print_line(w, w->renderer_3d, w_up, w_bot);
-
-
 
 	SDL_SetRenderDrawColor(w->renderer_3d, 200, 200, 200, 75);
 	print_line(w, w->renderer_3d, w_bot, init_vtex(x_window, WINY, 0));
@@ -107,11 +115,24 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 
 
 	if (orientation == 0)
-		SDL_RenderCopy(w->renderer_3d, w->txt_x, &srcrect, &dstrect);//&dstrect);
+	{
+		if (cos(conv_deg_to_rad(angle - 90)) > 0)
+			SDL_RenderCopy(w->renderer_3d, w->txt_x_east, &srcrect, &dstrect);//&dstrect);
+		else
+			SDL_RenderCopy(w->renderer_3d, w->txt_x_west, &srcrect, &dstrect);//&dstrect);
+	}
 	else if (orientation == 1)
-		SDL_RenderCopy(w->renderer_3d, w->txt_y, &srcrect, &dstrect);//&dstrect);
+	{
+		if (sin(conv_deg_to_rad(angle - 90)) > 0)
+			SDL_RenderCopy(w->renderer_3d, w->txt_y_south, &srcrect, &dstrect);//&dstrect);
+		else
+			SDL_RenderCopy(w->renderer_3d, w->txt_y_north, &srcrect, &dstrect);//&dstrect);
+
+	}
 	else
+	{
 		SDL_RenderCopy(w->renderer_3d, w->txt, &srcrect, &dstrect);//&dstrect);
+	}
 
 	//SDL_RenderPresent(w->renderer_3d);
 }
@@ -206,7 +227,7 @@ static void		 wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int w
 			SDL_RenderDrawPoint(w->ren, x, y);
 		else
 			if ((ray_distance = dist_calc(p->pos.x, p->pos.y, x, y)) > 0)
-				ft_draw_wall(w, recalc_ray_distance(ray_distance, window_x), (double)window_x, s_secteur, x, y, m);
+				ft_draw_wall(w, recalc_ray_distance(ray_distance, window_x), (double)window_x, s_secteur, x, y, m, alpha);
 		ray_distance++;
 	}
 }
