@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/22 15:18:47 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/26 12:12:59 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,11 @@ int			main(int ac, char **av)
 						   SDL_WINDOW_SHOWN);
 	p.renderer_3d = SDL_CreateRenderer(p.window_3d, 0, SDL_RENDERER_SOFTWARE);
 	SDL_RenderPresent(p.renderer_3d);
+
+
 	p.txt = loadBMP(p.renderer_3d, "untitled.bmp");
-
-
-	p.txt_x = loadBMP(p.renderer_3d, "imagex.bmp");
+	p.txt_x = loadBMP(p.renderer_3d, "image_x.bmp");
 	p.txt_y = loadBMP(p.renderer_3d, "imagey.bmp");
-
 
 
 

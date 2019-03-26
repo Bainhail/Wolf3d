@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/22 15:22:31 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/26 12:14:04 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 typedef struct		s_secteur_rayon
 {
-	int precedent_x;
-	int precedent_y;
-	int actuel_x;
-	int actuel_y;
+	int				precedent_x;
+	int 			precedent_y;
+	int				actuel_x;
+	int				actuel_y;
 }					t_secteur_rayon;
 
 static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_secteur_rayon s_secteur, int x, int y, t_map *m)
@@ -25,46 +25,45 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 	t_vertex	w_up;
 	t_vertex	w_bot;
 	double		hmp;// hauteur du mur percu par le joueur.
-
 	int		le_delta;
 
 	le_delta = 0;
-
-
 	int orientation = -1;   //0 pour X  // 1 pour y
 
-if (s_secteur.actuel_x == 0)
-{
-	printf("X colision au bord");
-	le_delta = y % (int)m->ycase;
-	orientation = 0;
-}
-else if (s_secteur.actuel_y == 0)
-{
-	printf("Y colision au bord");
-	le_delta = x % (int)m->xcase;
-	orientation = 1;
-}
-else if (s_secteur.actuel_x == s_secteur.precedent_x && s_secteur.actuel_y == s_secteur.precedent_y)
-{
-	printf("NO change");
-}
-else if (s_secteur.actuel_x == s_secteur.precedent_x)
-{
-	printf("Y colision");
-	le_delta = x % (int)m->xcase;
-	orientation = 1;
-}
-else if (s_secteur.actuel_y == s_secteur.precedent_y)
-{
-	printf("X colision");
-	le_delta = y % (int)m->ycase;
-	orientation = 0;
-}
-else
-{
-	printf("AUCUN");
-}
+
+	if (s_secteur.actuel_x == 0)
+	{
+		printf("X colision au bord");
+		le_delta = y % (int)m->ycase;
+		orientation = 0;
+	}
+	else if (s_secteur.actuel_y == 0)
+	{
+		printf("Y colision au bord");
+		le_delta = x % (int)m->xcase;
+		orientation = 1;
+	}
+	else if (s_secteur.actuel_x == s_secteur.precedent_x && s_secteur.actuel_y == s_secteur.precedent_y)
+	{
+		printf("NO change");
+	}
+	else if (s_secteur.actuel_x == s_secteur.precedent_x)
+	{
+		printf("Y colision");
+		le_delta = x % (int)m->xcase;
+		orientation = 1;
+	}
+	else if (s_secteur.actuel_y == s_secteur.precedent_y)
+	{
+		printf("X colision");
+		le_delta = y % (int)m->ycase;
+		orientation = 0;
+	}
+	else
+	{
+		printf("AUCUN");
+	}
+	printf("\nle xy =%d =%d le secteur =%d =%d le delta =%d\n", x, y, s_secteur.actuel_x, s_secteur.actuel_y, le_delta);
 
 
 	hmp = (((double)EYE * (double)WALL) / distance_ray) / 2.0;
@@ -92,8 +91,8 @@ else
 	print_line(w, w->renderer_3d, w_bot, init_vtex(x_window, WINY, 0));
 
 
-	 SDL_Rect	srcrect;
-	 SDL_Rect	dstrect;
+	SDL_Rect	srcrect;
+	SDL_Rect	dstrect;
 
 	srcrect.x = le_delta;//(int)x_window % 42; //delta_y  // ou delta x
 	//printf("le x =%d\n", srcrect.x);
@@ -185,6 +184,7 @@ static void		 wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int w
 
 
 	t_secteur_rayon		s_secteur;
+
 	s_secteur.precedent_x = (int)(p->pos.x / m->xcase);
 	s_secteur.precedent_y = (int)(p->pos.y / m->ycase);
 	s_secteur.actuel_x = (int)(p->pos.x / m->xcase);
