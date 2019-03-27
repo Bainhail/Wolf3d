@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 13:48:06 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 11:46:06 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 12:27:43 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ t_vertex		rotate_around_new_center(t_vertex *point, \
 
 	angle = conv_deg_to_rad(degree);
 	new_point.x = center->x + (point->x - center->x) * cos(angle) \
-				  - (point->y - center->y) * sin(angle);// Rotation de X par le centre CENTER
+			- (point->y - center->y) * sin(angle);
 	new_point.y = center->y + (point->x - center->x) * sin(angle) \
-				  + (point->y - center->y) * cos(angle);// Rotation de Y par le centre CENTER
+			+ (point->y - center->y) * cos(angle);
 	new_point.z = 0;
 	return (new_point);
 }

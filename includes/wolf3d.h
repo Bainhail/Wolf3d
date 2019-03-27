@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/27 12:15:46 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 12:39:40 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void				ft_raycast(t_print *w, t_player *p, t_map *m, int alpha, SDL_Texture *tx
 
 
 void				ft_quit(t_print *p);
+int					ft_get_the_map(char **av, t_print *p);
 
 
 

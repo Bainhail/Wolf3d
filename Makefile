@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/27 11:58:49 by jchardin         ###   ########.fr        #
+#    Updated: 2019/03/27 12:40:08 by jchardin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ SRC			=	main.c						\
 				t_vertex.c					\
 				file_event_loop.c			\
 				file_3d_map.c \
-				file_ft_quit.c
+				file_ft_quit.c \
+				file_ft_get_the_map.c
 
 OBJ			=	$(SRC:.c=.o)
 
