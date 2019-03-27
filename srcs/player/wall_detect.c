@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 11:28:57 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:32:53 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,10 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 
 static int		ft_colision_detection(t_map *m, int tmp_x, int tmp_y)
 {
-	if(tmp_x < 0 || tmp_x > (WINX - 1))
-		return(TRUE);
+	if (tmp_x < 0 || tmp_x > (WINX - 1))
+		return (TRUE);
 	else if (tmp_y < 0 || tmp_y > (WINY - 1))
-		return(TRUE);
+		return (TRUE);
 	else if (m->tab[(int)(tmp_y / m->ycase)][(int)(tmp_x / m->xcase)].z >= 1)
 		return (TRUE);
 	return (FALSE);
@@ -156,7 +156,7 @@ static double	recalc_ray_distance(double dist, int win_step)
 
 void			ft_get_secteur_rayon(t_secteur_rayon *s_secteur, int x, int y, t_map *m)
 {
-	if(s_secteur->actuel_x != (int)(x / m->xcase) || s_secteur->actuel_y != (int)(y / m->ycase))
+	if (s_secteur->actuel_x != (int)(x / m->xcase) || s_secteur->actuel_y != (int)(y / m->ycase))
 	{
 		s_secteur->precedent_x = s_secteur->actuel_x;
 		s_secteur->precedent_y = s_secteur->actuel_y;
@@ -185,10 +185,7 @@ static void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int wi
 	{
 		x = (cos(conv_deg_to_rad(alpha - 90)) * ray_distance) + p->pos.x;
 		y = (sin(conv_deg_to_rad(alpha - 90)) * ray_distance) + p->pos.y;
-
 		ft_get_secteur_rayon(&s_secteur, x, y, m);
-
-
 		if ((colision = ft_colision_detection(m, x, y)) == FALSE)
 			SDL_RenderDrawPoint(w->ren, x, y);
 		else
