@@ -6,11 +6,28 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 12:19:33 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/27 11:42:27 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 12:06:22 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
+
+typedef enum e_move_player
+{
+	UP,
+	DOWN,
+	TRIGO,
+	ANTI
+}			s_move_player;
+
+void			ft_move_player(int move, t_print *w)
+{
+	if (move == UP)
+	{
+				w->pl.pos.x += cos(conv_deg_to_rad(w->pl.flg_dir - 90)) * 16;
+				w->pl.pos.y += sin(conv_deg_to_rad(w->pl.flg_dir - 90)) * 16;
+	}
+}
 
 void			ft_update_event_editor(t_my_event *s_event, t_print *w)
 {
@@ -24,8 +41,7 @@ void			ft_update_event_editor(t_my_event *s_event, t_print *w)
 		{
 			if (event.key.keysym.scancode == SDL_SCANCODE_W)
 			{
-				w->pl.pos.x += cos(conv_deg_to_rad(w->pl.flg_dir - 90)) * 16;
-				w->pl.pos.y += sin(conv_deg_to_rad(w->pl.flg_dir - 90)) * 16;
+				ft_move_player(UP, w);
 				refresh_screen(w);
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_S)
