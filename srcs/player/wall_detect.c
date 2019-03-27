@@ -6,11 +6,11 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 16:50:08 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 17:04:49 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include <wolf3d.h>
 
 static double	ft_calcul_distance(double xa, double ya, double xb, double yb)
 {
@@ -86,49 +86,46 @@ static int		ft_get_wall_orientation(double angle, int orientation)
 	return (orientation);
 }
 
-static void		ft_load_texture_ft_orientation(int orientation, t_print *w, SDL_Rect *srcrect, SDL_Rect *dstrect)
+static void		ft_load_texture_ft_orientation(t_print *w, t_my_raycast *s_raycast)
 {
-	if (orientation == EAST_WALL)
-		SDL_RenderCopy(w->renderer_3d, w->txt_x_east, srcrect, dstrect);
-	else if (orientation == WEST_WALL)
-		SDL_RenderCopy(w->renderer_3d, w->txt_x_west, srcrect, dstrect);
-	else if (orientation == SOUTH_WALL)
-		SDL_RenderCopy(w->renderer_3d, w->txt_y_south, srcrect, dstrect);
-	else if (orientation == NORTH_WALL)
-		SDL_RenderCopy(w->renderer_3d, w->txt_y_north, srcrect, dstrect);
+	if (s_raycast->orientation == EAST_WALL)
+		SDL_RenderCopy(w->renderer_3d, w->txt_x_east, &(s_raycast->srcrect), &(s_raycast->dstrect));
+	else if (s_raycast->orientation == WEST_WALL)
+		SDL_RenderCopy(w->renderer_3d, w->txt_x_west, &(s_raycast->srcrect), &(s_raycast->dstrect));
+	else if (s_raycast->orientation == SOUTH_WALL)
+		SDL_RenderCopy(w->renderer_3d, w->txt_y_south, &(s_raycast->srcrect), &(s_raycast->dstrect));
+	else if (s_raycast->orientation == NORTH_WALL)
+		SDL_RenderCopy(w->renderer_3d, w->txt_y_north, &(s_raycast->srcrect), &(s_raycast->dstrect));
 	else
-		SDL_RenderCopy(w->renderer_3d, w->txt, srcrect, dstrect);
+		SDL_RenderCopy(w->renderer_3d, w->txt, &(s_raycast->srcrect), &(s_raycast->dstrect));
 }
 
-static void		ft_init_texture_wall_position(SDL_Rect *srcrect, SDL_Rect *dstrect, double hmp, double x_window, t_map *m, int x, int y, int orientation)
+static void		ft_init_texture_wall_position(t_map *m, t_my_raycast *s_raycast)
 {
 	int le_delta;
 
-	if (orientation == EAST_WALL || orientation == WEST_WALL)
-		le_delta = y % (int)m->ycase;
+	if (s_raycast->orientation == EAST_WALL || s_raycast->orientation == WEST_WALL)
+		le_delta = (int)s_raycast->y % (int)m->ycase;
 	else
-		le_delta = x % (int)m->xcase;
-	srcrect->x = le_delta;
-	srcrect->y = 0;
-	srcrect->w = 1;
-	srcrect->h = 54;
-	dstrect->x = x_window;
-	dstrect->h = (int)hmp * 2;
-	dstrect->y = (int)((double)WINY / 2.0) - (hmp / 2.0);
-	dstrect->w = 1;
+		le_delta = (int)s_raycast->x % (int)m->xcase;
+	s_raycast->srcrect.x = le_delta;
+	s_raycast->srcrect.y = 0;
+	s_raycast->srcrect.w = 1;
+	s_raycast->srcrect.h = 54;
+	s_raycast->dstrect.x = s_raycast->window_x;
+	s_raycast->dstrect.h = (int)s_raycast->hmp * 2;
+	s_raycast->dstrect.y = (int)((double)WINY / 2.0) - (s_raycast->hmp / 2.0);
+	s_raycast->dstrect.w = 1;
 }
 
 static void		ft_draw_wall(t_print *w, t_map *m, t_player *p, t_my_raycast *s_raycast)
 {
 	t_vertex	w_up;
 	t_vertex	w_bot;
-	SDL_Rect	srcrect;
-	SDL_Rect	dstrect;
-	double		ray_distance;
 	double		distance_ray;
 
-	ray_distance = ft_calcul_distance(p->pos.x, p->pos.y, s_raycast->x, s_raycast->y);
-	distance_ray = recalc_ray_distance(ray_distance, s_raycast->window_x);
+	distance_ray = ft_calcul_distance(p->pos.x, p->pos.y, s_raycast->x, s_raycast->y);
+	distance_ray = recalc_ray_distance(distance_ray, s_raycast->window_x);
 	s_raycast->orientation = ft_get_colision_type(s_raycast->x, s_raycast->y, s_raycast);
 	s_raycast->orientation = ft_get_wall_orientation(s_raycast->angle, s_raycast->orientation);
 	s_raycast->hmp = (((double)EYE * (double)WALL) / distance_ray) / 2.0;
@@ -138,8 +135,8 @@ static void		ft_draw_wall(t_print *w, t_map *m, t_player *p, t_my_raycast *s_ray
 	print_line(w, w->renderer_3d, init_vtex(s_raycast->window_x, 0, 0), w_up);
 	SDL_SetRenderDrawColor(w->renderer_3d, 200, 200, 200, 75);
 	print_line(w, w->renderer_3d, w_bot, init_vtex(s_raycast->window_x, WINY, 0));
-	ft_init_texture_wall_position(&srcrect, &dstrect, s_raycast->hmp, s_raycast->window_x, m, s_raycast->x, s_raycast->y, s_raycast->orientation);
-	ft_load_texture_ft_orientation(s_raycast->orientation, w, &srcrect, &dstrect);
+	ft_init_texture_wall_position(m, s_raycast);
+	ft_load_texture_ft_orientation(w, s_raycast);
 }
 
 static int		ft_colision_detection(t_map *m, t_my_raycast *s_raycast)
