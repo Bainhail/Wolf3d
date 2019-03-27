@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/27 11:59:29 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 12:15:46 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ typedef struct			s_my_event
 	SDL_bool			key[SDL_NUM_SCANCODES];
 	SDL_bool			quit;
 }						t_my_event;
+
+typedef enum e_move_player
+{
+	UP,
+	DOWN,
+	TRIGO,
+	ANTI
+}			s_move_player;
 
 typedef struct		s_file
 {
