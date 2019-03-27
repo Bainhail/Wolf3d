@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/27 13:37:19 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 14:30:35 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,16 @@ typedef enum e_move_player
 	TRIGO,
 	ANTI
 }			s_move_player;
+
+typedef enum e_orientation_wall
+{
+	Y_COLISION,
+	X_COLISION,
+	NORTH_WALL,
+	SOUTH_WALL,
+	EAST_WALL,
+	WEST_WALL
+}			s_orientation_wall;
 
 typedef struct		s_file
 {
