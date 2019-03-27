@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 11:28:10 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:28:57 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ static int		ft_colision_detection(t_map *m, int tmp_x, int tmp_y)
 	return (FALSE);
 }
 
-static double		dist_calc(double xa, double ya, double xb, double yb)
+static double	dist_calc(double xa, double ya, double xb, double yb)
 {
 	double	dist;
 	double	x;
@@ -154,7 +154,7 @@ static double	recalc_ray_distance(double dist, int win_step)
 	return (dist_cor);
 }
 
-void	ft_get_secteur_rayon(t_secteur_rayon *s_secteur, int x, int y, t_map *m)
+void			ft_get_secteur_rayon(t_secteur_rayon *s_secteur, int x, int y, t_map *m)
 {
 	if(s_secteur->actuel_x != (int)(x / m->xcase) || s_secteur->actuel_y != (int)(y / m->ycase))
 	{
@@ -165,7 +165,7 @@ void	ft_get_secteur_rayon(t_secteur_rayon *s_secteur, int x, int y, t_map *m)
 	}
 }
 
-static void		 wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int window_x)
+static void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int window_x)
 {
 	double				ray_distance;
    	double				ray_distance_max;
@@ -206,7 +206,6 @@ void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha, SDL_Texture *txt)
 	int		window_x;
 
 	(void)txt;
-
 	window_x = 0;
 	step = 60.0 / (double)WINX;
 	angle = (double)alpha - 30;
