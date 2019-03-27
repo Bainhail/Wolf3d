@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 11:26:58 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:28:10 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,32 +84,31 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 	print_line(w, w->renderer_3d, w_bot, init_vtex(x_window, WINY, 0));
 	SDL_Rect	srcrect;
 	SDL_Rect	dstrect;
-	srcrect.x = le_delta;//(int)x_window % 42; //delta_y  // ou delta x
-	srcrect.y = 0;  // ok
-	srcrect.w = 1; //ok
-	srcrect.h = 54; //ok 
-	dstrect.x = x_window;  //ok
-	dstrect.h = (int)hmp * 2;  //  ok
-	dstrect.y = (int)((double)WINY / 2.0) - (hmp / 2.0);  // ok
+	srcrect.x = le_delta;
+	srcrect.y = 0;
+	srcrect.w = 1;
+	srcrect.h = 54;
+	dstrect.x = x_window;
+	dstrect.h = (int)hmp * 2;
+	dstrect.y = (int)((double)WINY / 2.0) - (hmp / 2.0);
 	dstrect.w = 1;// ok
 	if (orientation == 0)
 	{
 		if (cos(conv_deg_to_rad(angle - 90)) > 0)
-			SDL_RenderCopy(w->renderer_3d, w->txt_x_east, &srcrect, &dstrect);//&dstrect);
+			SDL_RenderCopy(w->renderer_3d, w->txt_x_east, &srcrect, &dstrect);
 		else
-			SDL_RenderCopy(w->renderer_3d, w->txt_x_west, &srcrect, &dstrect);//&dstrect);
+			SDL_RenderCopy(w->renderer_3d, w->txt_x_west, &srcrect, &dstrect);
 	}
 	else if (orientation == 1)
 	{
 		if (sin(conv_deg_to_rad(angle - 90)) > 0)
-			SDL_RenderCopy(w->renderer_3d, w->txt_y_south, &srcrect, &dstrect);//&dstrect);
+			SDL_RenderCopy(w->renderer_3d, w->txt_y_south, &srcrect, &dstrect);
 		else
-			SDL_RenderCopy(w->renderer_3d, w->txt_y_north, &srcrect, &dstrect);//&dstrect);
-
+			SDL_RenderCopy(w->renderer_3d, w->txt_y_north, &srcrect, &dstrect);
 	}
 	else
 	{
-		SDL_RenderCopy(w->renderer_3d, w->txt, &srcrect, &dstrect);//&dstrect);
+		SDL_RenderCopy(w->renderer_3d, w->txt, &srcrect, &dstrect);
 	}
 }
 
@@ -168,11 +167,11 @@ void	ft_get_secteur_rayon(t_secteur_rayon *s_secteur, int x, int y, t_map *m)
 
 static void		 wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int window_x)
 {
-	double		ray_distance;
-   	double		ray_distance_max;
-	double		x;
-	double		y;
-	int			colision;
+	double				ray_distance;
+   	double				ray_distance_max;
+	double				x;
+	double				y;
+	int					colision;
 	t_secteur_rayon		s_secteur;
 
 	s_secteur.precedent_x = (int)(p->pos.x / m->xcase);
