@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 14:09:53 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 11:43:15 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 12:46:39 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static void		print_line1(t_print *w, int swp, t_vertex start, t_vertex end)
 	}
 }
 
-void			print_line(t_print *w, SDL_Renderer *r, t_vertex start, t_vertex end)
+void			print_line(t_print *w, SDL_Renderer *r, t_vertex start,
+t_vertex end)
 {
 	int		swp;
 

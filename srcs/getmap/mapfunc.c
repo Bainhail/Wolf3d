@@ -6,11 +6,11 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 13:24:08 by naali             #+#    #+#             */
-/*   Updated: 2019/03/12 10:05:16 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/27 12:45:12 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include <wolf3d.h>
 
 static t_vertex		*split_nb_to_tab2(t_map *m, char **line, int i, int *lizi)
 {
@@ -118,10 +118,8 @@ int					file_to_tab(char *path, t_map *m)
 	if (m->f.tbline == NULL)
 		return (-1);
 	m->tab = split_nb_to_tab1(m->f.tbline, m);
-	if (m->f.line != NULL)
-		free(m->f.line);
-	if (m->f.fd > 0)
-		close(m->f.fd);
+	m->f.line != NULL ? free(m->f.line) : 0;
+	m->f.fd > 0 ? close(m->f.fd) : 0;
 	m->xcase = (float)WINX / (float)(m->xmax);
 	m->ycase = (float)WINY / (float)(m->ymax);
 	return (0);
