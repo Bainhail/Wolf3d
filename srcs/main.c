@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 12:46:01 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 13:36:14 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void			refresh_screen(t_print *w)
 	print_line(w, w->ren, w->pl.s1, w->pl.s2);
 	print_line(w, w->ren, w->pl.s1, w->pl.s3);
 	print_line(w, w->ren, w->pl.s3, w->pl.s2);
-	ft_raycast(w, &(w->pl), &(w->m), w->pl.flg_dir, w->txt);
+	ft_raycast(w, &(w->pl), &(w->m), w->pl.flg_dir);
 	SDL_SetRenderDrawColor(w->ren, 0, 0, 0, 100);
 	SDL_SetRenderDrawColor(w->renderer_3d, 0, 0, 0, 100);
 	SDL_RenderPresent(w->ren);
@@ -94,7 +94,7 @@ SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
 	p.ren = SDL_CreateRenderer(p.w, 0, SDL_RENDERER_SOFTWARE);
 	init_renderer(p.ren, &(p.m));
 	get_player_pos(&p, &(p.pl), &(p.m));
-	ft_raycast(&p, &(p.pl), &(p.m), EST, p.txt);
+	ft_raycast(&p, &(p.pl), &(p.m), EST);
 	SDL_RenderPresent(p.ren);
 	ft_event_loop(&p);
 	ft_quit(&p);

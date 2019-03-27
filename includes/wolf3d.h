@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/27 13:06:42 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 13:37:19 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int					init_renderer(SDL_Renderer *r, t_map *m);
 void				calc_player_pos(t_map *m, t_player *p, int x, int y);
 void				refresh_player_pos(t_map *m, t_player *p);
 void				refresh_screen(t_print *w);
-SDL_Texture		*loadBMP(SDL_Renderer *tmp_renderer, char *path);
+SDL_Texture			*loadBMP(SDL_Renderer *tmp_renderer, char *path);
 
 
 void				ft_quit(t_print *p);

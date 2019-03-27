@@ -6,13 +6,44 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 13:16:57 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 13:41:35 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_secteur_rayon s_secteur, int x, int y, t_map *m, double angle)
+static double	ft_calcul_distance(double xa, double ya, double xb, double yb)
+{
+	double	dist;
+	double	x;
+	double	y;
+
+	x = (xb - xa) * (xb - xa);
+	y = (yb - ya) * (yb - ya);
+	dist = sqrt(x + y);
+	return (dist);
+}
+
+static double	recalc_ray_distance(double dist, int win_step)
+{
+	double		dist_cor;
+	double		step;
+
+	step = 60.0 / (double)WINX;
+	if (win_step <= WINX / 2)
+	{
+		step *= win_step;
+		dist_cor = cos(conv_deg_to_rad(30.0 - step)) * dist;
+	}
+	else
+	{
+		step *= (win_step - WINX / 2);
+		dist_cor = cos(conv_deg_to_rad(step)) * dist;
+	}
+	return (dist_cor);
+}
+
+static void		ft_draw_wall(t_print *w, double x_window, t_secteur_rayon s_secteur, int x, int y, t_map *m, double angle, t_player *p)
 {
 	t_vertex	w_up;
 	t_vertex	w_bot;
@@ -21,7 +52,11 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 	int			orientation;
 	SDL_Rect	srcrect;
 	SDL_Rect	dstrect;
+	double		ray_distance;
+	double		distance_ray;
 
+	ray_distance = ft_calcul_distance(p->pos.x, p->pos.y, x, y);
+	distance_ray = recalc_ray_distance(ray_distance, x_window);
 	printf("AAAAAA l'angle =%f\n", angle - 90);
 	le_delta = 0;
 	orientation = -1;
@@ -116,38 +151,7 @@ static int		ft_colision_detection(t_map *m, int tmp_x, int tmp_y)
 	return (FALSE);
 }
 
-static double	ft_calcul_distance(double xa, double ya, double xb, double yb)
-{
-	double	dist;
-	double	x;
-	double	y;
-
-	x = (xb - xa) * (xb - xa);
-	y = (yb - ya) * (yb - ya);
-	dist = sqrt(x + y);
-	return (dist);
-}
-
-static double	recalc_ray_distance(double dist, int win_step)
-{
-	double		dist_cor;
-	double		step;
-
-	step = 60.0 / (double)WINX;
-	if (win_step <= WINX / 2)
-	{
-		step *= win_step;
-		dist_cor = cos(conv_deg_to_rad(30.0 - step)) * dist;
-	}
-	else
-	{
-		step *= (win_step - WINX / 2);
-		dist_cor = cos(conv_deg_to_rad(step)) * dist;
-	}
-	return (dist_cor);
-}
-
-void			ft_get_secteur_rayon(t_secteur_rayon *s_secteur, int x, int y, t_map *m)
+static void		ft_get_secteur_rayon(t_secteur_rayon *s_secteur, int x, int y, t_map *m)
 {
 	if (s_secteur->actuel_x != (int)(x / m->xcase) || s_secteur->actuel_y != (int)(y / m->ycase))
 	{
@@ -158,7 +162,7 @@ void			ft_get_secteur_rayon(t_secteur_rayon *s_secteur, int x, int y, t_map *m)
 	}
 }
 
-void			ft_init_secteur_rayon(t_secteur_rayon *s_secteur, t_player *p, t_map *m)
+static void		ft_init_secteur_rayon(t_secteur_rayon *s_secteur, t_player *p, t_map *m)
 {
 	s_secteur->precedent_x = (int)(p->pos.x / m->xcase);
 	s_secteur->precedent_y = (int)(p->pos.y / m->ycase);
@@ -168,32 +172,24 @@ void			ft_init_secteur_rayon(t_secteur_rayon *s_secteur, t_player *p, t_map *m)
 
 static void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int window_x)
 {
-
-	double				ray_distance;
-	double				ray_distance_max;
 	double				x;
 	double				y;
 	int					colision;
 	t_secteur_rayon		s_secteur;
+	double				ray_distance;
 
 	ft_init_secteur_rayon(&s_secteur, p, m);
-	ray_distance = 0;
 	colision = FALSE;
-	ray_distance_max = 99999;
-	while (ray_distance < ray_distance_max && colision == FALSE)
+	ray_distance = 0;
+	while (colision == FALSE)
 	{
 		x = (cos(conv_deg_to_rad(alpha - 90)) * ray_distance) + p->pos.x;
 		y = (sin(conv_deg_to_rad(alpha - 90)) * ray_distance) + p->pos.y;
 		ft_get_secteur_rayon(&s_secteur, x, y, m);
 		if ((colision = ft_colision_detection(m, x, y)) == FALSE)
-		{
 			SDL_RenderDrawPoint(w->ren, x, y);
-		}
 		else
-		{
-			if ((ray_distance = ft_calcul_distance(p->pos.x, p->pos.y, x, y)) > 0)
-				ft_draw_wall(w, recalc_ray_distance(ray_distance, window_x), (double)window_x, s_secteur, x, y, m, alpha);
-		}
+			ft_draw_wall(w, (double)window_x, s_secteur, x, y, m, alpha, p);
 		ray_distance++;
 	}
 }
