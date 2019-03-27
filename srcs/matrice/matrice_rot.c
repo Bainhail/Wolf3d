@@ -6,11 +6,11 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 13:48:06 by naali             #+#    #+#             */
-/*   Updated: 2019/03/18 16:20:30 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/27 11:46:06 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_struct.h"
+#include <t_struct.h>
 
 t_matrice		set_x_matrice(double degree)
 {
@@ -87,18 +87,18 @@ t_matrice		set_z_matrice(double degree)
 	return (matrice);
 }
 
-t_vertex	rotate_around_new_center(t_vertex *point, \
-									 t_vertex *center, \
-									 double degree)
+t_vertex		rotate_around_new_center(t_vertex *point, \
+		t_vertex *center, \
+		double degree)
 {
 	double		angle;
 	t_vertex	new_point;
 
 	angle = conv_deg_to_rad(degree);
 	new_point.x = center->x + (point->x - center->x) * cos(angle) \
-		- (point->y - center->y) * sin(angle);// Rotation de X par le centre CENTER
+				  - (point->y - center->y) * sin(angle);// Rotation de X par le centre CENTER
 	new_point.y = center->y + (point->x - center->x) * sin(angle) \
-		+ (point->y - center->y) * cos(angle);// Rotation de Y par le centre CENTER
+				  + (point->y - center->y) * cos(angle);// Rotation de Y par le centre CENTER
 	new_point.z = 0;
 	return (new_point);
 }
