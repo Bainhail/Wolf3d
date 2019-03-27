@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 16:20:13 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 16:25:57 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,10 +176,8 @@ static void		ft_init_secteur_rayon(t_secteur_rayon *s_secteur, t_player *p, t_ma
 	s_secteur->actuel_y = (int)(p->pos.y / m->ycase);
 }
 
-static void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, t_my_raycast *s_raycast)
+static void		wall_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *s_raycast)
 {
-	double				x;
-	double				y;
 	int					colision;
 	t_secteur_rayon		s_secteur;
 	double				ray_distance;
@@ -189,33 +187,31 @@ static void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, t_my_r
 	ray_distance = 0;
 	while (colision == FALSE)
 	{
-		x = (cos(conv_deg_to_rad(alpha - 90)) * ray_distance) + p->pos.x;
-		y = (sin(conv_deg_to_rad(alpha - 90)) * ray_distance) + p->pos.y;
-		ft_get_secteur_rayon(&s_secteur, x, y, m);
-		if ((colision = ft_colision_detection(m, x, y)) == FALSE)
-			SDL_RenderDrawPoint(w->ren, x, y);
+		s_raycast->x = (cos(conv_deg_to_rad(s_raycast->angle - 90)) * ray_distance) + p->pos.x;
+		s_raycast->y = (sin(conv_deg_to_rad(s_raycast->angle - 90)) * ray_distance) + p->pos.y;
+		ft_get_secteur_rayon(&s_secteur, s_raycast->x, s_raycast->y, m);
+		if ((colision = ft_colision_detection(m, s_raycast->x, s_raycast->y)) == FALSE)
+			SDL_RenderDrawPoint(w->ren, s_raycast->x, s_raycast->y);
 		else
-			ft_draw_wall(w, s_secteur, x, y, m, alpha, p, s_raycast);
+			ft_draw_wall(w, s_secteur, s_raycast->x, s_raycast->y, m, s_raycast->angle, p, s_raycast);
 		ray_distance++;
 	}
 }
 
 void			ft_raycast(t_print *w, t_player *p, t_map *m, int alpha)
 {
-	double	step;
-	double	angle;
-	double	max;
-
-	t_my_raycast s_raycast;
+	double			step;
+	double			max;
+	t_my_raycast	s_raycast;
 
 	s_raycast.window_x = 0;
 	step = 60.0 / (double)WINX;
-	angle = (double)alpha - 30;
-	max = angle + 60;
-	while (angle < max && s_raycast.window_x < WINX)
+	s_raycast.angle = (double)alpha - 30;
+	max = s_raycast.angle + 60;
+	while (s_raycast.angle < max && s_raycast.window_x < WINX)
 	{
-		wall_detect(w, p, m, angle, &s_raycast);
-		angle += step;
+		wall_detect(w, p, m, &s_raycast);
+		s_raycast.angle += step;
 		s_raycast.window_x++;
 	}
 }

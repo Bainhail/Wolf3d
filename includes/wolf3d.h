@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/27 16:19:19 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 16:24:35 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ typedef enum e_orientation_wall
 typedef struct	s_my_raycast
 {
 	double		window_x;
+	double		angle;
+	double		x;
+	double		y;
 
 }				t_my_raycast;
 
