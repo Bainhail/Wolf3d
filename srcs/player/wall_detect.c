@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 16:37:37 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 16:42:34 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,13 +146,13 @@ static void		ft_draw_wall(t_print *w, int x, int y, t_map *m, double angle, t_pl
 	ft_load_texture_ft_orientation(orientation, w, &srcrect, &dstrect);
 }
 
-static int		ft_colision_detection(t_map *m, int tmp_x, int tmp_y)
+static int		ft_colision_detection(t_map *m, t_my_raycast *s_raycast)
 {
-	if (tmp_x < 0 || tmp_x > (WINX - 1))
+	if (s_raycast->x < 0 || s_raycast->x > (WINX - 1))
 		return (TRUE);
-	else if (tmp_y < 0 || tmp_y > (WINY - 1))
+	else if (s_raycast->y < 0 || s_raycast->y > (WINY - 1))
 		return (TRUE);
-	else if (m->tab[(int)(tmp_y / m->ycase)][(int)(tmp_x / m->xcase)].z >= 1)
+	else if (m->tab[(int)((int)(s_raycast->y) / m->ycase)][(int)((int)(s_raycast->x) / m->xcase)].z >= 1)
 		return (TRUE);
 	return (FALSE);
 }
@@ -189,7 +189,7 @@ static void		wall_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *s_rayc
 		s_raycast->x = (cos(conv_deg_to_rad(s_raycast->angle - 90)) * ray_distance) + p->pos.x;
 		s_raycast->y = (sin(conv_deg_to_rad(s_raycast->angle - 90)) * ray_distance) + p->pos.y;
 		ft_get_secteur_rayon(s_raycast->x, s_raycast->y, m, s_raycast);
-		if ((colision = ft_colision_detection(m, s_raycast->x, s_raycast->y)) == FALSE)
+		if ((colision = ft_colision_detection(m, s_raycast)) == FALSE)
 			SDL_RenderDrawPoint(w->ren, s_raycast->x, s_raycast->y);
 		else
 			ft_draw_wall(w, s_raycast->x, s_raycast->y, m, s_raycast->angle, p, s_raycast);
