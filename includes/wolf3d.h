@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/26 13:54:31 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:34:20 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ typedef enum		e_bool
 	TRUE = 1,
 }					t_bool;
 
+typedef struct		s_secteur_rayon
+{
+	int				precedent_x;
+	int 			precedent_y;
+	int				actuel_x;
+	int				actuel_y;
+}					t_secteur_rayon;
 
 typedef struct		s_file
 {

@@ -6,19 +6,11 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 11:32:53 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:34:53 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-
-typedef struct		s_secteur_rayon
-{
-	int				precedent_x;
-	int 			precedent_y;
-	int				actuel_x;
-	int				actuel_y;
-}					t_secteur_rayon;
 
 static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_secteur_rayon s_secteur, int x, int y, t_map *m, double angle)
 {
@@ -91,7 +83,7 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 	dstrect.x = x_window;
 	dstrect.h = (int)hmp * 2;
 	dstrect.y = (int)((double)WINY / 2.0) - (hmp / 2.0);
-	dstrect.w = 1;// ok
+	dstrect.w = 1;
 	if (orientation == 0)
 	{
 		if (cos(conv_deg_to_rad(angle - 90)) > 0)
