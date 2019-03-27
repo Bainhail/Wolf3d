@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 15:25:26 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 16:20:13 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ static int		ft_get_colision_type(int x, int y, t_secteur_rayon s_secteur)
 	else if (y == 0)
 		orientation = Y_COLISION;
 	else if (s_secteur.actuel_x == s_secteur.precedent_x && s_secteur.actuel_y == s_secteur.precedent_y)
-		printf("NO change");
+		printf("NO change ==> probleme\n");
 	else if (s_secteur.actuel_x == s_secteur.precedent_x)
 		orientation = Y_COLISION;
 	else if (s_secteur.actuel_y == s_secteur.precedent_y)
 		orientation = X_COLISION;
 	else
-		printf("AUCUN");
+		printf("AUCUN ==> probleme\n");
 	return (orientation);
 }
 
@@ -118,7 +118,7 @@ static void		ft_init_texture_wall_position(SDL_Rect *srcrect, SDL_Rect *dstrect,
 	dstrect->w = 1;
 }
 
-static void		ft_draw_wall(t_print *w, double x_window, t_secteur_rayon s_secteur, int x, int y, t_map *m, double angle, t_player *p)
+static void		ft_draw_wall(t_print *w, t_secteur_rayon s_secteur, int x, int y, t_map *m, double angle, t_player *p, t_my_raycast *s_raycast)
 {
 	t_vertex	w_up;
 	t_vertex	w_bot;
@@ -132,17 +132,17 @@ static void		ft_draw_wall(t_print *w, double x_window, t_secteur_rayon s_secteur
 
 	le_delta = 0;
 	ray_distance = ft_calcul_distance(p->pos.x, p->pos.y, x, y);
-	distance_ray = recalc_ray_distance(ray_distance, x_window);
+	distance_ray = recalc_ray_distance(ray_distance, s_raycast->window_x);
 	orientation = ft_get_colision_type(x, y, s_secteur);
 	orientation = ft_get_wall_orientation(angle, orientation);
 	hmp = (((double)EYE * (double)WALL) / distance_ray) / 2.0;
-	w_up = init_vtex(x_window, ((double)WINY / 2.0) - hmp, 0);
-	w_bot = init_vtex(x_window, ((double)WINY / 2.0) + hmp, 0);
+	w_up = init_vtex(s_raycast->window_x, ((double)WINY / 2.0) - hmp, 0);
+	w_bot = init_vtex(s_raycast->window_x, ((double)WINY / 2.0) + hmp, 0);
 	SDL_SetRenderDrawColor(w->renderer_3d, 50, 50, 200, 75);
-	print_line(w, w->renderer_3d, init_vtex(x_window, 0, 0), w_up);
+	print_line(w, w->renderer_3d, init_vtex(s_raycast->window_x, 0, 0), w_up);
 	SDL_SetRenderDrawColor(w->renderer_3d, 200, 200, 200, 75);
-	print_line(w, w->renderer_3d, w_bot, init_vtex(x_window, WINY, 0));
-	ft_init_texture_wall_position(&srcrect, &dstrect, hmp, x_window, m, x, y, orientation);
+	print_line(w, w->renderer_3d, w_bot, init_vtex(s_raycast->window_x, WINY, 0));
+	ft_init_texture_wall_position(&srcrect, &dstrect, hmp, s_raycast->window_x, m, x, y, orientation);
 	ft_load_texture_ft_orientation(orientation, w, &srcrect, &dstrect);
 }
 
@@ -176,7 +176,7 @@ static void		ft_init_secteur_rayon(t_secteur_rayon *s_secteur, t_player *p, t_ma
 	s_secteur->actuel_y = (int)(p->pos.y / m->ycase);
 }
 
-static void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int window_x)
+static void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, t_my_raycast *s_raycast)
 {
 	double				x;
 	double				y;
@@ -195,7 +195,7 @@ static void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int wi
 		if ((colision = ft_colision_detection(m, x, y)) == FALSE)
 			SDL_RenderDrawPoint(w->ren, x, y);
 		else
-			ft_draw_wall(w, (double)window_x, s_secteur, x, y, m, alpha, p);
+			ft_draw_wall(w, s_secteur, x, y, m, alpha, p, s_raycast);
 		ray_distance++;
 	}
 }
@@ -205,16 +205,17 @@ void			ft_raycast(t_print *w, t_player *p, t_map *m, int alpha)
 	double	step;
 	double	angle;
 	double	max;
-	int		window_x;
 
-	window_x = 0;
+	t_my_raycast s_raycast;
+
+	s_raycast.window_x = 0;
 	step = 60.0 / (double)WINX;
 	angle = (double)alpha - 30;
 	max = angle + 60;
-	while (angle < max && window_x < WINX)
+	while (angle < max && s_raycast.window_x < WINX)
 	{
-		wall_detect(w, p, m, angle, window_x);
+		wall_detect(w, p, m, angle, &s_raycast);
 		angle += step;
-		window_x++;
+		s_raycast.window_x++;
 	}
 }

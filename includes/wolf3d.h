@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/27 14:30:35 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 16:19:19 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ typedef enum e_orientation_wall
 	EAST_WALL,
 	WEST_WALL
 }			s_orientation_wall;
+
+typedef struct	s_my_raycast
+{
+	double		window_x;
+
+}				t_my_raycast;
 
 typedef struct		s_file
 {
