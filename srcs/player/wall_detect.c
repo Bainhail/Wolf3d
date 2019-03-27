@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 16:42:34 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 16:46:00 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ static void		ft_init_texture_wall_position(SDL_Rect *srcrect, SDL_Rect *dstrect,
 	dstrect->w = 1;
 }
 
-static void		ft_draw_wall(t_print *w, int x, int y, t_map *m, double angle, t_player *p, t_my_raycast *s_raycast)
+static void		ft_draw_wall(t_print *w, t_map *m, double angle, t_player *p, t_my_raycast *s_raycast)
 {
 	t_vertex	w_up;
 	t_vertex	w_bot;
@@ -131,9 +131,9 @@ static void		ft_draw_wall(t_print *w, int x, int y, t_map *m, double angle, t_pl
 	double		distance_ray;
 
 	le_delta = 0;
-	ray_distance = ft_calcul_distance(p->pos.x, p->pos.y, x, y);
+	ray_distance = ft_calcul_distance(p->pos.x, p->pos.y, s_raycast->x, s_raycast->y);
 	distance_ray = recalc_ray_distance(ray_distance, s_raycast->window_x);
-	orientation = ft_get_colision_type(x, y, s_raycast);
+	orientation = ft_get_colision_type(s_raycast->x, s_raycast->y, s_raycast);
 	orientation = ft_get_wall_orientation(angle, orientation);
 	hmp = (((double)EYE * (double)WALL) / distance_ray) / 2.0;
 	w_up = init_vtex(s_raycast->window_x, ((double)WINY / 2.0) - hmp, 0);
@@ -142,7 +142,7 @@ static void		ft_draw_wall(t_print *w, int x, int y, t_map *m, double angle, t_pl
 	print_line(w, w->renderer_3d, init_vtex(s_raycast->window_x, 0, 0), w_up);
 	SDL_SetRenderDrawColor(w->renderer_3d, 200, 200, 200, 75);
 	print_line(w, w->renderer_3d, w_bot, init_vtex(s_raycast->window_x, WINY, 0));
-	ft_init_texture_wall_position(&srcrect, &dstrect, hmp, s_raycast->window_x, m, x, y, orientation);
+	ft_init_texture_wall_position(&srcrect, &dstrect, hmp, s_raycast->window_x, m, s_raycast->x, s_raycast->y, orientation);
 	ft_load_texture_ft_orientation(orientation, w, &srcrect, &dstrect);
 }
 
@@ -192,7 +192,7 @@ static void		wall_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *s_rayc
 		if ((colision = ft_colision_detection(m, s_raycast)) == FALSE)
 			SDL_RenderDrawPoint(w->ren, s_raycast->x, s_raycast->y);
 		else
-			ft_draw_wall(w, s_raycast->x, s_raycast->y, m, s_raycast->angle, p, s_raycast);
+			ft_draw_wall(w, m, s_raycast->angle, p, s_raycast);
 		ray_distance++;
 	}
 }
