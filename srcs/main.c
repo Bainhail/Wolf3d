@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 11:23:15 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:24:17 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ int			init_renderer(SDL_Renderer *r, t_map *m)
 
 void		print_tab(t_vertex **tab)
 {
-	int		x, y;
+	int		x;
+	int		y;
+
 	y = 0;
 	while (y < 10)
 	{
