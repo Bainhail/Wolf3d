@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 11:24:17 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:58:23 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,14 @@ void		print_tab(t_vertex **tab)
 	}
 }
 
+void		ft_load_bmp(t_print *p)
+{
+	p->txt_x_west = loadBMP(p->renderer_3d, "west_x.bmp");
+	p->txt_x_east = loadBMP(p->renderer_3d, "east_x.bmp");
+	p->txt_y_south = loadBMP(p->renderer_3d, "south_y.bmp");
+	p->txt_y_north = loadBMP(p->renderer_3d, "north_y.bmp");
+}
+
 int			main(int ac, char **av)
 {
 	t_print			p;
@@ -84,19 +92,13 @@ int			main(int ac, char **av)
 	p.renderer_3d = SDL_CreateRenderer(p.window_3d, 0, SDL_RENDERER_SOFTWARE);
 	SDL_RenderPresent(p.renderer_3d);
 	p.txt = loadBMP(p.renderer_3d, "untitled.bmp");
-	p.txt_x_west = loadBMP(p.renderer_3d, "west_x.bmp");
-	p.txt_x_east = loadBMP(p.renderer_3d, "east_x.bmp");
-	p.txt_y_south = loadBMP(p.renderer_3d, "south_y.bmp");
-	p.txt_y_north = loadBMP(p.renderer_3d, "north_y.bmp");
+	ft_load_bmp(&p);
 	p.ren = SDL_CreateRenderer(p.w, 0, SDL_RENDERER_SOFTWARE);
 	init_renderer(p.ren, &(p.m));
 	get_player_pos(&p, &(p.pl), &(p.m));
 	ft_raycast(&p, &(p.pl), &(p.m), EST, p.txt);
 	SDL_RenderPresent(p.ren);
 	ft_event_loop(&p);
-	SDL_DestroyRenderer(p.ren);
-	SDL_DestroyRenderer(p.renderer_3d);
-	SDL_DestroyWindow(p.window_3d);
-	SDL_Quit();
+	ft_quit(&p);
 	return (0);
 }
