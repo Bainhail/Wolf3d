@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/26 13:53:59 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:23:15 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,18 @@
 
 void		refresh_screen(t_print *w)
 {
-/* Refresh Render START */
 	SDL_RenderClear(w->ren);
 	SDL_RenderClear(w->renderer_3d);
-
 	init_renderer(w->ren, &(w->m));
 	refresh_player_pos(&(w->m), &(w->pl));
 	print_line(w, w->ren, w->pl.s1, w->pl.s2);
 	print_line(w, w->ren, w->pl.s1, w->pl.s3);
 	print_line(w, w->ren, w->pl.s3, w->pl.s2);
 	ft_raycast(w, &(w->pl), &(w->m), w->pl.flg_dir, w->txt);
-
 	SDL_SetRenderDrawColor(w->ren, 0, 0, 0, 100);
 	SDL_SetRenderDrawColor(w->renderer_3d, 0, 0, 0, 100);
-
 	SDL_RenderPresent(w->ren);
 	SDL_RenderPresent(w->renderer_3d);
-/* Refresh Render END */
 }
 
 int			init_renderer(SDL_Renderer *r, t_map *m)
@@ -81,26 +76,16 @@ int			main(int ac, char **av)
 		printf("ERROR FILE\n");
 		return (-1);
 	}
-//	print_tab(p.m.tab);
 	SDL_Init(SDL_INIT_EVERYTHING);
-	p.w = SDL_CreateWindow("test", SDL_WINDOWPOS_CENTERED, \
-						   SDL_WINDOWPOS_CENTERED, WINX, WINY, \
-						   SDL_WINDOW_SHOWN);
-	p.window_3d = SDL_CreateWindow("Window 3D", SDL_WINDOWPOS_CENTERED, \
-						   SDL_WINDOWPOS_CENTERED, WINX, WINY, \
-						   SDL_WINDOW_SHOWN);
+	p.w = SDL_CreateWindow("test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
+	p.window_3d = SDL_CreateWindow("Window 3D", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
 	p.renderer_3d = SDL_CreateRenderer(p.window_3d, 0, SDL_RENDERER_SOFTWARE);
 	SDL_RenderPresent(p.renderer_3d);
-
-
 	p.txt = loadBMP(p.renderer_3d, "untitled.bmp");
 	p.txt_x_west = loadBMP(p.renderer_3d, "west_x.bmp");
 	p.txt_x_east = loadBMP(p.renderer_3d, "east_x.bmp");
 	p.txt_y_south = loadBMP(p.renderer_3d, "south_y.bmp");
 	p.txt_y_north = loadBMP(p.renderer_3d, "north_y.bmp");
-
-
-
 	p.ren = SDL_CreateRenderer(p.w, 0, SDL_RENDERER_SOFTWARE);
 	init_renderer(p.ren, &(p.m));
 	get_player_pos(&p, &(p.pl), &(p.m));
