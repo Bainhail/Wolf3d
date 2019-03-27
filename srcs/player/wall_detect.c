@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 11:34:53 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:37:59 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 	t_vertex	w_up;
 	t_vertex	w_bot;
 	double		hmp;
-	int		le_delta;
+	int			le_delta;
+	int			orientation;
 
 	printf("AAAAAA l'angle =%f\n", angle - 90);
 	le_delta = 0;
-	int orientation = -1;
+	orientation = -1;
 	if (y < 0)
 		y = 0;
 	if (x < 0)
@@ -133,7 +134,7 @@ static double	recalc_ray_distance(double dist, int win_step)
 	double		step;
 
 	step = 60.0 / (double)WINX;
-	if (win_step <= WINX/2)
+	if (win_step <= WINX / 2)
 	{
 		step *= win_step;
 		dist_cor = cos(conv_deg_to_rad(30.0 - step)) * dist;
@@ -160,7 +161,7 @@ void			ft_get_secteur_rayon(t_secteur_rayon *s_secteur, int x, int y, t_map *m)
 static void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int window_x)
 {
 	double				ray_distance;
-   	double				ray_distance_max;
+	double				ray_distance_max;
 	double				x;
 	double				y;
 	int					colision;
