@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 11:50:51 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 13:16:57 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 	double		hmp;
 	int			le_delta;
 	int			orientation;
+	SDL_Rect	srcrect;
+	SDL_Rect	dstrect;
 
 	printf("AAAAAA l'angle =%f\n", angle - 90);
 	le_delta = 0;
@@ -75,8 +77,6 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 	print_line(w, w->renderer_3d, init_vtex(x_window, 0, 0), w_up);
 	SDL_SetRenderDrawColor(w->renderer_3d, 200, 200, 200, 75);
 	print_line(w, w->renderer_3d, w_bot, init_vtex(x_window, WINY, 0));
-	SDL_Rect	srcrect;
-	SDL_Rect	dstrect;
 	srcrect.x = le_delta;
 	srcrect.y = 0;
 	srcrect.w = 1;
@@ -116,7 +116,7 @@ static int		ft_colision_detection(t_map *m, int tmp_x, int tmp_y)
 	return (FALSE);
 }
 
-static double	dist_calc(double xa, double ya, double xb, double yb)
+static double	ft_calcul_distance(double xa, double ya, double xb, double yb)
 {
 	double	dist;
 	double	x;
@@ -158,8 +158,17 @@ void			ft_get_secteur_rayon(t_secteur_rayon *s_secteur, int x, int y, t_map *m)
 	}
 }
 
+void			ft_init_secteur_rayon(t_secteur_rayon *s_secteur, t_player *p, t_map *m)
+{
+	s_secteur->precedent_x = (int)(p->pos.x / m->xcase);
+	s_secteur->precedent_y = (int)(p->pos.y / m->ycase);
+	s_secteur->actuel_x = (int)(p->pos.x / m->xcase);
+	s_secteur->actuel_y = (int)(p->pos.y / m->ycase);
+}
+
 static void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int window_x)
 {
+
 	double				ray_distance;
 	double				ray_distance_max;
 	double				x;
@@ -167,10 +176,7 @@ static void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int wi
 	int					colision;
 	t_secteur_rayon		s_secteur;
 
-	s_secteur.precedent_x = (int)(p->pos.x / m->xcase);
-	s_secteur.precedent_y = (int)(p->pos.y / m->ycase);
-	s_secteur.actuel_x = (int)(p->pos.x / m->xcase);
-	s_secteur.actuel_y = (int)(p->pos.y / m->ycase);
+	ft_init_secteur_rayon(&s_secteur, p, m);
 	ray_distance = 0;
 	colision = FALSE;
 	ray_distance_max = 99999;
@@ -185,26 +191,24 @@ static void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int wi
 		}
 		else
 		{
-			if ((ray_distance = dist_calc(p->pos.x, p->pos.y, x, y)) > 0)
+			if ((ray_distance = ft_calcul_distance(p->pos.x, p->pos.y, x, y)) > 0)
 				ft_draw_wall(w, recalc_ray_distance(ray_distance, window_x), (double)window_x, s_secteur, x, y, m, alpha);
 		}
 		ray_distance++;
 	}
 }
 
-void			ft_raycast(t_print *w, t_player *p, t_map *m, int alpha, SDL_Texture *txt)
+void			ft_raycast(t_print *w, t_player *p, t_map *m, int alpha)
 {
 	double	step;
 	double	angle;
 	double	max;
 	int		window_x;
 
-	(void)txt;
 	window_x = 0;
 	step = 60.0 / (double)WINX;
 	angle = (double)alpha - 30;
 	max = angle + 60;
-	SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 50);
 	while (angle < max && window_x < WINX)
 	{
 		wall_detect(w, p, m, angle, window_x);
