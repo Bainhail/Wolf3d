@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/26 13:54:54 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:26:58 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,16 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 {
 	t_vertex	w_up;
 	t_vertex	w_bot;
-	double		hmp;// hauteur du mur percu par le joueur.
+	double		hmp;
 	int		le_delta;
 
 	printf("AAAAAA l'angle =%f\n", angle - 90);
-
-
 	le_delta = 0;
-	int orientation = -1;   //0 pour X  // 1 pour y
+	int orientation = -1;
 	if (y < 0)
 		y = 0;
 	if (x < 0)
 		x = 0;
-
-
 	if (x == 0)
 	{
 		printf("X colision");
@@ -74,16 +70,9 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 	printf("le secteur prec =%d =%d \n", s_secteur.precedent_x, s_secteur.precedent_y);
 	printf("le x y =%d =%d\n", x, y);
 	printf("le delta =%d\n\n", le_delta);
-
-
-
-
 	hmp = (((double)EYE * (double)WALL) / distance_ray) / 2.0;
 	w_up = init_vtex(x_window, ((double)WINY / 2.0) - hmp, 0);
 	w_bot = init_vtex(x_window, ((double)WINY / 2.0) + hmp, 0);
-
-
-
 	if (w->txt == NULL)
 	{
 		printf("LA TEXTURE ?!\n");
@@ -91,29 +80,18 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 	}
 	SDL_SetRenderDrawColor(w->renderer_3d, 50, 50, 200, 75);
 	print_line(w, w->renderer_3d, init_vtex(x_window, 0, 0), w_up);
-
-	//SDL_SetRenderDrawColor(w->renderer_3d, 27, 0, 127, 75);
-	//print_line(w, w->renderer_3d, w_up, w_bot);
-
 	SDL_SetRenderDrawColor(w->renderer_3d, 200, 200, 200, 75);
 	print_line(w, w->renderer_3d, w_bot, init_vtex(x_window, WINY, 0));
-
-
 	SDL_Rect	srcrect;
 	SDL_Rect	dstrect;
-
 	srcrect.x = le_delta;//(int)x_window % 42; //delta_y  // ou delta x
-	//printf("le x =%d\n", srcrect.x);
 	srcrect.y = 0;  // ok
 	srcrect.w = 1; //ok
 	srcrect.h = 54; //ok 
-
 	dstrect.x = x_window;  //ok
 	dstrect.h = (int)hmp * 2;  //  ok
 	dstrect.y = (int)((double)WINY / 2.0) - (hmp / 2.0);  // ok
 	dstrect.w = 1;// ok
-
-
 	if (orientation == 0)
 	{
 		if (cos(conv_deg_to_rad(angle - 90)) > 0)
@@ -133,8 +111,6 @@ static void		ft_draw_wall(t_print *w, double distance_ray, double x_window, t_se
 	{
 		SDL_RenderCopy(w->renderer_3d, w->txt, &srcrect, &dstrect);//&dstrect);
 	}
-
-	//SDL_RenderPresent(w->renderer_3d);
 }
 
 static int		ft_colision_detection(t_map *m, int tmp_x, int tmp_y)
@@ -170,19 +146,14 @@ static double	recalc_ray_distance(double dist, int win_step)
 	{
 		step *= win_step;
 		dist_cor = cos(conv_deg_to_rad(30.0 - step)) * dist;
-		//printf("alpha = %.1f\n", 30.0 - step);
 	}
 	else
 	{
 		step *= (win_step - WINX / 2);
 		dist_cor = cos(conv_deg_to_rad(step)) * dist;
-		//printf("alpha = %.1f\n", step);
 	}
-	//printf("dist = %.1f\n", dist);
-	//printf("dist = %.1f\n\n", dist_cor);
 	return (dist_cor);
 }
-
 
 void	ft_get_secteur_rayon(t_secteur_rayon *s_secteur, int x, int y, t_map *m)
 {
@@ -202,8 +173,6 @@ static void		 wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int w
 	double		x;
 	double		y;
 	int			colision;
-
-
 	t_secteur_rayon		s_secteur;
 
 	s_secteur.precedent_x = (int)(p->pos.x / m->xcase);
@@ -213,8 +182,6 @@ static void		 wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int w
 	ray_distance = 0;
 	colision = FALSE;
 	ray_distance_max = 99999;
-
-
 	while (ray_distance < ray_distance_max && colision == FALSE)
 	{
 		x = (cos(conv_deg_to_rad(alpha - 90)) * ray_distance) + p->pos.x;

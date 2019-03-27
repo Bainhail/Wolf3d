@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 09:44:41 by naali             #+#    #+#             */
-/*   Updated: 2019/03/21 16:19:21 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/27 11:26:05 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		init_player_dir(t_player *p)
 {
-	p->flg_dir = EST;// flag d'orientation
+	p->flg_dir = EST;
 	p->dir.x = 1;
 	p->dir.y = 0;
 	p->dir.z = 0;
