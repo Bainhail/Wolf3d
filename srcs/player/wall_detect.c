@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 11:37:59 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:50:51 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,15 +180,19 @@ static void		wall_detect(t_print *w, t_player *p, t_map *m, double alpha, int wi
 		y = (sin(conv_deg_to_rad(alpha - 90)) * ray_distance) + p->pos.y;
 		ft_get_secteur_rayon(&s_secteur, x, y, m);
 		if ((colision = ft_colision_detection(m, x, y)) == FALSE)
+		{
 			SDL_RenderDrawPoint(w->ren, x, y);
+		}
 		else
+		{
 			if ((ray_distance = dist_calc(p->pos.x, p->pos.y, x, y)) > 0)
 				ft_draw_wall(w, recalc_ray_distance(ray_distance, window_x), (double)window_x, s_secteur, x, y, m, alpha);
+		}
 		ray_distance++;
 	}
 }
 
-void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha, SDL_Texture *txt)
+void			ft_raycast(t_print *w, t_player *p, t_map *m, int alpha, SDL_Texture *txt)
 {
 	double	step;
 	double	angle;
