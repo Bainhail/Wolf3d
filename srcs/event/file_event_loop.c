@@ -6,20 +6,13 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 12:19:33 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/26 13:44:53 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:42:27 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include <wolf3d.h>
 
-typedef struct			s_my_event
-{
-	SDL_bool			key[SDL_NUM_SCANCODES];
-	SDL_bool			quit;
-}						t_my_event;
-
-
-void		ft_update_event_editor(t_my_event *s_event, t_print *w)
+void			ft_update_event_editor(t_my_event *s_event, t_print *w)
 {
 	SDL_Event event;
 
@@ -56,7 +49,7 @@ void		ft_update_event_editor(t_my_event *s_event, t_print *w)
 	}
 }
 
-void		ft_init_event_editor(t_my_event *s_event)
+void			ft_init_event_editor(t_my_event *s_event)
 {
 	s_event->key[SDL_SCANCODE_ESCAPE] = SDL_FALSE;
 	s_event->key[SDL_SCANCODE_W] = SDL_FALSE;
@@ -64,7 +57,8 @@ void		ft_init_event_editor(t_my_event *s_event)
 	s_event->key[SDL_SCANCODE_D] = SDL_FALSE;
 	s_event->key[SDL_SCANCODE_A] = SDL_FALSE;
 }
-void	ft_event_loop(t_print *w)
+
+void			ft_event_loop(t_print *w)
 {
 	t_my_event		s_event;
 
@@ -73,9 +67,8 @@ void	ft_event_loop(t_print *w)
 	while (!s_event.quit)
 	{
 		ft_update_event_editor(&s_event, w);
-		s_event.key[SDL_SCANCODE_ESCAPE] ? s_event.quit = SDL_TRUE : 0 ;
+		s_event.key[SDL_SCANCODE_ESCAPE] ? s_event.quit = SDL_TRUE : 0;
 		ft_init_event_editor(&s_event);
 		SDL_Delay(2);
 	}
 }
-//		s_event.key[SDL_SCANCODE_W] ? ft_move_player(UP, &s_player_pos, renderer_name, s_triangle, height, width, map, &s_rayon) : 0 ;

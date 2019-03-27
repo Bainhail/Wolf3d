@@ -6,11 +6,11 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 11:39:03 by naali             #+#    #+#             */
-/*   Updated: 2019/03/19 15:06:14 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/27 11:43:28 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include <wolf3d.h>
 
 int			draw_square(SDL_Renderer *r, t_map *m, int x, int y)
 {

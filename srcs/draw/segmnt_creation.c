@@ -6,11 +6,11 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 14:09:53 by naali             #+#    #+#             */
-/*   Updated: 2019/03/21 17:41:46 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/27 11:43:15 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include <wolf3d.h>
 
 static void		init_sgmt(t_sgmt *l, t_vertex start, t_vertex end)
 {
@@ -48,7 +48,6 @@ static void		print_line1(t_print *w, int swp, t_vertex start, t_vertex end)
 	t_sgmt	l;
 
 	init_sgmt(&l, start, end);
-//	SDL_SetRenderDrawColor(w->ren_flg, 255, 0, 0, 100);
 	while (++l.x < (l.maxX - 1))
 	{
 		if (swp >= 0)

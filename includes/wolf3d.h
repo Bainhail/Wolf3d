@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/27 11:34:20 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:40:38 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ typedef struct		s_secteur_rayon
 	int				actuel_x;
 	int				actuel_y;
 }					t_secteur_rayon;
+
+typedef struct			s_my_event
+{
+	SDL_bool			key[SDL_NUM_SCANCODES];
+	SDL_bool			quit;
+}						t_my_event;
 
 typedef struct		s_file
 {
