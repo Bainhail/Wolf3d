@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 14:43:03 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 15:09:54 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static double	recalc_ray_distance(double dist, int win_step)
 	}
 	return (dist_cor);
 }
-
 
 static int		ft_get_colision_type(int x, int y, t_map *m,  t_secteur_rayon s_secteur, int *le_delta)
 {
@@ -84,26 +83,26 @@ static int		ft_get_colision_type(int x, int y, t_map *m,  t_secteur_rayon s_sect
 	return (orientation);
 }
 
-static int	ft_get_wall_orientation(double angle, int orientation)
+static int		ft_get_wall_orientation(double angle, int orientation)
 {
 	if (orientation == X_COLISION)
 	{
 		if (cos(conv_deg_to_rad(angle - 90)) > 0)
-			orientation = EAST_WALL; 
+			orientation = EAST_WALL;
 		else
-			orientation = WEST_WALL; 
+			orientation = WEST_WALL;
 	}
 	else if (orientation == Y_COLISION)
 	{
 		if (sin(conv_deg_to_rad(angle - 90)) > 0)
-			orientation = SOUTH_WALL; 
+			orientation = SOUTH_WALL;
 		else
-			orientation = NORTH_WALL; 
+			orientation = NORTH_WALL;
 	}
 	return (orientation);
 }
 
-static void	ft_load_texture_ft_orientation(int orientation, t_print *w, SDL_Rect *srcrect, SDL_Rect *dstrect)
+static void		ft_load_texture_ft_orientation(int orientation, t_print *w, SDL_Rect *srcrect, SDL_Rect *dstrect)
 {
 	if (orientation == EAST_WALL)
 		SDL_RenderCopy(w->renderer_3d, w->txt_x_east, srcrect, dstrect);
@@ -117,6 +116,17 @@ static void	ft_load_texture_ft_orientation(int orientation, t_print *w, SDL_Rect
 		SDL_RenderCopy(w->renderer_3d, w->txt, srcrect, dstrect);
 }
 
+static void		ft_init_texture_wall_position(SDL_Rect *srcrect,SDL_Rect *dstrect, double hmp, double x_window, int le_delta)
+{
+	srcrect->x = le_delta;
+	srcrect->y = 0;
+	srcrect->w = 1;
+	srcrect->h = 54;
+	dstrect->x = x_window;
+	dstrect->h = (int)hmp * 2;
+	dstrect->y = (int)((double)WINY / 2.0) - (hmp / 2.0);
+	dstrect->w = 1;
+}
 static void		ft_draw_wall(t_print *w, double x_window, t_secteur_rayon s_secteur, int x, int y, t_map *m, double angle, t_player *p)
 {
 	t_vertex	w_up;
@@ -129,31 +139,19 @@ static void		ft_draw_wall(t_print *w, double x_window, t_secteur_rayon s_secteur
 	double		ray_distance;
 	double		distance_ray;
 
+	le_delta = 0;
 	ray_distance = ft_calcul_distance(p->pos.x, p->pos.y, x, y);
 	distance_ray = recalc_ray_distance(ray_distance, x_window);
-	le_delta = 0;
 	orientation = ft_get_colision_type(x, y, m, s_secteur, &le_delta);
 	orientation = ft_get_wall_orientation(angle, orientation);
 	hmp = (((double)EYE * (double)WALL) / distance_ray) / 2.0;
 	w_up = init_vtex(x_window, ((double)WINY / 2.0) - hmp, 0);
 	w_bot = init_vtex(x_window, ((double)WINY / 2.0) + hmp, 0);
-	if (w->txt == NULL)
-	{
-		printf("LA TEXTURE ?!\n");
-		exit(0);
-	}
 	SDL_SetRenderDrawColor(w->renderer_3d, 50, 50, 200, 75);
 	print_line(w, w->renderer_3d, init_vtex(x_window, 0, 0), w_up);
 	SDL_SetRenderDrawColor(w->renderer_3d, 200, 200, 200, 75);
 	print_line(w, w->renderer_3d, w_bot, init_vtex(x_window, WINY, 0));
-	srcrect.x = le_delta;
-	srcrect.y = 0;
-	srcrect.w = 1;
-	srcrect.h = 54;
-	dstrect.x = x_window;
-	dstrect.h = (int)hmp * 2;
-	dstrect.y = (int)((double)WINY / 2.0) - (hmp / 2.0);
-	dstrect.w = 1;
+	ft_init_texture_wall_position(&srcrect, &dstrect, hmp, x_window, le_delta);
 	ft_load_texture_ft_orientation(orientation, w, &srcrect, &dstrect);
 }
 
