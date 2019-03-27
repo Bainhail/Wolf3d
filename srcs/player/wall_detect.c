@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 15:09:54 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/27 15:25:26 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static double	recalc_ray_distance(double dist, int win_step)
 	return (dist_cor);
 }
 
-static int		ft_get_colision_type(int x, int y, t_map *m,  t_secteur_rayon s_secteur, int *le_delta)
+static int		ft_get_colision_type(int x, int y, t_secteur_rayon s_secteur)
 {
 	int		orientation;
 
@@ -53,33 +53,17 @@ static int		ft_get_colision_type(int x, int y, t_map *m,  t_secteur_rayon s_sect
 	if (x < 0)
 		x = 0;
 	if (x == 0)
-	{
-		*le_delta = y % (int)m->ycase;
 		orientation = X_COLISION;
-	}
 	else if (y == 0)
-	{
-		*le_delta = x % (int)m->xcase;
 		orientation = Y_COLISION;
-	}
 	else if (s_secteur.actuel_x == s_secteur.precedent_x && s_secteur.actuel_y == s_secteur.precedent_y)
-	{
 		printf("NO change");
-	}
 	else if (s_secteur.actuel_x == s_secteur.precedent_x)
-	{
-		*le_delta = x % (int)m->xcase;
 		orientation = Y_COLISION;
-	}
 	else if (s_secteur.actuel_y == s_secteur.precedent_y)
-	{
-		*le_delta = y % (int)m->ycase;
 		orientation = X_COLISION;
-	}
 	else
-	{
 		printf("AUCUN");
-	}
 	return (orientation);
 }
 
@@ -116,8 +100,14 @@ static void		ft_load_texture_ft_orientation(int orientation, t_print *w, SDL_Rec
 		SDL_RenderCopy(w->renderer_3d, w->txt, srcrect, dstrect);
 }
 
-static void		ft_init_texture_wall_position(SDL_Rect *srcrect,SDL_Rect *dstrect, double hmp, double x_window, int le_delta)
+static void		ft_init_texture_wall_position(SDL_Rect *srcrect, SDL_Rect *dstrect, double hmp, double x_window, t_map *m, int x, int y, int orientation)
 {
+	int le_delta;
+
+	if (orientation == EAST_WALL || orientation == WEST_WALL)
+		le_delta = y % (int)m->ycase;
+	else
+		le_delta = x % (int)m->xcase;
 	srcrect->x = le_delta;
 	srcrect->y = 0;
 	srcrect->w = 1;
@@ -127,6 +117,7 @@ static void		ft_init_texture_wall_position(SDL_Rect *srcrect,SDL_Rect *dstrect, 
 	dstrect->y = (int)((double)WINY / 2.0) - (hmp / 2.0);
 	dstrect->w = 1;
 }
+
 static void		ft_draw_wall(t_print *w, double x_window, t_secteur_rayon s_secteur, int x, int y, t_map *m, double angle, t_player *p)
 {
 	t_vertex	w_up;
@@ -142,7 +133,7 @@ static void		ft_draw_wall(t_print *w, double x_window, t_secteur_rayon s_secteur
 	le_delta = 0;
 	ray_distance = ft_calcul_distance(p->pos.x, p->pos.y, x, y);
 	distance_ray = recalc_ray_distance(ray_distance, x_window);
-	orientation = ft_get_colision_type(x, y, m, s_secteur, &le_delta);
+	orientation = ft_get_colision_type(x, y, s_secteur);
 	orientation = ft_get_wall_orientation(angle, orientation);
 	hmp = (((double)EYE * (double)WALL) / distance_ray) / 2.0;
 	w_up = init_vtex(x_window, ((double)WINY / 2.0) - hmp, 0);
@@ -151,7 +142,7 @@ static void		ft_draw_wall(t_print *w, double x_window, t_secteur_rayon s_secteur
 	print_line(w, w->renderer_3d, init_vtex(x_window, 0, 0), w_up);
 	SDL_SetRenderDrawColor(w->renderer_3d, 200, 200, 200, 75);
 	print_line(w, w->renderer_3d, w_bot, init_vtex(x_window, WINY, 0));
-	ft_init_texture_wall_position(&srcrect, &dstrect, hmp, x_window, le_delta);
+	ft_init_texture_wall_position(&srcrect, &dstrect, hmp, x_window, m, x, y, orientation);
 	ft_load_texture_ft_orientation(orientation, w, &srcrect, &dstrect);
 }
 
