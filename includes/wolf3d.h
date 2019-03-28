@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/27 16:51:31 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/28 14:51:08 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ typedef struct	s_my_raycast
 	SDL_Rect		srcrect;
 	SDL_Rect		dstrect;
 	t_secteur_rayon	s_secteur;
-
+	double			dx;
+	double			dy;
 }				t_my_raycast;
 
 typedef struct		s_file
@@ -116,6 +117,23 @@ typedef struct		s_map
 	t_vertex	**tab;// Tableau contenant toute les coordonnees de la carte
 }					t_map;
 
+/*
+** On sait que y = (a * x) + b
+** par equivalence:
+** x = (y - b) / a
+*/
+typedef struct		s_wall
+{
+	double			a;// coefficient directeur dans y = ax + b
+	double			b;// pas du coefficient de y = ax + b
+	double			x;// coordonnee x du 1er point
+	double			y;// coordonnee y du 1er point
+	double			dirx;// indication pour la direction de la droite selon x
+	double			diry;// indication pour la direction de la droite selon y
+	double			ymin;
+	double			ymax;
+}					t_wall;
+
 typedef struct		s_player
 {
 	int				x;
@@ -128,6 +146,7 @@ typedef struct		s_player
 	t_vertex		s2;//   Sommet 2 triangle personnage
 	t_vertex		s3;//   Sommet 3 triangle personnage
 	double			dist;// Distance de vu max du joueur
+	t_wall			wl;
 }					t_player;
 
 typedef struct		s_print

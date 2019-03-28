@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/27 12:40:08 by jchardin         ###   ########.fr        #
+#    Updated: 2019/03/28 14:27:27 by naali            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC			=	main.c						\
 				drawsquare.c				\
 				playerposition.c			\
 				calc_player_form.c			\
-				wall_detect.c				\
+				wall_detect_opti.c			\
 				segmnt_creation.c			\
 				convert.c					\
 				matrice_init.c				\
