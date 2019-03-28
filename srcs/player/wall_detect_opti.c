@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/03/28 18:06:11 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/28 19:16:12 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ static int		ft_get_colision_type(int x, int y, t_my_raycast *s_raycast)
 	else if (y == 0)
 		orientation = Y_COLISION;
 	else if (s_raycast->s_secteur.actuel_x == s_raycast->s_secteur.precedent_x && s_raycast->s_secteur.actuel_y == s_raycast->s_secteur.precedent_y)
-		/* printf("NO change ==> probleme\n") */;
+		 printf("NO change ==> probleme\n");
 	else if (s_raycast->s_secteur.actuel_x == s_raycast->s_secteur.precedent_x)
 		orientation = Y_COLISION;
 	else if (s_raycast->s_secteur.actuel_y == s_raycast->s_secteur.precedent_y)
 		orientation = X_COLISION;
 	else
 	{
-		/* printf("%d\n", s_raycast->s_secteur.actuel_x); */
-		/* printf("%d\n", s_raycast->s_secteur.actuel_y); */
-		/* printf("%d\n", s_raycast->s_secteur.precedent_x); */
-		/* printf("%d\n", s_raycast->s_secteur.precedent_y); */
-		/* printf("AUCUN ==> probleme\n"); */
+		 printf("%d\n", s_raycast->s_secteur.actuel_x); 
+		 printf("%d\n", s_raycast->s_secteur.actuel_y); 
+		 printf("%d\n", s_raycast->s_secteur.precedent_x); 
+		 printf("%d\n", s_raycast->s_secteur.precedent_y); 
+		 printf("AUCUN ==> probleme\n"); 
 	}
 	return (orientation);
 }
@@ -88,6 +88,10 @@ static int		ft_get_wall_orientation(double angle, int orientation)
 			orientation = SOUTH_WALL;
 		else
 			orientation = NORTH_WALL;
+	}
+	else
+	{
+		printf("NO wall orientation\n");
 	}
 	return (orientation);
 }
@@ -122,6 +126,10 @@ static void		ft_init_texture_wall_position(t_map *m, t_my_raycast *s_raycast)
 	s_raycast->dstrect.h = (int)s_raycast->hmp * 2;
 	s_raycast->dstrect.y = (int)((double)WINY / 2.0) - (s_raycast->hmp / 2.0);
 	s_raycast->dstrect.w = 1;
+
+
+	printf("Le delta =%d\n", le_delta);
+	printf("le XY =%d =%d\n", s_raycast->x, s_raycast->y);
 }
 
 static void		ft_draw_wall(t_print *w, t_map *m, t_player *p, t_my_raycast *s_raycast)
