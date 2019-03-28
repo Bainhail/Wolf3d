@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/03/28 15:31:20 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/28 18:06:11 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ static int		ft_get_colision_type(int x, int y, t_my_raycast *s_raycast)
 	else if (y == 0)
 		orientation = Y_COLISION;
 	else if (s_raycast->s_secteur.actuel_x == s_raycast->s_secteur.precedent_x && s_raycast->s_secteur.actuel_y == s_raycast->s_secteur.precedent_y)
-		printf("NO change ==> probleme\n");
+		/* printf("NO change ==> probleme\n") */;
 	else if (s_raycast->s_secteur.actuel_x == s_raycast->s_secteur.precedent_x)
 		orientation = Y_COLISION;
 	else if (s_raycast->s_secteur.actuel_y == s_raycast->s_secteur.precedent_y)
 		orientation = X_COLISION;
 	else
 	{
-		printf("%d\n", s_raycast->s_secteur.actuel_x);
-		printf("%d\n", s_raycast->s_secteur.actuel_y);
-		printf("%d\n", s_raycast->s_secteur.precedent_x);
-		printf("%d\n", s_raycast->s_secteur.precedent_y);
-		printf("AUCUN ==> probleme\n");
+		/* printf("%d\n", s_raycast->s_secteur.actuel_x); */
+		/* printf("%d\n", s_raycast->s_secteur.actuel_y); */
+		/* printf("%d\n", s_raycast->s_secteur.precedent_x); */
+		/* printf("%d\n", s_raycast->s_secteur.precedent_y); */
+		/* printf("AUCUN ==> probleme\n"); */
 	}
 	return (orientation);
 }
@@ -257,6 +257,7 @@ static double	wall_x_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *rc)
 				SDL_RenderDrawPoint(w->ren, rc->x, rc->y);
 			if (dist < 0 || dist > tmp)
 				dist = tmp;
+			return (dist);
 		}
 		rc->x = rc->x + step;
 	}
@@ -293,6 +294,7 @@ static double	wall_y_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *rc)
 				SDL_RenderDrawPoint(w->ren, rc->x, rc->y);
 			if (dist < 0 || dist > tmp)
 				dist = tmp;
+			return (dist);
 		}
 		rc->y = rc->y + step;
 	}
@@ -319,6 +321,8 @@ void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha/*, SDL_Texture *tx
 	double			dy;
 	t_my_raycast	s_raycast;
 
+	t_vertex pos;
+
 	/* m->xcase = (double)WINX / m->xmax; */
 	/* m->ycase = (double)WINY / m->ymax; */
 
@@ -328,15 +332,37 @@ void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha/*, SDL_Texture *tx
 	s_raycast.angle = (double)alpha - 30;
 	max = s_raycast.angle + 60;
 	ft_init_secteur_rayon(p, m, &s_raycast);
+
+
+	pos = init_vtex(p->pos.x, p->pos.y, 0);
 	while (s_raycast.angle < max && s_raycast.window_x < WINX)
 	{
+		t_vertex wall;
+
 		init_coef(p->pos, &(p->wl), s_raycast.angle);
 		s_raycast.dx = wall_x_detect(w, p, m, &s_raycast);
+
+		wall.x = s_raycast.x;
+		wall.y = s_raycast.y;
+		wall.z = 0.0;
 		s_raycast.dy = wall_y_detect(w, p, m, &s_raycast);
+
+		if (dx > dy)
+			refresh_vtex(&wall, s_raycast.x, s_raycast.y, 0.0);
+		if (wall.x < 0) wall.x = 0;
+		if (wall.x > WINX - 1) wall.x = WINX - 1;
+		if (wall.y < 0) wall.y = 0;
+		if (wall.y > WINY - 1) wall.y = WINY - 1;
+		SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 50);
+		print_line(w, w->ren, pos, wall);
+
+
+
+		ft_draw_wall(w, m, p, &s_raycast);
 		/* if (dy > 0 && dy < dx) */
 		/* { */
 		ft_get_secteur_rayon(s_raycast.x, s_raycast.y, m, &s_raycast);
-		ft_draw_wall(w, m, p, &s_raycast);
+
 //			ft_draw_wall(w, recalc_ray_distance(dy, s_raycast.window_x), (double)(s_raycast.window_x));
 /* 		} */
 /* 		else if (dx > 0 && dx < dy) */
@@ -344,6 +370,7 @@ void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha/*, SDL_Texture *tx
 /* 			ft_draw_wall(w, m, p, &s_raycast); */
 /* //			ft_draw_wall(w, recalc_ray_distance(dx, s_raycast.window_x), (double)(s_raycast.window_x)); */
 /* 		} */
+
 		s_raycast.angle += step;
 		s_raycast.window_x++;
 	}

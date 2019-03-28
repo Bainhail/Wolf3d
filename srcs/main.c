@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 13:36:14 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/28 17:57:50 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void			refresh_screen(t_print *w)
 	SDL_RenderClear(w->renderer_3d);
 	init_renderer(w->ren, &(w->m));
 	refresh_player_pos(&(w->m), &(w->pl));
+	SDL_SetRenderDrawColor(w->ren, 255, 0, 0, 50);
 	print_line(w, w->ren, w->pl.s1, w->pl.s2);
 	print_line(w, w->ren, w->pl.s1, w->pl.s3);
 	print_line(w, w->ren, w->pl.s3, w->pl.s2);
