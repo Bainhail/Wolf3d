@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:31:21 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 17:04:49 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/28 11:50:22 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,19 @@ static int		ft_colision_detection(t_map *m, t_my_raycast *s_raycast)
 
 static void		ft_get_secteur_rayon(int x, int y, t_map *m, t_my_raycast *s_raycast)
 {
+
+	//effet de bord
+	if (x == WINX - 1)
+	{
+		x+= 2;
+	}
+	if (y == WINY - 1)
+	{
+		y+= 3;
+	}
+
+
+
 	if (s_raycast->s_secteur.actuel_x != (int)(x / m->xcase) || s_raycast->s_secteur.actuel_y != (int)(y / m->ycase))
 	{
 		s_raycast->s_secteur.precedent_x = s_raycast->s_secteur.actuel_x;
@@ -159,6 +172,7 @@ static void		ft_get_secteur_rayon(int x, int y, t_map *m, t_my_raycast *s_raycas
 		s_raycast->s_secteur.actuel_x = (int)(x / m->xcase);
 		s_raycast->s_secteur.actuel_y = (int)(y / m->ycase);
 	}
+	//printf("XY =%d =%d\n", x, y);
 }
 
 static void		ft_init_secteur_rayon(t_player *p, t_map *m, t_my_raycast *s_raycast)
@@ -183,9 +197,13 @@ static void		wall_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *s_rayc
 		s_raycast->y = (sin(conv_deg_to_rad(s_raycast->angle - 90)) * ray_distance) + p->pos.y;
 		ft_get_secteur_rayon(s_raycast->x, s_raycast->y, m, s_raycast);
 		if ((colision = ft_colision_detection(m, s_raycast)) == FALSE)
+		{
 			SDL_RenderDrawPoint(w->ren, s_raycast->x, s_raycast->y);
+		}
 		else
+		{
 			ft_draw_wall(w, m, p, s_raycast);
+		}
 		ray_distance++;
 	}
 }
@@ -206,4 +224,5 @@ void			ft_raycast(t_print *w, t_player *p, t_map *m, int alpha)
 		s_raycast.angle += step;
 		s_raycast.window_x++;
 	}
+			printf("Finish\n\n");
 }
