@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/28 14:27:27 by naali            ###   ########.fr        #
+#    Updated: 2019/03/29 15:02:04 by naali            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,15 @@ SRC			=	main.c						\
 				mult_matrice.c				\
 				t_vertex.c					\
 				file_event_loop.c			\
-				file_3d_map.c \
-				file_ft_quit.c \
-				file_ft_get_the_map.c
+				file_3d_map.c 				\
+				file_ft_quit.c 				\
+				file_ft_get_the_map.c		\
+				calcul_distance.c			\
+				wall_checking.c				\
+				colision.c					\
+				orientation.c				\
+				draw_wall.c					\
+				secteur_func.c
 
 OBJ			=	$(SRC:.c=.o)
 

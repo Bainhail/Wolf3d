@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/28 14:51:08 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/29 15:01:13 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,22 +166,39 @@ typedef struct		s_print
 	SDL_Texture		*txt_y;
 }					t_print;
 
-int					file_to_tab(char *path, t_map *m);
-int					draw_square(SDL_Renderer *r, t_map *m, int x, int y);
-int					get_player_pos(t_print *w, t_player *p, t_map *m);
-void				print_line(t_print *w, SDL_Renderer *r, t_vertex start, t_vertex end);
-void				ft_event_loop(t_print *w);
-int					init_renderer(SDL_Renderer *r, t_map *m);
-void				calc_player_pos(t_map *m, t_player *p, int x, int y);
-void				refresh_player_pos(t_map *m, t_player *p);
-void				refresh_screen(t_print *w);
-SDL_Texture			*loadBMP(SDL_Renderer *tmp_renderer, char *path);
+int				file_to_tab(char *path, t_map *m);
+int				draw_square(SDL_Renderer *r, t_map *m, int x, int y);
+int				get_player_pos(t_print *w, t_player *p, t_map *m);
+void			print_line(t_print *w, SDL_Renderer *r, t_vertex start, \
+															t_vertex end);
+void			ft_event_loop(t_print *w);
+int				init_renderer(SDL_Renderer *r, t_map *m);
+void			calc_player_pos(t_map *m, t_player *p, int x, int y);
+void			refresh_player_pos(t_map *m, t_player *p);
+void			refresh_screen(t_print *w);
+SDL_Texture		*loadBMP(SDL_Renderer *tmp_renderer, char *path);
 
 
-void				ft_quit(t_print *p);
-int					ft_get_the_map(char **av, t_print *p);
-void				ft_raycast(t_print *w, t_player *p, t_map *m, int alpha);
-
-
+void			ft_quit(t_print *p);
+int				ft_get_the_map(char **av, t_print *p);
+void			ft_raycast(t_print *w, t_player *p, t_map *m, int alpha);
+double			dist_calc(double xa, double ya, double xb, double yb);
+double			recalc_ray_distance(double dist, int win_step);
+int				ft_colision_detection(t_map *m, t_my_raycast *rc, \
+												double corx, double cory);
+double			wall_y_detect(t_print *w, t_player *p, t_map *m, \
+												t_my_raycast *rc);
+double			wall_x_detect(t_print *w, t_player *p, t_map *m, \
+												t_my_raycast *rc);
+int				ft_get_wall_orientation(double angle, int orientation);
+void			ft_load_texture_ft_orientation(t_print *w, \
+												t_my_raycast *s_raycast);
+void			ft_init_texture_wall_position(t_map *m, \
+												t_my_raycast *s_raycast);
+void			ft_draw_wall(t_print *w, t_map *m, t_my_raycast *rc);
+void			ft_get_secteur_rayon(int x, int y, t_map *m, \
+												t_my_raycast *s_raycast);
+void			ft_init_secteur_rayon(t_player *p, t_map *m, \
+												t_my_raycast *rc);
 
 #endif

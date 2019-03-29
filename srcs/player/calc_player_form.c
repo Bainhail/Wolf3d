@@ -6,12 +6,16 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 14:42:55 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 11:25:15 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/03/29 13:46:22 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wolf3d.h"
 
+/*
+** Contraction des fonctions calc s1 s2 s3
+** A mettre en une ou deux fonctions max.
+*/
 t_vertex	calc_s1(t_map *m, t_vertex *pos, double flg)
 {
 	t_vertex	s1;

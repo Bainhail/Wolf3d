@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/28 17:57:50 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/29 13:38:31 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ int				main(int ac, char **av)
 	ft_get_the_map(av, &p);
 	SDL_Init(SDL_INIT_EVERYTHING);
 	p.w = SDL_CreateWindow("test", SDL_WINDOWPOS_CENTERED,
-SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
+						SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
 	p.window_3d = SDL_CreateWindow("Window 3D", SDL_WINDOWPOS_CENTERED,
-SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
+						SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
 	p.renderer_3d = SDL_CreateRenderer(p.window_3d, 0, SDL_RENDERER_SOFTWARE);
 	SDL_RenderPresent(p.renderer_3d);
 	ft_load_bmp(&p);
