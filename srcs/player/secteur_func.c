@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:59:14 by naali             #+#    #+#             */
-/*   Updated: 2019/03/29 15:00:42 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/29 16:12:26 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void			ft_get_secteur_rayon(int x, int y, t_map *m, t_my_raycast *s_raycast)
 {
 	if (x == WINX - 1)
 	{
-		x+= 2;
+		x += 2;
 	}
 	if (y == WINY - 1)
 	{
-		y+= 3;
+		y += 3;
 	}
 	x = (int)(x / m->xcase);
 	y = (int)(y / m->ycase);

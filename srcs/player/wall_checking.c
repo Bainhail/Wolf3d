@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/03/29 14:45:19 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/29 16:13:46 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ double			wall_x_detect(t_print *w, t_player *p, t_map *m, \
 	double	dist;
 	int		colision;
 
-	dist = -1;
+	dist = 0;
 	init_wall_x(p, m, rc, &step);
 	colision = FALSE;
 	SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 100);
@@ -68,16 +68,15 @@ static void		init_wall_y(t_player *p, t_map *m, t_my_raycast *rc, double *s)
 	*s = m->ycase * p->wl.diry;
 }
 
-double			wall_y_detect(t_print *w, t_player *p, t_map *m, \
-													t_my_raycast *rc)
+double			wall_y_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *rc)
 {
 	double	step;
 	double	tmp;
 	double	dist;
-	int		colision = FALSE;
-
+	int		colision;
 
 	dist = -1.0;
+	colision = FALSE;
 	init_wall_y(p, m, rc, &step);
 	SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 100);
 	while (colision == FALSE)

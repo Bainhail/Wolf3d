@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 13:49:38 by naali             #+#    #+#             */
-/*   Updated: 2019/03/29 13:51:29 by naali            ###   ########.fr       */
+/*   Updated: 2019/03/29 16:11:40 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ double			recalc_ray_distance(double dist, int win_step)
 	double	step;
 
 	step = 60.0 / (double)WINX;
-	if (win_step <= WINX/2)
+	if (win_step <= WINX / 2)
 	{
 		step *= win_step;
 		dist_cor = cos(conv_deg_to_rad(30.0 - step)) * dist;
