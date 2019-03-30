@@ -1,4 +1,46 @@
 # Wolf3d ToDoList
+-------------------------------------------------------------------------------------
+-->Wolf3d minimal todolist-----------------------------------------------------------
+-------------------------------------------------------------------------------------
+  -->makefile sans relinkage qui compile le code source et les diferentes librairies
+  -->gestion d'erreur
+      -->le programme quite proprement si un malloc indispensable ne se fait pas (exemple fenetre principale)
+  -->zero leak
+      -->free de toutes les alocations lorsque le programme quite
+  -->programme qui quite proprement sur croix rouge fenetre et touche echape
+  -->map3d
+      -->affichage des texture en fonction de l'orientation sans aucun defaut d'affichage
+      -->mapper les touches comme demander dans le sujet
+  -->map2d
+      -->c'est pas obligatoire mais une bonne map 2d donne une bonne map 3d non?
+  -->plus aucun crash possible et boucle infinie
+      -->division par zero
+      -->put pixel en dehors de la window
+      -->proteger l'entrer du programme (map invalide..)
+      -->...
+  -->fichiers sources a la norme42
+  
+------------------------------------------------------------------------------------
+------------>BONUS<-----------------------------------------------------------------
+------------------------------------------------------------------------------------
+-->introduire le plus de parametre variable, dans une fenetre de parametre?
+        -->taille des cellules
+        -->tailles de la map
+        -->vitesse personnage
+        -->angle de vue
+        
+-->editeur de map
+      -->placer des mur ou l'on veux
+      
+-->game play
+      -->introduire la souris pour l'angle du joueur
+  
+-->graphisme
+      -->texture au sol et plafond
+
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+
 
 - Recuperation de la map et parsing - DONE
   - Decoupage de la map en case - DONE
