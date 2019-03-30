@@ -4,9 +4,9 @@
 -------------------------------------------------------------------------------------<br/>
 --->makefile sans relinkage qui compile le code source et les diferentes librairies<br/>
 --->gestion d'erreur<br/>
-.      -le programme quite proprement si un malloc indispensable ne se fait pas (exemple fenetre principale)<br/>
+-      -le programme quite proprement si un malloc indispensable ne se fait pas (exemple fenetre principale)<br/>
 --->zero leak<br/>
-.      -free de toutes les alocations lorsque le programme quite<br/>
+-      -free de toutes les alocations lorsque le programme quite<br/>
 --->programme qui quite proprement sur croix rouge fenetre et touche echape<br/>
 --->map3d<br/>
 -      -affichage des texture en fonction de l'orientation sans aucun defaut d'affichage<br/>
@@ -14,10 +14,10 @@
 --->map2d<br/>
 -      -c'est pas obligatoire mais une bonne map 2d donne une bonne map 3d non?<br/>
 --->plus aucun crash possible et boucle infinie<br/>
-.      -division par zero<br/>
-.      -put pixel en dehors de la window<br/>
-.      -proteger l'entrer du programme (map invalide..)<br/>
-.      -...<br/>
+-      -division par zero<br/>
+-      -put pixel en dehors de la window<br/>
+-      -proteger l'entrer du programme (map invalide..)<br/>
+-      -...<br/>
 --->fichiers sources a la norme42<br/>
   <br/>
 ------------------------------------------------------------------------------------<br/>
