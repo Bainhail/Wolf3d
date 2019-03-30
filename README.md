@@ -24,19 +24,19 @@
 ------------>BONUS<-----------------------------------------------------------------<br/>
 ------------------------------------------------------------------------------------<br/>
 -->introduire le plus de parametre variable, dans une fenetre de parametre?<br/>
-        -->taille des cellules<br/>
-        -->tailles de la map<br/>
-        -->vitesse personnage<br/>
-        -->angle de vue<br/>
+.        -->taille des cellules<br/>
+.        -->tailles de la map<br/>
+.        -->vitesse personnage<br/>
+.        -->angle de vue<br/>
         <br/>
 -->editeur de map<br/>
-      -->placer des mur ou l'on veux<br/>
+.      -->placer des mur ou l'on veux<br/>
       <br/>
 -->game play<br/>
-      -->introduire la souris pour l'angle du joueur<br/>
+.      -->introduire la souris pour l'angle du joueur<br/>
   <br/>
 -->graphisme<br/>
-      -->texture au sol et plafond<br/>
+.      -->texture au sol et plafond<br/>
 <br/>
 -----------------------------------------------------------------------------------<br/>
 -----------------------------------------------------------------------------------<br/>
