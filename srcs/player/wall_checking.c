@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/03/29 16:13:46 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/01 14:06:02 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static double	check_colision(t_print *w, t_player *p, t_my_raycast *r, int *c)
 	double		dist;
 
 	dist = -1;
-	if ((*c = ft_colision_detection(&(w->m), r, p->wl.dirx, 0.0)) == FALSE)
+	if ((*c = ft_colision_detection(&(w->m), r, p->wl.dirx, p->wl.diry)) == FALSE)
 		SDL_RenderDrawPoint(w->ren, r->x, r->y);
 	else
 	{
@@ -27,6 +27,7 @@ static double	check_colision(t_print *w, t_player *p, t_my_raycast *r, int *c)
 	}
 	return (dist);
 }
+
 
 static void		init_wall_x(t_player *p, t_map *m, t_my_raycast *rc, double *s)
 {
@@ -56,6 +57,8 @@ double			wall_x_detect(t_print *w, t_player *p, t_map *m, \
 		if ((dist = check_colision(w, p, rc, &colision)) >= 0)
 			return (dist);
 		rc->x = rc->x + step;
+		if (rc->x <= 5.0)
+			rc->x = 0;
 	}
 	return (dist);
 }
@@ -86,6 +89,7 @@ double			wall_y_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *rc)
 		{
 			if (dist < 0 || (tmp >= 0 && dist > tmp))
 				dist = tmp;
+			return (dist);
 		}
 		rc->y = rc->y + step;
 	}

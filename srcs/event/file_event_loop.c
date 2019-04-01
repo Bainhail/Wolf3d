@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 12:19:33 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/27 12:26:33 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/01 14:05:07 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@ void	ft_move(int move, t_print *w)
 {
 	if (move == UP)
 	{
-		w->pl.pos.x += cos(conv_deg_to_rad(w->pl.flg_dir - 90)) * 16;
-		w->pl.pos.y += sin(conv_deg_to_rad(w->pl.flg_dir - 90)) * 16;
+		w->pl.pos.x += cos(conv_deg_to_rad(w->pl.flg_dir)) * 20;
+		w->pl.pos.y += sin(conv_deg_to_rad(w->pl.flg_dir)) * 20;
 	}
 	else if (move == DOWN)
 	{
-		w->pl.pos.x -= cos(conv_deg_to_rad(w->pl.flg_dir - 90)) * 16;
-		w->pl.pos.y -= sin(conv_deg_to_rad(w->pl.flg_dir - 90)) * 16;
+		w->pl.pos.x -= cos(conv_deg_to_rad(w->pl.flg_dir)) * 20;
+		w->pl.pos.y -= sin(conv_deg_to_rad(w->pl.flg_dir)) * 20;
 	}
 	else if (move == TRIGO)
 	{
-		w->pl.flg_dir += 13;
+		w->pl.flg_dir += 10;
 	}
 	else if (move == ANTI)
 	{
-		w->pl.flg_dir -= 13;
+		w->pl.flg_dir -= 10;
 	}
 	refresh_screen(w);
 }

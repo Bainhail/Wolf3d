@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:55:35 by naali             #+#    #+#             */
-/*   Updated: 2019/03/30 16:55:20 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/01 14:12:34 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,22 @@ void			ft_init_texture_wall_position(t_map *m, t_my_raycast *s_raycast)
 			le_delta = (int)s_raycast->y % (int)m->ycase;
 		else
 			le_delta = (int)m->ycase - ((int)s_raycast->y % (int)m->ycase);
-
 	}
 	else
 	{
 		if (s_raycast->orientation == NORTH_WALL)
 		le_delta = (int)(s_raycast->x + 1.0) % (int)m->xcase;
 		else
-		le_delta =(int)m->xcase - ( (int)(s_raycast->x + 1.0) % (int)m->xcase);
-
+		le_delta =(int)m->xcase - ((int)(s_raycast->x + 1.0) % (int)m->xcase);
 	}
 	s_raycast->srcrect.x = le_delta;
+	s_raycast->srcrect.w = 1;//Peut etre une modification ici aussi
 	s_raycast->srcrect.y = 0;
-	s_raycast->srcrect.w = 1;
 	s_raycast->srcrect.h = 54;
 	s_raycast->dstrect.x = s_raycast->window_x;
-	s_raycast->dstrect.h = (int)s_raycast->hmp * 2;
-	s_raycast->dstrect.y = (int)((double)WINY / 2.0) - (s_raycast->hmp / 2.0);
-	s_raycast->dstrect.w = 1;
+	s_raycast->dstrect.w = 1;//a modifier pour adapter la largeur
+	s_raycast->dstrect.h = (int)(s_raycast->hmp * 2);
+	s_raycast->dstrect.y = (int)((double)WINY / 2.0) - (s_raycast->hmp/* / 2.0 */);
 }
 
 void			ft_draw_wall(t_print *w, t_map *m, t_my_raycast *rc)

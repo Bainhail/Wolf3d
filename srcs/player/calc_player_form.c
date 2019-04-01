@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 14:42:55 by naali             #+#    #+#             */
-/*   Updated: 2019/03/29 16:10:57 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/01 14:07:22 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_vertex	calc_s1(t_map *m, t_vertex *pos, double flg)
 	s1.x = pos->x + ((double)m->xcase / 3);
 	s1.y = pos->y;
 	s1.z = pos->z;
-	s1 = rotate_around_new_center(&s1, pos, flg - 90);
+	s1 = rotate_around_new_center(&s1, pos, flg);
 	return (s1);
 }
 
@@ -35,7 +35,7 @@ t_vertex	calc_s2(t_map *m, t_vertex *pos, double flg)
 	s2.x = pos->x - ((double)m->xcase / 3);
 	s2.y = pos->y - ((double)m->ycase / 3);
 	s2.z = pos->z;
-	s2 = rotate_around_new_center(&s2, pos, flg - 90);
+	s2 = rotate_around_new_center(&s2, pos, flg);
 	return (s2);
 }
 
@@ -46,7 +46,7 @@ t_vertex	calc_s3(t_map *m, t_vertex *pos, double flg)
 	s3.x = pos->x - ((double)m->xcase / 3);
 	s3.y = pos->y + ((double)m->ycase / 3);
 	s3.z = pos->z;
-	s3 = rotate_around_new_center(&s3, pos, flg - 90);
+	s3 = rotate_around_new_center(&s3, pos, flg);
 	return (s3);
 }
 

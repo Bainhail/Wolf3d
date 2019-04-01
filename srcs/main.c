@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/03/29 13:38:31 by naali            ###   ########.fr       */
+/*   Updated: 2019/04/01 14:18:28 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void			refresh_screen(t_print *w)
 {
+	SDL_SetRenderDrawColor(w->ren, 0, 0, 0, 100);
+	SDL_SetRenderDrawColor(w->renderer_3d, 0, 0, 0, 100);
 	SDL_RenderClear(w->ren);
 	SDL_RenderClear(w->renderer_3d);
 	init_renderer(w->ren, &(w->m));
@@ -70,11 +72,11 @@ void			print_tab(t_vertex **tab)
 
 void			ft_load_bmp(t_print *p)
 {
-	p->txt = loadBMP(p->renderer_3d, "untitled.bmp");
-	p->txt_x_west = loadBMP(p->renderer_3d, "west_x.bmp");
-	p->txt_x_east = loadBMP(p->renderer_3d, "east_x.bmp");
-	p->txt_y_south = loadBMP(p->renderer_3d, "south_y.bmp");
-	p->txt_y_north = loadBMP(p->renderer_3d, "north_y.bmp");
+	p->txt = loadBMP(p->renderer_3d, "textures/untitled.bmp");
+	p->txt_x_west = loadBMP(p->renderer_3d, "textures/west_x.bmp");
+	p->txt_x_east = loadBMP(p->renderer_3d, "textures/east_x.bmp");
+	p->txt_y_south = loadBMP(p->renderer_3d, "textures/south_y.bmp");
+	p->txt_y_north = loadBMP(p->renderer_3d, "textures/north_y.bmp");
 }
 
 int				main(int ac, char **av)
@@ -96,6 +98,7 @@ int				main(int ac, char **av)
 	init_renderer(p.ren, &(p.m));
 	get_player_pos(&p, &(p.pl), &(p.m));
 	ft_raycast(&p, &(p.pl), &(p.m), EST);
+	refresh_screen(&p);
 	SDL_RenderPresent(p.ren);
 	ft_event_loop(&p);
 	ft_quit(&p);

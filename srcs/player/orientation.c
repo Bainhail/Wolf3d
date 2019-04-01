@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:51:54 by naali             #+#    #+#             */
-/*   Updated: 2019/03/29 14:53:56 by naali            ###   ########.fr       */
+/*   Updated: 2019/04/01 14:07:53 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ int			ft_get_wall_orientation(double angle, int orientation)
 {
 	if (orientation == X_COLISION)
 	{
-		if (cos(conv_deg_to_rad(angle - 90)) > 0)
+		if (cos(conv_deg_to_rad(angle)) > 0)
 			orientation = EAST_WALL;
 		else
 			orientation = WEST_WALL;
 	}
 	else if (orientation == Y_COLISION)
 	{
-		if (sin(conv_deg_to_rad(angle - 90)) > 0)
+		if (sin(conv_deg_to_rad(angle)) > 0)
 			orientation = SOUTH_WALL;
 		else
 			orientation = NORTH_WALL;

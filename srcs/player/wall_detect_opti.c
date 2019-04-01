@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/03/29 15:16:03 by naali            ###   ########.fr       */
+/*   Updated: 2019/04/01 14:05:41 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	init_coef(t_vertex j, t_wall *wl, double alpha)
 {
-	wl->x = (cos(conv_deg_to_rad(alpha - 90)) * 1.0) + j.x;
-	wl->y = (sin(conv_deg_to_rad(alpha - 90)) * 1.0) + j.y;
+	wl->x = (cos(conv_deg_to_rad(alpha)) * 1.0) + j.x;
+	wl->y = (sin(conv_deg_to_rad(alpha)) * 1.0) + j.y;
 	wl->a = (wl->y - j.y) / (wl->x - j.x);
 	wl->b = j.y - (j.x * wl->a);
 	wl->dirx = (wl->x < j.x) ? -1 : 1;
