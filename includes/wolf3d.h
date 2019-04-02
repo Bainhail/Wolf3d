@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/29 15:01:13 by naali            ###   ########.fr       */
+/*   Updated: 2019/04/02 15:56:32 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ typedef struct	s_my_raycast
 	SDL_Rect		srcrect;
 	SDL_Rect		dstrect;
 	t_secteur_rayon	s_secteur;
-	double			dx;
-	double			dy;
+	double			dist_col_x;
+	double			dist_col_y;
 }				t_my_raycast;
 
 typedef struct		s_file

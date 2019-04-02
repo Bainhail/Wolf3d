@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/01 14:06:02 by naali            ###   ########.fr       */
+/*   Updated: 2019/04/02 17:11:44 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,18 @@ double			wall_x_detect(t_print *w, t_player *p, t_map *m, \
 	SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 100);
 	while (colision == FALSE)
 	{
-		rc->y = p->wl.a * rc->x + p->wl.b;
+		if (rc->angle != 90 && rc->angle != 270)
+		{
+			rc->y = p->wl.a * rc->x + p->wl.b;
+		}
+		else
+		{
+			printf("angle 90 x =%.1f\n", p->wl.b);
+
+			rc->y = rc->x /*+ p->wl.b*/;
+		}
+
+
 		if (rc->y > p->wl.ymax)
 			p->wl.ymax = rc->y;
 		if (rc->y < p->wl.ymin)
@@ -57,16 +68,13 @@ double			wall_x_detect(t_print *w, t_player *p, t_map *m, \
 		if ((dist = check_colision(w, p, rc, &colision)) >= 0)
 			return (dist);
 		rc->x = rc->x + step;
-		if (rc->x <= 5.0)
-			rc->x = 0;
 	}
 	return (dist);
 }
 
 static void		init_wall_y(t_player *p, t_map *m, t_my_raycast *rc, double *s)
 {
-	rc->y = (p->wl.diry > 0) ? ((int)(p->wl.ymin / m->ycase)) \
-						: ((int)(p->wl.ymax / m->ycase));
+	rc->y = (p->wl.diry > 0) ? ((int)(p->wl.ymin / m->ycase)) : ((int)(p->wl.ymax / m->ycase));
 	rc->y = rc->y * m->ycase + ((p->wl.diry > 0) ? m->ycase : 0);
 	*s = m->ycase * p->wl.diry;
 }
@@ -84,7 +92,13 @@ double			wall_y_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *rc)
 	SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 100);
 	while (colision == FALSE)
 	{
-		rc->x = (rc->y - p->wl.b) / p->wl.a;
+		if (rc->angle == 90 || rc->angle == 270)
+			printf("HELLO\n");
+
+		if (rc->angle != 90 && rc->angle != 270)
+			rc->x = (rc->y - p->wl.b) / p->wl.a;
+		else
+			rc->x = (rc->y /* - p->wl.b*/);
 		if ((tmp = check_colision(w, p, rc, &colision)) >= 0)
 		{
 			if (dist < 0 || (tmp >= 0 && dist > tmp))
