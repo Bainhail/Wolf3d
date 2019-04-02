@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/01 14:05:41 by naali            ###   ########.fr       */
+/*   Updated: 2019/04/02 14:09:09 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,12 @@ static void	print_view(t_print *w, t_player *p, t_my_raycast *r, t_vertex *wall)
 		r->x = wall->x;
 		r->y = wall->y;
 	}
-	SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 50);
+	if ((int)r->dx == (int)r->dy)
+		SDL_SetRenderDrawColor(w->ren, 255, 0, 0, 50);
+	else if ((int)r->dx > (int)r->dy)
+		SDL_SetRenderDrawColor(w->ren, 0, 0, 255, 50);
+	else
+		SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 50);
 	print_line(w, w->ren, p->pos, *wall);
 }
 
