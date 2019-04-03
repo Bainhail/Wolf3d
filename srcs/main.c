@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 09:56:18 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 10:43:25 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		ft_init_param_game(t_print *s_win)
 {
-	s_win->player.fov = 60;
+	s_win->player.fov = 60.0;
 }
 
 void		ft_init_window_and_renderer(t_print *s_win)
@@ -37,17 +37,11 @@ int				main(int ac, char **av)
 	ft_init_window_and_renderer(&s_win);
 	SDL_RenderPresent(s_win.renderer[MAP_3D]);
 	ft_load_bmp(&s_win);
-	//init_renderer(s_win.ren, &(s_win.m));
 	init_renderer(s_win.renderer[MAP_2D], &(s_win.m));
-
 	ft_init_player_pos(&s_win, &(s_win.player), &(s_win.m));
-
-
 	ft_raycast(&s_win, &(s_win.player), &(s_win.m), EST);
 	refresh_screen(&s_win);
-
 	SDL_RenderPresent(s_win.renderer[MAP_2D]);
-
 	ft_event_loop(&s_win);
 	ft_quit(&s_win);
 	return (0);

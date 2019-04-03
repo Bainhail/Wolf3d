@@ -6,11 +6,11 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:51:54 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 10:38:17 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 10:39:07 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include <wolf3d.h>
 
 int			ft_get_wall_orientation(double angle, int orientation)
 {

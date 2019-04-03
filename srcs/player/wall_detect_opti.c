@@ -6,11 +6,11 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 09:57:41 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 11:33:26 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include <wolf3d.h>
 
 static void	init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 {
@@ -27,11 +27,10 @@ static void	init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 		wl->b = pos_joueur->y - pos_joueur->x;
 		printf("XY =%f =%f\n", wl->x, wl->y);
 	}
-	wl->b = pos_joueur->y - (pos_joueur->x * wl->a);
 	wl->dirx = (wl->x < pos_joueur->x) ? -1 : 1;
 	wl->diry = (wl->y < pos_joueur->y) ? -1 : 1;
-	wl->ymin = wl->y;
-	wl->ymax = wl->y;
+	wl->ymin = wl->y; //je c pas ce ke c
+	wl->ymax = wl->y; //je c pas ce ke c
 }
 
 static void	print_view(t_print *w, t_player *p, t_my_raycast *r, t_vertex *wall)
@@ -61,7 +60,7 @@ void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map, int alpha)
 	t_vertex		wall;
 
 	s_raycast.window_x = 0;
-	step = 60.0 / (double)WINX;
+	step = s_player->fov / (double)WINX;
 	s_raycast.angle = (double)alpha - 30;
 	max = s_raycast.angle + 60;
 	ft_init_secteur_rayon(s_player, s_map, &s_raycast);

@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/03 10:38:05 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 11:38:03 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ typedef enum e_move_player
 	ANTI
 }			s_move_player;
 
-
-
 typedef struct	s_my_raycast
 {
 	double			window_x;
@@ -71,6 +69,12 @@ typedef struct	s_my_raycast
 	t_secteur_rayon	s_secteur;
 	double			dist_col_x;
 	double			dist_col_y;
+
+
+	double			step_cte_x;
+
+
+
 }				t_my_raycast;
 
 typedef struct		s_file
@@ -155,16 +159,11 @@ typedef enum	e_orientation_wall
 
 typedef struct		s_print
 {
-	t_player		player;//     (Voir s_player)
-	t_map			m;//      (Voir s_map)
-
-
-
+	t_player		player;
+	t_map			m;
 	SDL_Renderer	*renderer[10];
 	SDL_Texture		*texture[10];
 	SDL_Window		*window[10];
-
-
 	SDL_Renderer	*ren_flg;
 
 }					t_print;
@@ -178,8 +177,6 @@ void			calc_player_pos(t_map *m, t_player *p, int x, int y);
 void			refresh_player_pos(t_map *m, t_player *p);
 void			refresh_screen(t_print *w);
 SDL_Texture		*loadBMP(SDL_Renderer *tmp_renderer, char *path);
-
-
 void			ft_quit(t_print *p);
 int				ft_get_the_map(char **av, t_print *p);
 void			ft_raycast(t_print *w, t_player *p, t_map *m, int alpha);
