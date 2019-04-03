@@ -6,11 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/04/02 17:10:28 by jchardin         ###   ########.fr       */
-=======
-/*   Updated: 2019/04/02 14:09:09 by naali            ###   ########.fr       */
->>>>>>> 87252abfe09111ece13154fe2f194f4fc28a7e00
+/*   Updated: 2019/04/03 09:04:33 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +16,6 @@ static void	init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 {
 	wl->x = (cos(conv_deg_to_rad(alpha)) * 1.0) + pos_joueur->x;
 	wl->y = (sin(conv_deg_to_rad(alpha)) * 1.0) + pos_joueur->y;
-
-
 	if (alpha != 90 && alpha != 270)
 	{
 		wl->a = (wl->y - pos_joueur->y) / (wl->x - pos_joueur->x);
@@ -33,8 +27,6 @@ static void	init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 		wl->b = pos_joueur->y - pos_joueur->x;
 		printf("XY =%f =%f\n", wl->x, wl->y);
 	}
-
-
 	wl->b = pos_joueur->y - (pos_joueur->x * wl->a);
 	wl->dirx = (wl->x < pos_joueur->x) ? -1 : 1;
 	wl->diry = (wl->y < pos_joueur->y) ? -1 : 1;
@@ -51,22 +43,17 @@ static void	print_view(t_print *w, t_player *p, t_my_raycast *r, t_vertex *wall)
 		r->x = wall->x;
 		r->y = wall->y;
 	}
-
-
 	if ((int)r->dist_col_x == (int)r->dist_col_y)
 		SDL_SetRenderDrawColor(w->ren, 255, 0, 0, 50);  //rouge
 	else if ((int)r->dist_col_x > (int)r->dist_col_y)
 		SDL_SetRenderDrawColor(w->ren, 0, 0, 255, 50);  //bleu
 	else
 		SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 50); //vert
-
-
-
 	//SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 50);
 	print_line(w, w->ren, p->pos, *wall);
 }
 
-void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha)
+void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map, int alpha)
 {
 	double			step;
 	double			max;
@@ -77,19 +64,19 @@ void		ft_raycast(t_print *w, t_player *p, t_map *m, int alpha)
 	step = 60.0 / (double)WINX;
 	rc.angle = (double)alpha - 30;
 	max = rc.angle + 60;
-	ft_init_secteur_rayon(p, m, &rc);
+	ft_init_secteur_rayon(s_player, s_map, &rc);
 	printf("\n\n");
 	while (rc.angle < max && rc.window_x < WINX)
 	{
-		init_coef(&(p->pos), &(p->wl), rc.angle);
-		rc.dist_col_x = wall_x_detect(w, p, m, &rc);
+		init_coef(&(s_player->pos), &(s_player->wl), rc.angle);
+		rc.dist_col_x = wall_x_detect(s_win, s_player, s_map, &rc);
 		wall.x = rc.x;
 		wall.y = rc.y;
 		wall.z = 0.0;
-		rc.dist_col_y = wall_y_detect(w, p, m, &rc);
-		print_view(w, p, &rc, &wall);
-		ft_draw_wall(w, m, &rc);
-		ft_get_secteur_rayon(rc.x, rc.y, m, &rc);
+		rc.dist_col_y = wall_y_detect(s_win, s_player, s_map, &rc);
+		print_view(s_win, s_player, &rc, &wall);
+		ft_draw_wall(s_win, s_map, &rc);
+		ft_get_secteur_rayon(rc.x, rc.y, s_map, &rc);
 		rc.angle += step;
 		rc.window_x++;
 	}

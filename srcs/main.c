@@ -6,11 +6,37 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/04/01 14:18:28 by naali            ###   ########.fr       */
+/*   Updated: 2019/04/03 08:48:45 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
+
+int				main(int ac, char **av)
+{
+	t_print			p;
+
+	if (ac != 2)
+		return (0);
+	ft_get_the_map(av, &p);
+	SDL_Init(SDL_INIT_EVERYTHING);
+	p.w = SDL_CreateWindow("test", SDL_WINDOWPOS_CENTERED,
+						SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
+	p.window_3d = SDL_CreateWindow("Window 3D", SDL_WINDOWPOS_CENTERED,
+						SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
+	p.renderer_3d = SDL_CreateRenderer(p.window_3d, 0, SDL_RENDERER_SOFTWARE);
+	SDL_RenderPresent(p.renderer_3d);
+	ft_load_bmp(&p);
+	p.ren = SDL_CreateRenderer(p.w, 0, SDL_RENDERER_SOFTWARE);
+	init_renderer(p.ren, &(p.m));
+	get_player_pos(&p, &(p.pl), &(p.m));
+	ft_raycast(&p, &(p.pl), &(p.m), EST);
+	refresh_screen(&p);
+	SDL_RenderPresent(p.ren);
+	ft_event_loop(&p);
+	ft_quit(&p);
+	return (0);
+}
 
 void			refresh_screen(t_print *w)
 {
@@ -70,37 +96,3 @@ void			print_tab(t_vertex **tab)
 	}
 }
 
-void			ft_load_bmp(t_print *p)
-{
-	p->txt = loadBMP(p->renderer_3d, "textures/untitled.bmp");
-	p->txt_x_west = loadBMP(p->renderer_3d, "textures/west_x.bmp");
-	p->txt_x_east = loadBMP(p->renderer_3d, "textures/east_x.bmp");
-	p->txt_y_south = loadBMP(p->renderer_3d, "textures/south_y.bmp");
-	p->txt_y_north = loadBMP(p->renderer_3d, "textures/north_y.bmp");
-}
-
-int				main(int ac, char **av)
-{
-	t_print			p;
-
-	if (ac != 2)
-		return (0);
-	ft_get_the_map(av, &p);
-	SDL_Init(SDL_INIT_EVERYTHING);
-	p.w = SDL_CreateWindow("test", SDL_WINDOWPOS_CENTERED,
-						SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
-	p.window_3d = SDL_CreateWindow("Window 3D", SDL_WINDOWPOS_CENTERED,
-						SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
-	p.renderer_3d = SDL_CreateRenderer(p.window_3d, 0, SDL_RENDERER_SOFTWARE);
-	SDL_RenderPresent(p.renderer_3d);
-	ft_load_bmp(&p);
-	p.ren = SDL_CreateRenderer(p.w, 0, SDL_RENDERER_SOFTWARE);
-	init_renderer(p.ren, &(p.m));
-	get_player_pos(&p, &(p.pl), &(p.m));
-	ft_raycast(&p, &(p.pl), &(p.m), EST);
-	refresh_screen(&p);
-	SDL_RenderPresent(p.ren);
-	ft_event_loop(&p);
-	ft_quit(&p);
-	return (0);
-}

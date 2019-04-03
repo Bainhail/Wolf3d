@@ -6,11 +6,11 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/02 17:11:44 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 08:56:59 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include <wolf3d.h>
 
 static double	check_colision(t_print *w, t_player *p, t_my_raycast *r, int *c)
 {
@@ -27,7 +27,6 @@ static double	check_colision(t_print *w, t_player *p, t_my_raycast *r, int *c)
 	}
 	return (dist);
 }
-
 
 static void		init_wall_x(t_player *p, t_map *m, t_my_raycast *rc, double *s)
 {
@@ -56,11 +55,8 @@ double			wall_x_detect(t_print *w, t_player *p, t_map *m, \
 		else
 		{
 			printf("angle 90 x =%.1f\n", p->wl.b);
-
 			rc->y = rc->x /*+ p->wl.b*/;
 		}
-
-
 		if (rc->y > p->wl.ymax)
 			p->wl.ymax = rc->y;
 		if (rc->y < p->wl.ymin)
@@ -94,7 +90,6 @@ double			wall_y_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *rc)
 	{
 		if (rc->angle == 90 || rc->angle == 270)
 			printf("HELLO\n");
-
 		if (rc->angle != 90 && rc->angle != 270)
 			rc->x = (rc->y - p->wl.b) / p->wl.a;
 		else

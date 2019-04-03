@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/03/29 15:02:04 by naali            ###   ########.fr        #
+#    Updated: 2019/04/03 08:47:46 by jchardin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ SRC			=	main.c						\
 				colision.c					\
 				orientation.c				\
 				draw_wall.c					\
-				secteur_func.c
+				secteur_func.c				\
+				file_bmp_texture.c
 
 OBJ			=	$(SRC:.c=.o)
 

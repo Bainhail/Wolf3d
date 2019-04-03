@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/02 15:56:32 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 08:49:54 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,4 +201,5 @@ void			ft_get_secteur_rayon(int x, int y, t_map *m, \
 void			ft_init_secteur_rayon(t_player *p, t_map *m, \
 												t_my_raycast *rc);
 
+void			ft_load_bmp(t_print *p);
 #endif
