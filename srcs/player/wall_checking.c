@@ -6,24 +6,24 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 12:01:20 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 12:44:41 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
 
-static double	check_colision(t_print *w, t_player *player, t_my_raycast *r, int *c)
+static double	check_colision(t_print *s_win, t_player *player, t_my_raycast *r, int *c)
 {
 	double		dist;
 
 	dist = -1;
-	if ((*c = ft_colision_detection(&(w->m), r, player->wl.dirx, player->wl.diry)) == FALSE)
-		SDL_RenderDrawPoint(w->renderer[MAP_2D], r->x, r->y);
+	if ((*c = ft_colision_detection(&(s_win->m), r, player->wl.dirx, player->wl.diry)) == FALSE)
+		SDL_RenderDrawPoint(s_win->renderer[MAP_2D], r->x, r->y);
 	else
 	{
-		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 255, 50);
+		SDL_SetRenderDrawColor(s_win->renderer[MAP_2D], 255, 0, 255, 50);
 		if ((dist = dist_calc(player->pos.x, player->pos.y, r->x, r->y)) > 0)
-			SDL_RenderDrawPoint(w->renderer[MAP_2D], r->x, r->y);
+			SDL_RenderDrawPoint(s_win->renderer[MAP_2D], r->x, r->y);
 	}
 	return (dist);
 }
@@ -35,8 +35,7 @@ static void		init_wall_x(t_player *player, t_map *map, t_my_raycast *rc)
 	rc->step_cte_x = map->xcase * player->wl.dirx;
 }
 
-double			wall_x_detect(t_print *w, t_player *player, t_map *map, \
-												t_my_raycast *rc)
+double			wall_x_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycast *rc)
 {
 	double	dist;
 	int		colision;
@@ -44,7 +43,7 @@ double			wall_x_detect(t_print *w, t_player *player, t_map *map, \
 	dist = 0;
 	init_wall_x(player, map, rc);
 	colision = FALSE;
-	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 100);
+	SDL_SetRenderDrawColor(s_win->renderer[MAP_2D], 0, 255, 0, 100);
 	while (colision == FALSE)
 	{
 		if (rc->angle != 90 && rc->angle != 270)
@@ -60,7 +59,7 @@ double			wall_x_detect(t_print *w, t_player *player, t_map *map, \
 			player->wl.ymax = rc->y;
 		if (rc->y < player->wl.ymin)
 			player->wl.ymin = rc->y;
-		if ((dist = check_colision(w, player, rc, &colision)) >= 0)
+		if ((dist = check_colision(s_win, player, rc, &colision)) >= 0)
 			return (dist);
 		rc->x = rc->x + rc->step_cte_x;
 	}
@@ -74,7 +73,7 @@ static void		init_wall_y(t_player *player, t_map *map, t_my_raycast *rc, double 
 	*s = map->ycase * player->wl.diry;
 }
 
-double			wall_y_detect(t_print *w, t_player *player, t_map *map, t_my_raycast *rc)
+double			wall_y_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycast *rc)
 {
 	double	step;
 	double	tmp;
@@ -84,7 +83,7 @@ double			wall_y_detect(t_print *w, t_player *player, t_map *map, t_my_raycast *r
 	dist = -1.0;
 	colision = FALSE;
 	init_wall_y(player, map, rc, &step);
-	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 100);
+	SDL_SetRenderDrawColor(s_win->renderer[MAP_2D], 0, 255, 0, 100);
 	while (colision == FALSE)
 	{
 		if (rc->angle == 90 || rc->angle == 270)
@@ -93,7 +92,7 @@ double			wall_y_detect(t_print *w, t_player *player, t_map *map, t_my_raycast *r
 			rc->x = (rc->y - player->wl.b) / player->wl.a;
 		else
 			rc->x = (rc->y /* - player->wl.b*/);
-		if ((tmp = check_colision(w, player, rc, &colision)) >= 0)
+		if ((tmp = check_colision(s_win, player, rc, &colision)) >= 0)
 		{
 			if (dist < 0 || (tmp >= 0 && dist > tmp))
 				dist = tmp;
