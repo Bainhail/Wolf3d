@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 08:56:59 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 09:59:52 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static double	check_colision(t_print *w, t_player *p, t_my_raycast *r, int *c)
 
 	dist = -1;
 	if ((*c = ft_colision_detection(&(w->m), r, p->wl.dirx, p->wl.diry)) == FALSE)
-		SDL_RenderDrawPoint(w->ren, r->x, r->y);
+		SDL_RenderDrawPoint(w->renderer[MAP_2D], r->x, r->y);
 	else
 	{
-		SDL_SetRenderDrawColor(w->ren, 255, 0, 255, 50);
+		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 255, 50);
 		if ((dist = dist_calc(p->pos.x, p->pos.y, r->x, r->y)) > 0)
-			SDL_RenderDrawPoint(w->ren, r->x, r->y);
+			SDL_RenderDrawPoint(w->renderer[MAP_2D], r->x, r->y);
 	}
 	return (dist);
 }
@@ -45,7 +45,7 @@ double			wall_x_detect(t_print *w, t_player *p, t_map *m, \
 	dist = 0;
 	init_wall_x(p, m, rc, &step);
 	colision = FALSE;
-	SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 100);
+	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 100);
 	while (colision == FALSE)
 	{
 		if (rc->angle != 90 && rc->angle != 270)
@@ -85,7 +85,7 @@ double			wall_y_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *rc)
 	dist = -1.0;
 	colision = FALSE;
 	init_wall_y(p, m, rc, &step);
-	SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 100);
+	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 100);
 	while (colision == FALSE)
 	{
 		if (rc->angle == 90 || rc->angle == 270)

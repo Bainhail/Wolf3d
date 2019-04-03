@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 12:19:33 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/02 16:50:58 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 09:35:06 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,28 @@ void	ft_move(int move, t_print *w)
 {
 	if (move == UP)
 	{
-		w->pl.pos.x += cos(conv_deg_to_rad(w->pl.flg_dir)) * 20;
-		w->pl.pos.y += sin(conv_deg_to_rad(w->pl.flg_dir)) * 20;
+		w->player.pos.x += cos(conv_deg_to_rad(w->player.flg_dir)) * 20;
+		w->player.pos.y += sin(conv_deg_to_rad(w->player.flg_dir)) * 20;
 	}
 	else if (move == DOWN)
 	{
-		w->pl.pos.x -= cos(conv_deg_to_rad(w->pl.flg_dir)) * 20;
-		w->pl.pos.y -= sin(conv_deg_to_rad(w->pl.flg_dir)) * 20;
+		w->player.pos.x -= cos(conv_deg_to_rad(w->player.flg_dir)) * 20;
+		w->player.pos.y -= sin(conv_deg_to_rad(w->player.flg_dir)) * 20;
 	}
 	else if (move == TRIGO)
 	{
-		w->pl.flg_dir += 10;
+		w->player.flg_dir += 10;
 	}
 	else if (move == ANTI)
 	{
-		w->pl.flg_dir -= 10;
+		w->player.flg_dir -= 10;
 	}
 
 	//modulo 360
-	while (w->pl.flg_dir < 0)
-		w->pl.flg_dir += 360;
-	w->pl.flg_dir = w->pl.flg_dir % 360;
-	printf("angle =%d\n", w->pl.flg_dir);
+	while (w->player.flg_dir < 0)
+		w->player.flg_dir += 360;
+	w->player.flg_dir = w->player.flg_dir % 360;
+	printf("angle =%d\n", w->player.flg_dir);
 	refresh_screen(w);
 }
 

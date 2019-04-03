@@ -6,55 +6,70 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 08:48:45 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 09:56:18 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
 
+void		ft_init_param_game(t_print *s_win)
+{
+	s_win->player.fov = 60;
+}
+
+void		ft_init_window_and_renderer(t_print *s_win)
+{
+	SDL_Init(SDL_INIT_EVERYTHING);
+	s_win->window[MAP_2D] = SDL_CreateWindow("Window 2D", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
+	s_win->window[MAP_3D] = SDL_CreateWindow("Window 3D", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
+	s_win->renderer[MAP_3D] = SDL_CreateRenderer(s_win->window[MAP_3D], 0, SDL_RENDERER_SOFTWARE);
+	s_win->renderer[MAP_2D] = SDL_CreateRenderer(s_win->window[MAP_2D], 0, SDL_RENDERER_SOFTWARE);
+}
+
 int				main(int ac, char **av)
 {
-	t_print			p;
+	t_print			s_win;
 
 	if (ac != 2)
 		return (0);
-	ft_get_the_map(av, &p);
-	SDL_Init(SDL_INIT_EVERYTHING);
-	p.w = SDL_CreateWindow("test", SDL_WINDOWPOS_CENTERED,
-						SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
-	p.window_3d = SDL_CreateWindow("Window 3D", SDL_WINDOWPOS_CENTERED,
-						SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
-	p.renderer_3d = SDL_CreateRenderer(p.window_3d, 0, SDL_RENDERER_SOFTWARE);
-	SDL_RenderPresent(p.renderer_3d);
-	ft_load_bmp(&p);
-	p.ren = SDL_CreateRenderer(p.w, 0, SDL_RENDERER_SOFTWARE);
-	init_renderer(p.ren, &(p.m));
-	get_player_pos(&p, &(p.pl), &(p.m));
-	ft_raycast(&p, &(p.pl), &(p.m), EST);
-	refresh_screen(&p);
-	SDL_RenderPresent(p.ren);
-	ft_event_loop(&p);
-	ft_quit(&p);
+	ft_init_param_game(&s_win);
+	ft_get_the_map(av, &s_win);
+	ft_init_window_and_renderer(&s_win);
+	SDL_RenderPresent(s_win.renderer[MAP_3D]);
+	ft_load_bmp(&s_win);
+	//init_renderer(s_win.ren, &(s_win.m));
+	init_renderer(s_win.renderer[MAP_2D], &(s_win.m));
+
+	ft_init_player_pos(&s_win, &(s_win.player), &(s_win.m));
+
+
+	ft_raycast(&s_win, &(s_win.player), &(s_win.m), EST);
+	refresh_screen(&s_win);
+
+	SDL_RenderPresent(s_win.renderer[MAP_2D]);
+
+	ft_event_loop(&s_win);
+	ft_quit(&s_win);
 	return (0);
 }
 
 void			refresh_screen(t_print *w)
 {
-	SDL_SetRenderDrawColor(w->ren, 0, 0, 0, 100);
-	SDL_SetRenderDrawColor(w->renderer_3d, 0, 0, 0, 100);
-	SDL_RenderClear(w->ren);
-	SDL_RenderClear(w->renderer_3d);
-	init_renderer(w->ren, &(w->m));
-	refresh_player_pos(&(w->m), &(w->pl));
-	SDL_SetRenderDrawColor(w->ren, 255, 0, 0, 50);
-	print_line(w, w->ren, w->pl.s1, w->pl.s2);
-	print_line(w, w->ren, w->pl.s1, w->pl.s3);
-	print_line(w, w->ren, w->pl.s3, w->pl.s2);
-	ft_raycast(w, &(w->pl), &(w->m), w->pl.flg_dir);
-	SDL_SetRenderDrawColor(w->ren, 0, 0, 0, 100);
-	SDL_SetRenderDrawColor(w->renderer_3d, 0, 0, 0, 100);
-	SDL_RenderPresent(w->ren);
-	SDL_RenderPresent(w->renderer_3d);
+	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 0, 0, 100);
+	SDL_SetRenderDrawColor(w->renderer[MAP_3D], 0, 0, 0, 100);
+	SDL_RenderClear(w->renderer[MAP_2D]);
+	SDL_RenderClear(w->renderer[MAP_3D]);
+	init_renderer(w->renderer[MAP_2D], &(w->m));
+	refresh_player_pos(&(w->m), &(w->player));
+	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 0, 50);
+	print_line(w, w->renderer[MAP_2D], w->player.s1, w->player.s2);
+	print_line(w, w->renderer[MAP_2D], w->player.s1, w->player.s3);
+	print_line(w, w->renderer[MAP_2D], w->player.s3, w->player.s2);
+	ft_raycast(w, &(w->player), &(w->m), w->player.flg_dir);
+	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 0, 0, 100);
+	SDL_SetRenderDrawColor(w->renderer[MAP_3D], 0, 0, 0, 100);
+	SDL_RenderPresent(w->renderer[MAP_2D]);
+	SDL_RenderPresent(w->renderer[MAP_3D]);
 }
 
 int				init_renderer(SDL_Renderer *r, t_map *m)

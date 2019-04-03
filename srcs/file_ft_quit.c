@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 11:57:49 by jchardin          #+#    #+#             */
-/*   Updated: 2019/03/27 11:58:26 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 09:59:12 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void		ft_quit(t_print *p)
 {
-	SDL_DestroyRenderer(p->ren);
-	SDL_DestroyRenderer(p->renderer_3d);
-	SDL_DestroyWindow(p->window_3d);
+	SDL_DestroyRenderer(p->renderer[MAP_2D]);
+	SDL_DestroyRenderer(p->renderer[MAP_3D]);
+	SDL_DestroyWindow(p->window[MAP_3D]);
 	SDL_Quit();
 }

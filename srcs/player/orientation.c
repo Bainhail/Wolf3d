@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:51:54 by naali             #+#    #+#             */
-/*   Updated: 2019/04/02 16:26:05 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 10:00:55 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,23 @@ int			ft_get_wall_orientation(double angle, int orientation)
 void		ft_load_texture_ft_orientation(t_print *w, t_my_raycast *s_raycast)
 {
 	if (s_raycast->orientation == EAST_WALL)
-		SDL_RenderCopy(w->renderer_3d, w->txt_x_east, \
+		SDL_RenderCopy(w->renderer[MAP_3D], w->txt_x_east, \
 						&(s_raycast->srcrect), \
 						&(s_raycast->dstrect));
 	else if (s_raycast->orientation == WEST_WALL)
-		SDL_RenderCopy(w->renderer_3d, w->txt_x_west, \
+		SDL_RenderCopy(w->renderer[MAP_3D], w->txt_x_west, \
 						&(s_raycast->srcrect), \
 						&(s_raycast->dstrect));
 	else if (s_raycast->orientation == SOUTH_WALL)
-		SDL_RenderCopy(w->renderer_3d, w->txt_y_south, \
+		SDL_RenderCopy(w->renderer[MAP_3D], w->txt_y_south, \
 						&(s_raycast->srcrect), \
 						&(s_raycast->dstrect));
 	else if (s_raycast->orientation == NORTH_WALL)
-		SDL_RenderCopy(w->renderer_3d, w->txt_y_north, \
+		SDL_RenderCopy(w->renderer[MAP_3D], w->txt_y_north, \
 						&(s_raycast->srcrect), \
 						&(s_raycast->dstrect));
 	else
-		SDL_RenderCopy(w->renderer_3d, w->txt, \
+		SDL_RenderCopy(w->renderer[MAP_3D], w->txt, \
 						&(s_raycast->srcrect), \
 						&(s_raycast->dstrect));
 }

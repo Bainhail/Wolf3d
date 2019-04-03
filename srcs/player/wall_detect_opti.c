@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 09:04:33 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 09:57:41 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,40 +44,40 @@ static void	print_view(t_print *w, t_player *p, t_my_raycast *r, t_vertex *wall)
 		r->y = wall->y;
 	}
 	if ((int)r->dist_col_x == (int)r->dist_col_y)
-		SDL_SetRenderDrawColor(w->ren, 255, 0, 0, 50);  //rouge
+		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 0, 50);  //rouge
 	else if ((int)r->dist_col_x > (int)r->dist_col_y)
-		SDL_SetRenderDrawColor(w->ren, 0, 0, 255, 50);  //bleu
+		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 0, 255, 50);  //bleu
 	else
-		SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 50); //vert
-	//SDL_SetRenderDrawColor(w->ren, 0, 255, 0, 50);
-	print_line(w, w->ren, p->pos, *wall);
+		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 50); //vert
+	//SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 50);
+	print_line(w, w->renderer[MAP_2D], p->pos, *wall);
 }
 
 void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map, int alpha)
 {
 	double			step;
 	double			max;
-	t_my_raycast	rc;
+	t_my_raycast	s_raycast;
 	t_vertex		wall;
 
-	rc.window_x = 0;
+	s_raycast.window_x = 0;
 	step = 60.0 / (double)WINX;
-	rc.angle = (double)alpha - 30;
-	max = rc.angle + 60;
-	ft_init_secteur_rayon(s_player, s_map, &rc);
+	s_raycast.angle = (double)alpha - 30;
+	max = s_raycast.angle + 60;
+	ft_init_secteur_rayon(s_player, s_map, &s_raycast);
 	printf("\n\n");
-	while (rc.angle < max && rc.window_x < WINX)
+	while (s_raycast.angle < max && s_raycast.window_x < WINX)
 	{
-		init_coef(&(s_player->pos), &(s_player->wl), rc.angle);
-		rc.dist_col_x = wall_x_detect(s_win, s_player, s_map, &rc);
-		wall.x = rc.x;
-		wall.y = rc.y;
+		init_coef(&(s_player->pos), &(s_player->wl), s_raycast.angle);
+		s_raycast.dist_col_x = wall_x_detect(s_win, s_player, s_map, &s_raycast);
+		wall.x = s_raycast.x;
+		wall.y = s_raycast.y;
 		wall.z = 0.0;
-		rc.dist_col_y = wall_y_detect(s_win, s_player, s_map, &rc);
-		print_view(s_win, s_player, &rc, &wall);
-		ft_draw_wall(s_win, s_map, &rc);
-		ft_get_secteur_rayon(rc.x, rc.y, s_map, &rc);
-		rc.angle += step;
-		rc.window_x++;
+		s_raycast.dist_col_y = wall_y_detect(s_win, s_player, s_map, &s_raycast);
+		print_view(s_win, s_player, &s_raycast, &wall);
+		ft_draw_wall(s_win, s_map, &s_raycast);
+		ft_get_secteur_rayon(s_raycast.x, s_raycast.y, s_map, &s_raycast);
+		s_raycast.angle += step;
+		s_raycast.window_x++;
 	}
 }

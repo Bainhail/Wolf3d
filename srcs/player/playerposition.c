@@ -6,13 +6,13 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 09:44:41 by naali             #+#    #+#             */
-/*   Updated: 2019/04/01 13:45:46 by naali            ###   ########.fr       */
+/*   Updated: 2019/04/03 09:57:09 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include <wolf3d.h>
 
-int			get_player_pos(t_print *w, t_player *p, t_map *m)
+void			ft_init_player_pos(t_print *w, t_player *p, t_map *m)
 {
 	int		i;
 	int		j;
@@ -28,14 +28,12 @@ int			get_player_pos(t_print *w, t_player *p, t_map *m)
 				m->tab[i][j].z = 0;
 				p->flg_dir = EST;
 				calc_player_pos(m, p, j, i);
-				print_line(w, w->ren, p->s1, p->s2);
-				print_line(w, w->ren, p->s1, p->s3);
-				print_line(w, w->ren, p->s3, p->s2);
-				return (0);
+				print_line(w, w->renderer[MAP_2D], p->s1, p->s2);
+				print_line(w, w->renderer[MAP_2D], p->s1, p->s3);
+				print_line(w, w->renderer[MAP_2D], p->s3, p->s2);
 			}
 			j++;
 		}
 		i++;
 	}
-	return (-1);
 }

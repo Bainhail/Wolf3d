@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:55:35 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 08:54:05 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 10:01:23 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void			ft_draw_wall(t_print *w, t_map *m, t_my_raycast *rc)
 	rc->hmp = (((double)EYE * (double)WALL) / distance_ray) / 2.0;
 	w_up = init_vtex(rc->window_x, ((double)WINY / 2.0) - rc->hmp, 0);
 	w_bot = init_vtex(rc->window_x, ((double)WINY / 2.0) + rc->hmp, 0);
-	SDL_SetRenderDrawColor(w->renderer_3d, 50, 50, 200, 75);
-	print_line(w, w->renderer_3d, init_vtex(rc->window_x, 0, 0), w_up);
-	SDL_SetRenderDrawColor(w->renderer_3d, 200, 200, 200, 75);
-	print_line(w, w->renderer_3d, w_bot, init_vtex(rc->window_x, WINY, 0));
+	SDL_SetRenderDrawColor(w->renderer[MAP_3D], 50, 50, 200, 75);
+	print_line(w, w->renderer[MAP_3D], init_vtex(rc->window_x, 0, 0), w_up);
+	SDL_SetRenderDrawColor(w->renderer[MAP_3D], 200, 200, 200, 75);
+	print_line(w, w->renderer[MAP_3D], w_bot, init_vtex(rc->window_x, WINY, 0));
 	ft_init_texture_wall_position(m, rc);
 	ft_load_texture_ft_orientation(w, rc);
 }
