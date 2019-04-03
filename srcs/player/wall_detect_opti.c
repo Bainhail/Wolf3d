@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 15:19:24 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 15:25:26 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,23 @@ void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map, int alpha)
 	
 		s_raycast.wall_Y_colision.x = s_raycast.x;
 		s_raycast.wall_Y_colision.y = s_raycast.y;
+
+
+		if (s_raycast.dist_col_x > s_raycast.dist_col_y)
+		{
+			wall.x = s_raycast.wall_Y_colision.x;
+			wall.y = s_raycast.wall_Y_colision.y;
+			s_raycast.x = s_raycast.wall_Y_colision.x;
+			s_raycast.y = s_raycast.wall_Y_colision.y;
+		}
+		else
+		{
+			wall.x = s_raycast.wall_X_colision.x;
+			wall.y = s_raycast.wall_X_colision.y;
+			s_raycast.x = s_raycast.wall_X_colision.x;
+			s_raycast.y = s_raycast.wall_X_colision.y;
+		}
+
 
 
 		print_view(s_win, s_player, &s_raycast, &wall);
