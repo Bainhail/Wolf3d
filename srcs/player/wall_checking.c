@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 13:27:06 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 14:53:47 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,15 @@ double			wall_x_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycas
 			rc->y = player->wl.a * rc->x + player->wl.b;
 		else
 			rc->y = rc->y + map->ycase;
+
+
+
 		if (rc->y > player->wl.ymax)  //comprend pas
 			player->wl.ymax = rc->y;  //comprend pas
 		if (rc->y < player->wl.ymin)  //comprend pas
 			player->wl.ymin = rc->y;  //comprend pas
+
+
 		rc->colision = ft_colision_detection(&(s_win->m), rc, player->wl.dirx, player->wl.diry);
 		if(rc->colision == TRUE)
 		{
@@ -66,18 +71,19 @@ static double	check_colision(t_print *s_win, t_player *player, t_my_raycast *rc)
 
 static void		init_wall_y(t_player *player, t_map *map, t_my_raycast *rc)
 {
+	rc->colision = FALSE;
+	rc->dist_col_y = 0;
 	rc->y = (player->wl.diry > 0) ? ((int)(player->wl.ymin / map->ycase)) : ((int)(player->wl.ymax / map->ycase));
 	rc->y = rc->y * map->ycase + ((player->wl.diry > 0) ? map->ycase : 0);
 	rc->step_cte_y = map->ycase * player->wl.diry;
 }
 
+
+
+
+
 double			wall_y_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycast *rc)
 {
-	double	tmp;
-	double	dist;
-
-	dist = -1.0;
-	rc->colision = FALSE;
 	init_wall_y(player, map, rc);
 	SDL_SetRenderDrawColor(s_win->renderer[MAP_2D], 0, 255, 0, 100);
 	while (rc->colision == FALSE)
@@ -88,13 +94,11 @@ double			wall_y_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycas
 			rc->x = (rc->y - player->wl.b) / player->wl.a;
 		else
 			rc->x = (rc->y /* - player->wl.b*/);
-		if ((tmp = check_colision(s_win, player, rc)) >= 0)
+		if ((rc->dist_col_y = check_colision(s_win, player, rc)) >= 0)
 		{
-			if (dist < 0 || (tmp >= 0 && dist > tmp))
-				dist = tmp;
-			return (dist);
+			return (rc->dist_col_y);
 		}
 		rc->y = rc->y + rc->step_cte_y;
 	}
-	return (dist);
+	return (rc->dist_col_y);
 }

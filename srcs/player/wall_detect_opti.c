@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 12:42:56 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 14:47:45 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 	{
 		wl->a = (wl->y - pos_joueur->y);
 		wl->b = pos_joueur->y - pos_joueur->x;
-		printf("XY =%f =%f\n", wl->x, wl->y);
 	}
 	wl->dirx = (wl->x < pos_joueur->x) ? -1 : 1;
 	wl->diry = (wl->y < pos_joueur->y) ? -1 : 1;
