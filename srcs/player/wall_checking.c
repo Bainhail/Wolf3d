@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 12:55:26 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 12:57:43 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,21 @@ double			wall_x_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycas
 	return (dist);
 }
 
-static void		init_wall_y(t_player *player, t_map *map, t_my_raycast *rc, double *s)
+static void		init_wall_y(t_player *player, t_map *map, t_my_raycast *rc)
 {
 	rc->y = (player->wl.diry > 0) ? ((int)(player->wl.ymin / map->ycase)) : ((int)(player->wl.ymax / map->ycase));
 	rc->y = rc->y * map->ycase + ((player->wl.diry > 0) ? map->ycase : 0);
-	*s = map->ycase * player->wl.diry;
+	rc->step_cte_y = map->ycase * player->wl.diry;
 }
 
 double			wall_y_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycast *rc)
 {
-	double	step;
 	double	tmp;
 	double	dist;
 
 	dist = -1.0;
 	rc->colision = FALSE;
-	init_wall_y(player, map, rc, &step);
+	init_wall_y(player, map, rc);
 	SDL_SetRenderDrawColor(s_win->renderer[MAP_2D], 0, 255, 0, 100);
 	while (rc->colision == FALSE)
 	{
@@ -96,7 +95,7 @@ double			wall_y_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycas
 				dist = tmp;
 			return (dist);
 		}
-		rc->y = rc->y + step;
+		rc->y = rc->y + rc->step_cte_y;
 	}
 	return (dist);
 }
