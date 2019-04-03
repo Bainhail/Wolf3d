@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 16:39:20 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 16:57:16 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ static void	print_view(t_print *w, t_player *p, t_my_raycast *rc, t_vertex *wall
 		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 0, 255, 50);  //bleu
 	else
 		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 50); //vert
-
-
 	print_line(w, w->renderer[MAP_2D], p->pos, *wall);
 }
 
