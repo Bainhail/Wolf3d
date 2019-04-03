@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 14:53:47 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 14:58:54 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,24 +78,20 @@ static void		init_wall_y(t_player *player, t_map *map, t_my_raycast *rc)
 	rc->step_cte_y = map->ycase * player->wl.diry;
 }
 
-
-
-
-
 double			wall_y_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycast *rc)
 {
 	init_wall_y(player, map, rc);
 	SDL_SetRenderDrawColor(s_win->renderer[MAP_2D], 0, 255, 0, 100);
 	while (rc->colision == FALSE)
 	{
-		if (rc->angle == 90 || rc->angle == 270)
-			printf("HELLO\n");
 		if (rc->angle != 90 && rc->angle != 270)
 			rc->x = (rc->y - player->wl.b) / player->wl.a;
 		else
 			rc->x = (rc->y /* - player->wl.b*/);
-		if ((rc->dist_col_y = check_colision(s_win, player, rc)) >= 0)
+
+		if ((rc->colision = ft_colision_detection(&(s_win->m), rc, player->wl.dirx, player->wl.diry)) == TRUE)
 		{
+			rc->dist_col_y = dist_calc(player->pos.x, player->pos.y, rc->x, rc->y);
 			return (rc->dist_col_y);
 		}
 		rc->y = rc->y + rc->step_cte_y;
