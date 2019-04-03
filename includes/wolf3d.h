@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/03 09:58:18 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 10:38:05 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,6 @@ typedef enum e_move_player
 	ANTI
 }			s_move_player;
 
-typedef enum e_orientation_wall
-{
-	Y_COLISION,
-	X_COLISION,
-	NORTH_WALL,
-	SOUTH_WALL,
-	EAST_WALL,
-	WEST_WALL
-}			s_orientation_wall;
 
 
 typedef struct	s_my_raycast
@@ -150,24 +141,23 @@ typedef enum	e_renderer
 	MAP_3D,
 }				s_renderer;
 
+typedef enum	e_orientation_wall
+{
+	Y_COLISION,
+	X_COLISION,
+	NORTH_WALL,
+	SOUTH_WALL,
+	EAST_WALL,
+	WEST_WALL,
+	NONE,
+}				s_orientation_wall;
+
+
 typedef struct		s_print
 {
 	t_player		player;//     (Voir s_player)
 	t_map			m;//      (Voir s_map)
-	SDL_Window		*w;//     Pointeur de la fenetre //3d
-	SDL_Window		*window_3d;
 
-	//SDL_Renderer	*ren;//   Pointeur du renderer sauvegarder de la carte //2d
-	//SDL_Renderer	*renderer_3d;
-	SDL_Renderer	*ren_flg;
-
-
-	SDL_Texture		*txt;
-	SDL_Texture		*txt_x_west;
-	SDL_Texture		*txt_x_east;
-	SDL_Texture		*txt_y_north;
-	SDL_Texture		*txt_y_south;
-	SDL_Texture		*txt_y;
 
 
 	SDL_Renderer	*renderer[10];
@@ -175,6 +165,7 @@ typedef struct		s_print
 	SDL_Window		*window[10];
 
 
+	SDL_Renderer	*ren_flg;
 
 }					t_print;
 
