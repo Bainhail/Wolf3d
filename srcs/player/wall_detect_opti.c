@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 16:57:16 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 18:41:58 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,21 @@ static void	print_view(t_print *w, t_player *p, t_my_raycast *rc, t_vertex *wall
 		}
 
 
-	if ((int)rc->dist_col_x == (int)rc->dist_col_y)
-		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 0, 50);  //rouge
-	else if ((int)rc->dist_col_x > (int)rc->dist_col_y)
-		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 0, 255, 50);  //bleu
-	else
-		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 50); //vert
-	print_line(w, w->renderer[MAP_2D], p->pos, *wall);
+		if ((int)rc->dist_col_x == (int)rc->dist_col_y)
+		{
+			SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 0, 50);  //rouge
+			//print_line(w, w->renderer[MAP_2D], p->pos, *wall);
+		}
+		else if ((int)rc->dist_col_x > (int)rc->dist_col_y)
+		{
+			SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 0, 255, 50);  //bleu
+			print_line(w, w->renderer[MAP_2D], p->pos, *wall);
+		}
+		else
+		{
+			SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 50); //vert
+			//print_line(w, w->renderer[MAP_2D], p->pos, *wall);
+		}
 }
 
 void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map, int alpha)
@@ -80,8 +88,8 @@ void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map, int alpha)
 		s_raycast.dist_col_x = wall_x_detect(s_win, s_player, s_map, &s_raycast);
 		s_raycast.dist_col_y = wall_y_detect(s_win, s_player, s_map, &s_raycast);
 		print_view(s_win, s_player, &s_raycast, &wall);
+		ft_get_secteur_rayon(s_raycast.x, s_raycast.y, s_map, &s_raycast); //pk ici?
 		ft_draw_wall(s_win, s_map, &s_raycast);
-		ft_get_secteur_rayon(s_raycast.x, s_raycast.y, s_map, &s_raycast);
 		s_raycast.angle += step;
 		s_raycast.window_x++;
 	}

@@ -6,13 +6,13 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/04/03 08:47:46 by jchardin         ###   ########.fr        #
+#    Updated: 2019/04/03 17:41:14 by jchardin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	wolf3d
 
-CC			=	gcc
+CC			=	gcc -g
 
 CFLAGS		=	-Wall -Wextra
 #-Werror

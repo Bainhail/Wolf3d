@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 12:19:33 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/03 09:35:06 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 18:35:35 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	ft_move(int move, t_print *w)
 	}
 	else if (move == TRIGO)
 	{
-		w->player.flg_dir += 10;
+		w->player.flg_dir += 5;
 	}
 	else if (move == ANTI)
 	{
-		w->player.flg_dir -= 10;
+		w->player.flg_dir -= 5;
 	}
 
 	//modulo 360

@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 16:56:52 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 18:56:40 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void		init_wall_x(t_player *player, t_map *map, t_my_raycast *rc)
 double			wall_x_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycast *rc)
 {
 	init_wall_x(player, map, rc);
+
 	while (rc->colision == FALSE)
 	{
 		if ((int)(rc->angle * 1000) == (90 * 1000) || (int)(rc->angle * 1000) == (270 * 1000))
@@ -43,6 +44,7 @@ double			wall_x_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycas
 		if(rc->colision == TRUE)
 		{
 			rc->dist_col_x = dist_calc(player->pos.x, player->pos.y, rc->x, rc->y);
+			printf("wall x=%f\n", rc->dist_col_x);
 			rc->wall_X_colision.x = rc->x;
 			rc->wall_X_colision.y = rc->y;
 			return (rc->dist_col_x);
@@ -85,6 +87,7 @@ double			wall_y_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycas
 		if ((rc->colision = ft_colision_detection(&(s_win->m), rc, player->wl.dirx, player->wl.diry)) == TRUE)
 		{
 			rc->dist_col_y = dist_calc(player->pos.x, player->pos.y, rc->x, rc->y);
+			printf("wall y=%f\n", rc->dist_col_y);
 			rc->wall_Y_colision.x = rc->x;
 			rc->wall_Y_colision.y = rc->y;
 			return (rc->dist_col_y);
