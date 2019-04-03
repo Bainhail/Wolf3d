@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/03 12:56:34 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 13:11:36 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,26 @@ typedef struct	s_my_raycast
 	t_secteur_rayon	s_secteur;
 	double			dist_col_x;
 	double			dist_col_y;
-
-
 	double			step_cte_x;
 	double			step_cte_y;
 	int				colision;
 
 
 
+
 }				t_my_raycast;
+
+typedef struct		s_wall
+{
+	double			a;// coefficient directeur dans y = ax + b
+	double			b;// pas du coefficient de y = ax + b
+	double			x;// coordonnee x du 1er point
+	double			y;// coordonnee y du 1er point
+	double			dirx;// indication pour la direction de la droite selon x
+	double			diry;// indication pour la direction de la droite selon y
+	double			ymin;
+	double			ymax;
+}					t_wall;
 
 typedef struct		s_file
 {
@@ -114,17 +125,6 @@ typedef struct		s_map
 ** par equivalence:
 ** x = (y - b) / a
 */
-typedef struct		s_wall
-{
-	double			a;// coefficient directeur dans y = ax + b
-	double			b;// pas du coefficient de y = ax + b
-	double			x;// coordonnee x du 1er point
-	double			y;// coordonnee y du 1er point
-	double			dirx;// indication pour la direction de la droite selon x
-	double			diry;// indication pour la direction de la droite selon y
-	double			ymin;
-	double			ymax;
-}					t_wall;
 
 typedef struct		s_player
 {
