@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 15:04:24 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 15:31:12 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,10 @@ double			wall_x_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycas
 
 
 
-		if (rc->y > player->wl.ymax)  //comprend pas
-			player->wl.ymax = rc->y;  //comprend pas
-		if (rc->y < player->wl.ymin)  //comprend pas
-			player->wl.ymin = rc->y;  //comprend pas
-
-
+		//		if (rc->y > player->wl.ymax)  //comprend pas
+		//			player->wl.ymax = rc->y;  //comprend pas
+		//		if (rc->y < player->wl.ymin)  //comprend pas
+		//			player->wl.ymin = rc->y;  //comprend pas
 
 
 
@@ -47,6 +45,8 @@ double			wall_x_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycas
 		if(rc->colision == TRUE)
 		{
 			rc->dist_col_x = dist_calc(player->pos.x, player->pos.y, rc->x, rc->y);
+			rc->wall_X_colision.x = rc->x;
+			rc->wall_X_colision.y = rc->y;
 			return (rc->dist_col_x);
 		}
 		rc->x = rc->x + rc->step_cte_x;
@@ -76,9 +76,12 @@ double			wall_y_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycas
 		else
 			rc->x = (rc->y /* - player->wl.b*/);
 
+
 		if ((rc->colision = ft_colision_detection(&(s_win->m), rc, player->wl.dirx, player->wl.diry)) == TRUE)
 		{
 			rc->dist_col_y = dist_calc(player->pos.x, player->pos.y, rc->x, rc->y);
+			rc->wall_Y_colision.x = rc->x;
+			rc->wall_Y_colision.y = rc->y;
 			return (rc->dist_col_y);
 		}
 		rc->y = rc->y + rc->step_cte_y;
