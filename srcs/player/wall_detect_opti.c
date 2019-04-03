@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 15:34:52 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 16:39:20 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 	}
 	wl->dirx = (wl->x < pos_joueur->x) ? -1 : 1;
 	wl->diry = (wl->y < pos_joueur->y) ? -1 : 1;
+
+
 	wl->ymin = wl->y; //je c pas ce ke c
 	wl->ymax = wl->y; //je c pas ce ke c
 }
