@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 14:47:45 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 15:19:24 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,26 @@ static void	init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 	wl->ymax = wl->y; //je c pas ce ke c
 }
 
-static void	print_view(t_print *w, t_player *p, t_my_raycast *r, t_vertex *wall)
+static void	print_view(t_print *w, t_player *p, t_my_raycast *rc, t_vertex *wall)
 {
-	if (r->dist_col_x > r->dist_col_y)
-		refresh_vtex(wall, r->x, r->y, 0.0);
+	if (rc->dist_col_x > rc->dist_col_y)
+		refresh_vtex(wall, rc->x, rc->y, 0.0);
 	else
 	{
-		r->x = wall->x;
-		r->y = wall->y;
+		rc->x = wall->x;
+		rc->y = wall->y;
 	}
-	if ((int)r->dist_col_x == (int)r->dist_col_y)
+
+
+
+	if ((int)rc->dist_col_x == (int)rc->dist_col_y)
 		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 0, 50);  //rouge
-	else if ((int)r->dist_col_x > (int)r->dist_col_y)
+	else if ((int)rc->dist_col_x > (int)rc->dist_col_y)
 		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 0, 255, 50);  //bleu
 	else
 		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 50); //vert
-	//SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 50);
+
+
 	print_line(w, w->renderer[MAP_2D], p->pos, *wall);
 }
 
@@ -71,7 +75,19 @@ void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map, int alpha)
 		wall.x = s_raycast.x;
 		wall.y = s_raycast.y;
 		wall.z = 0.0;
+
+
+		s_raycast.wall_X_colision.x = s_raycast.x;
+		s_raycast.wall_X_colision.y = s_raycast.y;
+
+
 		s_raycast.dist_col_y = wall_y_detect(s_win, s_player, s_map, &s_raycast);
+
+	
+		s_raycast.wall_Y_colision.x = s_raycast.x;
+		s_raycast.wall_Y_colision.y = s_raycast.y;
+
+
 		print_view(s_win, s_player, &s_raycast, &wall);
 		ft_draw_wall(s_win, s_map, &s_raycast);
 		ft_get_secteur_rayon(s_raycast.x, s_raycast.y, s_map, &s_raycast);

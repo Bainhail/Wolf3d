@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/03 13:11:36 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/03 15:14:56 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,18 @@ typedef enum e_move_player
 	ANTI
 }			s_move_player;
 
+typedef struct		s_wall
+{
+	double			a;// coefficient directeur dans y = ax + b
+	double			b;// pas du coefficient de y = ax + b
+	double			x;// coordonnee x du 1er point
+	double			y;// coordonnee y du 1er point
+	double			dirx;// indication pour la direction de la droite selon x
+	double			diry;// indication pour la direction de la droite selon y
+	double			ymin;
+	double			ymax;
+}					t_wall;
+
 typedef struct	s_my_raycast
 {
 	double			window_x;
@@ -72,23 +84,11 @@ typedef struct	s_my_raycast
 	double			step_cte_x;
 	double			step_cte_y;
 	int				colision;
-
-
-
+	t_wall			wall_X_colision;
+	t_wall			wall_Y_colision;
 
 }				t_my_raycast;
 
-typedef struct		s_wall
-{
-	double			a;// coefficient directeur dans y = ax + b
-	double			b;// pas du coefficient de y = ax + b
-	double			x;// coordonnee x du 1er point
-	double			y;// coordonnee y du 1er point
-	double			dirx;// indication pour la direction de la droite selon x
-	double			diry;// indication pour la direction de la droite selon y
-	double			ymin;
-	double			ymax;
-}					t_wall;
 
 typedef struct		s_file
 {
