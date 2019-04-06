@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 18:41:58 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/06 14:06:41 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map, int alpha)
 	s_raycast.angle = (double)alpha - 30;
 	max = s_raycast.angle + 60;
 	ft_init_secteur_rayon(s_player, s_map, &s_raycast);
-	printf("\n\n");
+//	printf("\n\n");
 	while (s_raycast.angle < max && s_raycast.window_x < WINX)
 	{
 		init_coef(&(s_player->pos), &(s_player->wl), s_raycast.angle);

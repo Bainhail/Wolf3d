@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:55:35 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 18:50:45 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/06 14:16:54 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,32 @@ void			ft_init_texture_wall_position(t_map *m, t_my_raycast *s_raycast)
 			le_delta = (int)s_raycast->y % (int)m->ycase;
 		else
 			le_delta = (int)m->ycase - ((int)s_raycast->y % (int)m->ycase);
+	s_raycast->dstrect.w = m->ycase;//a modifier pour adapter la largeur
 	}
 	else
 	{
 		if (s_raycast->orientation == NORTH_WALL)
-		le_delta = (int)(s_raycast->x + 1.0) % (int)m->xcase;
+			le_delta = (int)(s_raycast->x + 1.0) % (int)m->xcase;
 		else
-		le_delta =(int)m->xcase - ((int)(s_raycast->x + 1.0) % (int)m->xcase);
+			le_delta =(int)m->xcase - ((int)(s_raycast->x + 1.0) % (int)m->xcase);
+	s_raycast->dstrect.w = m->xcase;//a modifier pour adapter la largeur
 	}
 	s_raycast->srcrect.x = le_delta;
 	s_raycast->srcrect.w = 1;//Peut etre une modification ici aussi
 	s_raycast->srcrect.y = 0;
 	s_raycast->srcrect.h = 54;
 	s_raycast->dstrect.x = s_raycast->window_x;
-	s_raycast->dstrect.w = 1;//a modifier pour adapter la largeur
+	s_raycast->dstrect.w = m->xcase;//a modifier pour adapter la largeur
 	s_raycast->dstrect.h = (int)(s_raycast->hmp * 2);
 	s_raycast->dstrect.y = (int)((double)WINY / 2.0) - (s_raycast->hmp/* / 2.0 */);
 
 
 
-	printf("x=%d delta=%d y=%d h=%d orien= %d\n", s_raycast->dstrect.x,
-									le_delta,
-									s_raycast->dstrect.y,
-									s_raycast->dstrect.h,
-									s_raycast->orientation);
+/* // printf("x=%d delta=%d y=%d h=%d orien= %d\n", s_raycast->dstrect.x, */
+/* 									le_delta, */
+/* 									s_raycast->dstrect.y, */
+/* 									s_raycast->dstrect.h, */
+/* 									s_raycast->orientation); */
 
 }
 
