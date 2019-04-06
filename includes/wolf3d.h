@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/03 15:14:56 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/06 15:29:48 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,9 @@ typedef struct		s_map
 	float		xcase;// Largeur d'une case
 	float		ycase;// Hauteur d'une case
 	t_vertex	**tab;// Tableau contenant toute les coordonnees de la carte
+
+
+	int			debug;
 }					t_map;
 
 /*

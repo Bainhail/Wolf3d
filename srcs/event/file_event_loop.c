@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 12:19:33 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/06 14:10:34 by naali            ###   ########.fr       */
+/*   Updated: 2019/04/06 15:32:57 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	ft_update_event(t_my_event *s_event, t_print *w, SDL_Event *event)
 		event->key.keysym.scancode == SDL_SCANCODE_S ? ft_move(DOWN, w) : 0;
 		event->key.keysym.scancode == SDL_SCANCODE_D ? ft_move(TRIGO, w) : 0;
 		event->key.keysym.scancode == SDL_SCANCODE_A ? ft_move(ANTI, w) : 0;
+		event->key.keysym.scancode == SDL_SCANCODE_V ? w->m.debug *= -1 : 0;
 		s_event->key[event->key.keysym.scancode] = SDL_TRUE;
 	}
 }
