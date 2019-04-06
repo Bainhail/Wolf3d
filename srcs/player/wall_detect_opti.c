@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/06 15:32:48 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/06 16:19:24 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ static void	init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 	wl->diry = (wl->y < pos_joueur->y) ? -1 : 1;
 
 
-	wl->ymin = wl->y; //je c pas ce ke c
-	wl->ymax = wl->y; //je c pas ce ke c
+	/* voir wall_y_detect */
+	wl->ymin = wl->y; //je c pas ce ke c <-- ymin permet a la detection de savoir ou commencer si le pas est negatif
+	wl->ymax = wl->y; //je c pas ce ke c <-- ymax permet a la detection de savoir ou commencer si le pas est positif
+	/* voir wall_y_detect */
 }
 
 static void	print_view(t_print *w, t_player *p, t_my_raycast *rc, t_vertex *wall)
@@ -81,7 +83,7 @@ void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map, int alpha)
 	s_raycast.angle = (double)alpha - 30;
 	max = s_raycast.angle + 60;
 	ft_init_secteur_rayon(s_player, s_map, &s_raycast);
-	printf("############\n\n");
+	/* printf("############\n\n"); */
 	while (s_raycast.angle < max && s_raycast.window_x < WINX)
 	{
 		init_coef(&(s_player->pos), &(s_player->wl), s_raycast.angle);
