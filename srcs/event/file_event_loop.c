@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 12:19:33 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/06 15:32:57 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 17:27:49 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,9 @@ void	ft_move(int move, t_print *w)
 	{
 		w->player.flg_dir -= 5;
 	}
-
-	//modulo 360
 	while (w->player.flg_dir < 0)
 		w->player.flg_dir += 360;
 	w->player.flg_dir = w->player.flg_dir % 360;
-//	printf("angle =%d\n", w->player.flg_dir);
 	refresh_screen(w);
 }
 

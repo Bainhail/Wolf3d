@@ -6,33 +6,33 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 13:58:07 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 17:34:35 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
 
-void		ft_init_param_game(t_print *s_win)
+void			ft_init_param_game(t_print *s_win)
 {
 	s_win->player.fov = 60.0;
 }
 
-void		ft_init_window_and_renderer(t_print *s_win)
+void			ft_init_window_and_renderer(t_print *s_win)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	s_win->window[MAP_2D] = SDL_CreateWindow("Window 2D", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
-	s_win->window[MAP_3D] = SDL_CreateWindow("Window 3D", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
-	s_win->renderer[MAP_3D] = SDL_CreateRenderer(s_win->window[MAP_3D], 0, SDL_RENDERER_SOFTWARE);
-	s_win->renderer[MAP_2D] = SDL_CreateRenderer(s_win->window[MAP_2D], 0, SDL_RENDERER_SOFTWARE);
+	s_win->window[MAP_2D] = SDL_CreateWindow("Window 2D",
+SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
+	s_win->window[MAP_3D] = SDL_CreateWindow("Window 3D",
+SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
+	s_win->renderer[MAP_3D] = SDL_CreateRenderer(s_win->window[MAP_3D],
+0, SDL_RENDERER_SOFTWARE);
+	s_win->renderer[MAP_2D] = SDL_CreateRenderer(s_win->window[MAP_2D],
+0, SDL_RENDERER_SOFTWARE);
 }
-
-int debug = -1;
 
 int				main(int ac, char **av)
 {
 	t_print			s_win;
-
-	s_win.m.debug = -1;
 
 	if (ac != 2)
 		return (0);
@@ -108,4 +108,3 @@ void			print_tab(t_vertex **tab)
 		y++;
 	}
 }
-

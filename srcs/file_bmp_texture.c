@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 08:47:05 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/06 15:54:16 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 17:26:55 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 
 void			ft_load_bmp(t_print *s_win)
 {
-	s_win->texture[NONE] = loadBMP(s_win->renderer[MAP_3D], "textures/untitled.bmp");
-	s_win->texture[WEST_WALL] = loadBMP(s_win->renderer[MAP_3D], "textures/west.bmp");
-	s_win->texture[EAST_WALL] = loadBMP(s_win->renderer[MAP_3D], "textures/east.bmp");
-	s_win->texture[SOUTH_WALL] = loadBMP(s_win->renderer[MAP_3D], "textures/south.bmp");
-	s_win->texture[NORTH_WALL] = loadBMP(s_win->renderer[MAP_3D], "textures/north.bmp");
+	s_win->texture[NONE] = loadBMP(s_win->renderer[MAP_3D],
+"textures/untitled.bmp");
+	s_win->texture[WEST_WALL] = loadBMP(s_win->renderer[MAP_3D],
+"textures/west.bmp");
+	s_win->texture[EAST_WALL] = loadBMP(s_win->renderer[MAP_3D],
+"textures/east.bmp");
+	s_win->texture[SOUTH_WALL] = loadBMP(s_win->renderer[MAP_3D],
+"textures/south.bmp");
+	s_win->texture[NORTH_WALL] = loadBMP(s_win->renderer[MAP_3D],
+"textures/north.bmp");
 }
