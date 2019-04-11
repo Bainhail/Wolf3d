@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:55:35 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 16:16:41 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 16:23:06 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ void			ft_init_texture_wall_position(t_map *m, t_my_raycast *s_raycast)
 {
 	int le_delta;
 
-	if (s_raycast->orientation == EAST_WALL || s_raycast->orientation == WEST_WALL)
+	if (s_raycast->orientation == EAST_WALL ||
+			s_raycast->orientation == WEST_WALL)
 	{
 		if (s_raycast->orientation == EAST_WALL)
 			le_delta = (int)s_raycast->y % (int)m->ycase;
 		else
 			le_delta = (int)m->ycase - ((int)s_raycast->y % (int)m->ycase);
-		s_raycast->dstrect.w = m->ycase;//a modifier pour adapter la largeur
+		s_raycast->dstrect.w = m->ycase;
 	}
 	else
 	{
@@ -30,22 +31,16 @@ void			ft_init_texture_wall_position(t_map *m, t_my_raycast *s_raycast)
 			le_delta = (int)(s_raycast->x + 1.0) % (int)m->xcase;
 		else
 			le_delta =(int)m->xcase - ((int)(s_raycast->x + 1.0) % (int)m->xcase);
-		s_raycast->dstrect.w = m->xcase;//a modifier pour adapter la largeur
+		s_raycast->dstrect.w = m->xcase;
 	}
 	s_raycast->srcrect.x = le_delta / 2;
-	s_raycast->srcrect.w = 1;//Peut etre une modification ici aussi
+	s_raycast->srcrect.w = 1;
 	s_raycast->srcrect.y = 0;
 	s_raycast->srcrect.h = 54;
 	s_raycast->dstrect.x = s_raycast->window_x;
-	s_raycast->dstrect.w = 1;//m->xcase;//a modifier pour adapter la largeur
+	s_raycast->dstrect.w = 1;
 	s_raycast->dstrect.h = (int)(s_raycast->hmp * 2);
-	s_raycast->dstrect.y = (int)((double)WINY / 2.0) - (s_raycast->hmp/* / 2.0 */);
-	/* // printf("x=%d delta=%d y=%d h=%d orien= %d\n", s_raycast->dstrect.x, */
-	/* 									le_delta, */
-	/* 									s_raycast->dstrect.y, */
-	/* 									s_raycast->dstrect.h, */
-	/* 									s_raycast->orientation); */
-
+	s_raycast->dstrect.y = (int)((double)WINY / 2.0) - (s_raycast->hmp);
 }
 
 void			ft_draw_wall(t_print *w, t_map *m, t_my_raycast *rc)
@@ -53,16 +48,21 @@ void			ft_draw_wall(t_print *w, t_map *m, t_my_raycast *rc)
 	t_vertex	w_up;
 	t_vertex	w_bot;
 	double		distance_ray;
-	float precision = 0.1;
+	float		precision;
 
-	if ((rc->dist_col_x + precision) > rc->dist_col_y && (rc->dist_col_x - precision) < rc->dist_col_y  )
+	precision = 0.1;
+	if ((rc->dist_col_x + precision) > rc->dist_col_y &&
+			(rc->dist_col_x - precision) < rc->dist_col_y  )
 		;
 	else
 	{
 		rc->orientation = (rc->dist_col_x < rc->dist_col_y)  ? X_COLISION : Y_COLISION;
 		rc->orientation = ft_get_wall_orientation(rc->angle, rc->orientation);
 	}
-	distance_ray = (rc->dist_col_x < rc->dist_col_y) ? rc->dist_col_x : rc->dist_col_y;
+	if (rc->dist_col_x < rc->dist_col_y)
+		distance_ray = rc->dist_col_x;
+	else
+		distance_ray = rc->dist_col_y;
 	distance_ray = recalc_ray_distance(distance_ray, rc->window_x);
 	rc->hmp = (((double)EYE * (double)WALL) / distance_ray) / 2.0;
 	w_up = init_vtex(rc->window_x, ((double)WINY / 2.0) - rc->hmp, 0);
