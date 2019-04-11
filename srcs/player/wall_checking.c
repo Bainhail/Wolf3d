@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 12:07:56 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 15:22:10 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,19 @@ static void		init_wall_x(t_player *player, t_map *map, t_my_raycast *rc)
 
 double			wall_x_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycast *rc)
 {
+	float			precision;
+	precision = 0.00001;
 	init_wall_x(player, map, rc);
 	while (rc->colision == FALSE)
 	{
-		if ((int)(rc->angle * 1000) == (90 * 1000) || (int)(rc->angle * 1000) == (270 * 1000))
+		if ((rc->angle < (90.0 + precision) && (rc->angle > (90.0 - precision))) ||
+				(rc->angle < (270.0 + precision) && (rc->angle > (270.0 - precision))))
 		{
 			rc->y = 9999999999;
 			rc->x = 9999999999;
 		}
-		else if ((int)(rc->angle * 1000) == 0 || (int)(rc->angle * 1000) == (180 * 1000))
+		else if ((rc->angle < (0.0 + precision) && (rc->angle > (0.0 - precision))) ||
+				(rc->angle < (180.0 + precision) && (rc->angle > (180.0 - precision))))
 			rc->y = player->pos.y;
 		else
 			rc->y = player->wl.a * rc->x + player->wl.b;
@@ -68,15 +72,19 @@ static void		init_wall_y(t_player *player, t_map *map, t_my_raycast *rc)
 
 double			wall_y_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycast *rc)
 {
+	float			precision;
+	precision = 0.00001;
 	init_wall_y(player, map, rc);
 	while (rc->colision == FALSE)
 	{
-		if ((int)(rc->angle * 1000) == 0 || (int)(rc->angle * 1000) == (180 * 1000))
+		if ((rc->angle < (0.0 + precision) && (rc->angle > (0.0 - precision))) ||
+				(rc->angle < (180.0 + precision) && (rc->angle > (180.0 - precision))))
 		{
 			rc->x = 99999999;
 			rc->y = 99999999;
 		}
-		else if ((int)(rc->angle * 1000) == (90 * 1000) || (int)(rc->angle * 1000) == (270 * 1000))
+		else if ((rc->angle < (90.0 + precision) && (rc->angle > (90.0 - precision))) ||
+				(rc->angle < (270.0 + precision) && (rc->angle > (270.0 - precision))))
 		{
 			rc->x = player->pos.x;
 		}

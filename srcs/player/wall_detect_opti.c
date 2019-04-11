@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 14:22:03 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 15:22:48 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,8 @@ static void	init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 
 static void	print_view(t_print *w, t_player *p, t_my_raycast *rc, t_vertex *wall)
 {
-	printf("=%f\t=%f\t", rc->dist_col_x, rc->dist_col_y);
-
 	if (rc->dist_col_x > rc->dist_col_y)
 	{
-		printf("X\n");
 		wall->x = rc->wall_Y_colision.x;
 		wall->y = rc->wall_Y_colision.y;
 		rc->x = rc->wall_Y_colision.x;
@@ -48,7 +45,6 @@ static void	print_view(t_print *w, t_player *p, t_my_raycast *rc, t_vertex *wall
 	}
 	else
 	{
-		printf("Y\n");
 		wall->x = rc->wall_X_colision.x;
 		wall->y = rc->wall_X_colision.y;
 		rc->x = rc->wall_X_colision.x;
@@ -57,17 +53,17 @@ static void	print_view(t_print *w, t_player *p, t_my_raycast *rc, t_vertex *wall
 	if ((int)(rc->dist_col_x * 10) == (int)(rc->dist_col_y * 10))
 	{
 		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 0, 50);  //rouge
-		print_line(w, w->renderer[MAP_2D], p->pos, *wall);
+		//print_line(w, w->renderer[MAP_2D], p->pos, *wall);
 	}
 	else if ((int)rc->dist_col_x > (int)rc->dist_col_y)
 	{
 		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 0, 255, 50);  //bleu
-		//print_line(w, w->renderer[MAP_2D], p->pos, *wall);
+		print_line(w, w->renderer[MAP_2D], p->pos, *wall);
 	}
 	else
 	{
 		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 50); //vert
-		//print_line(w, w->renderer[MAP_2D], p->pos, *wall);
+		print_line(w, w->renderer[MAP_2D], p->pos, *wall);
 	}
 }
 
@@ -83,7 +79,6 @@ void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map, int alpha)
 	s_raycast.angle = (double)alpha - 30;
 	max = s_raycast.angle + 60;
 	ft_init_secteur_rayon(s_player, s_map, &s_raycast);
-	printf("############\n\n"); 
 	while (s_raycast.angle < max && s_raycast.window_x < WINX)
 	{
 		init_coef(&(s_player->pos), &(s_player->wl), s_raycast.angle);
