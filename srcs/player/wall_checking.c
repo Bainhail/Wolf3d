@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 18:55:38 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:59:18 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,20 @@ void ft_wall_y_detect_calucl_x(t_player *player, t_my_raycast *rc)
 		rc->x = (rc->y - player->wl.b) / player->wl.a;
 }
 
+void		ft_wall_y_detect_y_calcul(t_player *player, t_map *map, t_my_raycast *rc)
+{
+	float			precision;
+
+	precision = 0.00001;
+		if ((rc->angle < (0.0 + precision) && (rc->angle > (0.0 - precision))) ||
+				(rc->angle < (180.0 + precision) && (rc->angle > (180.0 - precision))))
+			rc->y = rc->y;
+		else if ((rc->angle < (90.0 + precision) && (rc->angle > (90.0 - precision))) ||
+				(rc->angle < (270.0 + precision) && (rc->angle > (270.0 - precision))))
+			rc->y = rc->y + (map->ycase * player->wl.diry);
+		else
+			rc->y = rc->y + rc->step_cte_y;
+}
 
 double			wall_y_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycast *rc)
 {
@@ -137,14 +151,7 @@ double			wall_y_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycas
 			rc->wall_Y_colision.y = rc->y;
 			return (rc->dist_col_y);
 		}
-		if ((rc->angle < (0.0 + precision) && (rc->angle > (0.0 - precision))) ||
-				(rc->angle < (180.0 + precision) && (rc->angle > (180.0 - precision))))
-			rc->y = rc->y;
-		else if ((rc->angle < (90.0 + precision) && (rc->angle > (90.0 - precision))) ||
-				(rc->angle < (270.0 + precision) && (rc->angle > (270.0 - precision))))
-			rc->y = rc->y + (map->ycase * player->wl.diry);
-		else
-			rc->y = rc->y + rc->step_cte_y;
+		ft_wall_y_detect_y_calcul(player, map, rc);
 	}
 	return (rc->dist_col_y);
 }
