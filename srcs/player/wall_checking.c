@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 19:04:39 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 19:09:49 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,25 +94,31 @@ static void		init_wall_y(t_player *player, t_map *map, t_my_raycast *rc)
 {
 	rc->colision = FALSE;
 	rc->dist_col_y = 0;
-	rc->y = (player->wl.diry > 0) ? ((int)(player->wl.ymin / map->ycase)) : ((int)(player->wl.ymax / map->ycase));
+	if (player->wl.diry > 0)
+		rc->y = ((int)(player->wl.ymin / map->ycase));
+	else
+		rc->y = ((int)(player->wl.ymax / map->ycase));
 	rc->y = rc->y * map->ycase + ((player->wl.diry > 0) ? map->ycase : 0);
 	rc->step_cte_y = map->ycase * player->wl.diry;
 }
 
-
-void ft_wall_y_detect_calucl_x(t_player *player, t_my_raycast *rc)
+void			ft_wall_y_detect_calucl_x(t_player *player, t_my_raycast *rc)
 {
 	float			precision;
 
 	precision = 0.00001;
-	if ((rc->angle < (0.0 + precision) && (rc->angle > (0.0 - precision))) ||
-			(rc->angle < (180.0 + precision) && (rc->angle > (180.0 - precision))))
+	if ((rc->angle < (0.0 + precision) &&
+		(rc->angle > (0.0 - precision))) ||
+		(rc->angle < (180.0 + precision) &&
+		(rc->angle > (180.0 - precision))))
 	{
 		rc->x = 99999999;
 		rc->y = 99999999;
 	}
-	else if ((rc->angle < (90.0 + precision) && (rc->angle > (90.0 - precision))) ||
-			(rc->angle < (270.0 + precision) && (rc->angle > (270.0 - precision))))
+	else if ((rc->angle < (90.0 + precision) &&
+			(rc->angle > (90.0 - precision))) ||
+			(rc->angle < (270.0 + precision) &&
+			(rc->angle > (270.0 - precision))))
 	{
 		rc->x = player->pos.x;
 	}
@@ -120,7 +126,8 @@ void ft_wall_y_detect_calucl_x(t_player *player, t_my_raycast *rc)
 		rc->x = (rc->y - player->wl.b) / player->wl.a;
 }
 
-void		ft_wall_y_detect_y_calcul(t_player *player, t_map *map, t_my_raycast *rc)
+void			ft_wall_y_detect_y_calcul(t_player *player, t_map *map,
+										t_my_raycast *rc)
 {
 	float			precision;
 
