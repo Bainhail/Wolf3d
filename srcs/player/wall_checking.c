@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 18:59:18 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 19:04:39 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,17 +125,22 @@ void		ft_wall_y_detect_y_calcul(t_player *player, t_map *map, t_my_raycast *rc)
 	float			precision;
 
 	precision = 0.00001;
-		if ((rc->angle < (0.0 + precision) && (rc->angle > (0.0 - precision))) ||
-				(rc->angle < (180.0 + precision) && (rc->angle > (180.0 - precision))))
-			rc->y = rc->y;
-		else if ((rc->angle < (90.0 + precision) && (rc->angle > (90.0 - precision))) ||
-				(rc->angle < (270.0 + precision) && (rc->angle > (270.0 - precision))))
-			rc->y = rc->y + (map->ycase * player->wl.diry);
-		else
-			rc->y = rc->y + rc->step_cte_y;
+	if ((rc->angle < (0.0 + precision) &&
+		(rc->angle > (0.0 - precision))) ||
+		(rc->angle < (180.0 + precision) &&
+		(rc->angle > (180.0 - precision))))
+		rc->y = rc->y;
+	else if ((rc->angle < (90.0 + precision) &&
+			(rc->angle > (90.0 - precision))) ||
+			(rc->angle < (270.0 + precision) &&
+			(rc->angle > (270.0 - precision))))
+		rc->y = rc->y + (map->ycase * player->wl.diry);
+	else
+		rc->y = rc->y + rc->step_cte_y;
 }
 
-double			wall_y_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycast *rc)
+double			wall_y_detect(t_print *s_win, t_player *player,
+								t_map *map, t_my_raycast *rc)
 {
 	float			precision;
 
@@ -144,9 +149,11 @@ double			wall_y_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycas
 	while (rc->colision == FALSE)
 	{
 		ft_wall_y_detect_calucl_x(player, rc);
-		if ((rc->colision = ft_colision_detection(&(s_win->m), rc, player->wl.dirx, player->wl.diry)) == TRUE)
+		if ((rc->colision = ft_colision_detection(&(s_win->m), rc,
+			player->wl.dirx, player->wl.diry)) == TRUE)
 		{
-			rc->dist_col_y = dist_calc(player->pos.x, player->pos.y, rc->x, rc->y);
+			rc->dist_col_y = dist_calc(player->pos.x, player->pos.y,
+										rc->x, rc->y);
 			rc->wall_Y_colision.x = rc->x;
 			rc->wall_Y_colision.y = rc->y;
 			return (rc->dist_col_y);
