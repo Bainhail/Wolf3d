@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 15:22:10 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 16:37:49 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,13 @@ double			wall_x_detect(t_print *s_win, t_player *player, t_map *map, t_my_raycas
 			rc->y = player->pos.y;
 		else
 			rc->y = player->wl.a * rc->x + player->wl.b;
-		//		if (rc->y > player->wl.ymax)  //comprend pas
-		//			player->wl.ymax = rc->y;  //comprend pas
-		//		if (rc->y < player->wl.ymin)  //comprend pas
-		//			player->wl.ymin = rc->y;  //comprend pas
+
+		/*
+		**		if (rc->y > player->wl.ymax)  //comprend pas
+		**			player->wl.ymax = rc->y;  //comprend pas
+		**		if (rc->y < player->wl.ymin)  //comprend pas
+		**			player->wl.ymin = rc->y;  //comprend pas
+		*/
 		rc->colision = ft_colision_detection(&(s_win->m), rc, player->wl.dirx, player->wl.diry);
 		if (rc->colision == TRUE)
 		{

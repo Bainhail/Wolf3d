@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:51:54 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 16:26:54 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 16:30:20 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int			ft_get_wall_orientation(t_my_raycast *rc)
 {
+	if (rc->dist_col_x < rc->dist_col_y)
+		rc->orientation =  X_COLISION;
+	else
+		rc->orientation = Y_COLISION;
 	if (rc->orientation == X_COLISION && cos(conv_deg_to_rad(rc->angle)) > 0)
 		rc->orientation = EAST_WALL;
 	else if (rc->orientation == X_COLISION )
