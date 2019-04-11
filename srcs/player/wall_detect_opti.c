@@ -6,13 +6,13 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 17:17:21 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:04:11 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
 
-static void	init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
+static void		init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 {
 	wl->x = (cos(conv_deg_to_rad(alpha)) * 1.0) + pos_joueur->x;
 	wl->y = (sin(conv_deg_to_rad(alpha)) * 1.0) + pos_joueur->y;
@@ -41,23 +41,9 @@ static void	init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 ** voir wall_y_detect
 */
 
-static void	print_view(t_print *w, t_player *p, t_my_raycast *rc,
-														t_vertex *wall)
+static void		ft_printf_view(t_print *w, t_player *p, t_my_raycast *rc,
+													t_vertex *wall)
 {
-	if (rc->dist_col_x > rc->dist_col_y)
-	{
-		wall->x = rc->wall_Y_colision.x;
-		wall->y = rc->wall_Y_colision.y;
-		rc->x = rc->wall_Y_colision.x;
-		rc->y = rc->wall_Y_colision.y;
-	}
-	else
-	{
-		wall->x = rc->wall_X_colision.x;
-		wall->y = rc->wall_X_colision.y;
-		rc->x = rc->wall_X_colision.x;
-		rc->y = rc->wall_X_colision.y;
-	}
 	if ((int)(rc->dist_col_x * 10) == (int)(rc->dist_col_y * 10))
 	{
 		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 0, 50);
@@ -75,7 +61,27 @@ static void	print_view(t_print *w, t_player *p, t_my_raycast *rc,
 	}
 }
 
-void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map,
+static void		print_view(t_print *w, t_player *p, t_my_raycast *rc,
+													t_vertex *wall)
+{
+	if (rc->dist_col_x > rc->dist_col_y)
+	{
+		wall->x = rc->wall_Y_colision.x;
+		wall->y = rc->wall_Y_colision.y;
+		rc->x = rc->wall_Y_colision.x;
+		rc->y = rc->wall_Y_colision.y;
+	}
+	else
+	{
+		wall->x = rc->wall_X_colision.x;
+		wall->y = rc->wall_X_colision.y;
+		rc->x = rc->wall_X_colision.x;
+		rc->y = rc->wall_X_colision.y;
+	}
+	ft_printf_view(w, p, rc, wall);
+}
+
+void			ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map,
 															int alpha)
 {
 	double			step;

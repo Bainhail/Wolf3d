@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/11 16:53:55 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:20:31 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,4 +200,6 @@ void			ft_load_bmp(t_print *p);
 void			ft_init_player_pos(t_print *w, t_player *p, t_map *m);
 void			wall_x_detect_calcul_x(t_player *player, t_map *map, t_my_raycast *rc);
 void			wall_x_detect_calcul_y(t_player *player, t_my_raycast *rc);
+void			ft_wall_y_detect_x_calcul(t_player *player, t_map *map, t_my_raycast *rc);
+void			ft_wall_y_detect_y_calcul(t_player *player, t_map *map, t_my_raycast *rc);
 #endif
