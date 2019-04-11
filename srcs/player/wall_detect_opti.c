@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 15:22:48 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 17:17:21 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,21 @@ static void	init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 	}
 	wl->dirx = (wl->x < pos_joueur->x) ? -1 : 1;
 	wl->diry = (wl->y < pos_joueur->y) ? -1 : 1;
-	/* voir wall_y_detect */
-	wl->ymin = wl->y; //je c pas ce ke c <-- ymin permet a la detection de savoir ou commencer si le pas est negatif
-	wl->ymax = wl->y; //je c pas ce ke c <-- ymax permet a la detection de savoir ou commencer si le pas est positif
-	/* voir wall_y_detect */
+	wl->ymin = wl->y;
+	wl->ymax = wl->y;
 }
 
-static void	print_view(t_print *w, t_player *p, t_my_raycast *rc, t_vertex *wall)
+/*
+** voir wall_y_detect
+** je c pas ce ke c <-- ymin permet a la detection de savoir ou
+** commencer si le pas est negatif
+** je c pas ce ke c <-- ymax permet a la detection de savoir ou
+** commencer si le pas est positif
+** voir wall_y_detect
+*/
+
+static void	print_view(t_print *w, t_player *p, t_my_raycast *rc,
+														t_vertex *wall)
 {
 	if (rc->dist_col_x > rc->dist_col_y)
 	{
@@ -52,22 +60,23 @@ static void	print_view(t_print *w, t_player *p, t_my_raycast *rc, t_vertex *wall
 	}
 	if ((int)(rc->dist_col_x * 10) == (int)(rc->dist_col_y * 10))
 	{
-		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 0, 50);  //rouge
-		//print_line(w, w->renderer[MAP_2D], p->pos, *wall);
+		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 0, 50);
+		print_line(w, w->renderer[MAP_2D], p->pos, *wall);
 	}
 	else if ((int)rc->dist_col_x > (int)rc->dist_col_y)
 	{
-		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 0, 255, 50);  //bleu
+		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 0, 255, 50);
 		print_line(w, w->renderer[MAP_2D], p->pos, *wall);
 	}
 	else
 	{
-		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 50); //vert
+		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 255, 0, 50);
 		print_line(w, w->renderer[MAP_2D], p->pos, *wall);
 	}
 }
 
-void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map, int alpha)
+void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map,
+															int alpha)
 {
 	double			step;
 	double			max;
@@ -82,10 +91,12 @@ void		ft_raycast(t_print *s_win, t_player *s_player, t_map *s_map, int alpha)
 	while (s_raycast.angle < max && s_raycast.window_x < WINX)
 	{
 		init_coef(&(s_player->pos), &(s_player->wl), s_raycast.angle);
-		s_raycast.dist_col_x = wall_x_detect(s_win, s_player, s_map, &s_raycast);
-		s_raycast.dist_col_y = wall_y_detect(s_win, s_player, s_map, &s_raycast);
+		s_raycast.dist_col_x = wall_x_detect(s_win, s_player, s_map,
+															&s_raycast);
+		s_raycast.dist_col_y = wall_y_detect(s_win, s_player, s_map,
+															&s_raycast);
 		print_view(s_win, s_player, &s_raycast, &wall);
-		ft_get_secteur_rayon(s_raycast.x, s_raycast.y, s_map, &s_raycast); //pk ici?
+		ft_get_secteur_rayon(s_raycast.x, s_raycast.y, s_map, &s_raycast);
 		ft_draw_wall(s_win, s_map, &s_raycast);
 		s_raycast.angle += step;
 		s_raycast.window_x++;
