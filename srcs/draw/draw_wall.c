@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:55:35 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 16:23:06 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 16:27:20 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void			ft_draw_wall(t_print *w, t_map *m, t_my_raycast *rc)
 		;
 	else
 	{
-		rc->orientation = (rc->dist_col_x < rc->dist_col_y)  ? X_COLISION : Y_COLISION;
-		rc->orientation = ft_get_wall_orientation(rc->angle, rc->orientation);
+		rc->orientation = (rc->dist_col_x < rc->dist_col_y) ? X_COLISION : Y_COLISION;
+		rc->orientation = ft_get_wall_orientation(rc);
 	}
 	if (rc->dist_col_x < rc->dist_col_y)
 		distance_ray = rc->dist_col_x;

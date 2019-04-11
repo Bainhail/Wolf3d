@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/06 15:29:48 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 16:28:13 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ double			recalc_ray_distance(double dist, int win_step);
 int				ft_colision_detection(t_map *m, t_my_raycast *rc, double corx, double cory);
 double			wall_y_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *rc);
 double			wall_x_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *rc);
-int				ft_get_wall_orientation(double angle, int orientation);
+int				ft_get_wall_orientation(t_my_raycast *rc);
 void			ft_load_texture_ft_orientation(t_print *w, t_my_raycast *s_raycast);
 void			ft_init_texture_wall_position(t_map *m, t_my_raycast *s_raycast);
 void			ft_draw_wall(t_print *w, t_map *m, t_my_raycast *rc);

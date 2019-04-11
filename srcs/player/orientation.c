@@ -6,23 +6,23 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:51:54 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 14:30:44 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 16:26:54 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
 
-int			ft_get_wall_orientation(double angle, int orientation)
+int			ft_get_wall_orientation(t_my_raycast *rc)
 {
-	if (orientation == X_COLISION && cos(conv_deg_to_rad(angle)) > 0)
-		orientation = EAST_WALL;
-	else if (orientation == X_COLISION )
-		orientation = WEST_WALL;
-	else if (orientation == Y_COLISION && sin(conv_deg_to_rad(angle)) > 0)
-		orientation = SOUTH_WALL;
-	else if (orientation == Y_COLISION)
-		orientation = NORTH_WALL;
-	return (orientation);
+	if (rc->orientation == X_COLISION && cos(conv_deg_to_rad(rc->angle)) > 0)
+		rc->orientation = EAST_WALL;
+	else if (rc->orientation == X_COLISION )
+		rc->orientation = WEST_WALL;
+	else if (rc->orientation == Y_COLISION && sin(conv_deg_to_rad(rc->angle)) > 0)
+		rc->orientation = SOUTH_WALL;
+	else if (rc->orientation == Y_COLISION)
+		rc->orientation = NORTH_WALL;
+	return (rc->orientation);
 }
 
 void		ft_load_texture_ft_orientation(t_print *w, t_my_raycast *s_raycast)
@@ -36,8 +36,5 @@ void		ft_load_texture_ft_orientation(t_print *w, t_my_raycast *s_raycast)
 	else if (s_raycast->orientation == NORTH_WALL)
 		SDL_RenderCopy(w->renderer[MAP_3D], w->texture[NORTH_WALL], &(s_raycast->srcrect), &(s_raycast->dstrect));
 	else
-	{
 		SDL_RenderCopy(w->renderer[MAP_3D], w->texture[NONE], &(s_raycast->srcrect), &(s_raycast->dstrect));
-		//		printf("XXXXXXXXXXXXXXXXXxx PROBLEME\n");
-	}
 }
