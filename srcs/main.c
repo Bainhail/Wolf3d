@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/04/06 15:31:04 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/11 13:58:07 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void		ft_init_window_and_renderer(t_print *s_win)
 	s_win->renderer[MAP_3D] = SDL_CreateRenderer(s_win->window[MAP_3D], 0, SDL_RENDERER_SOFTWARE);
 	s_win->renderer[MAP_2D] = SDL_CreateRenderer(s_win->window[MAP_2D], 0, SDL_RENDERER_SOFTWARE);
 }
-
-
 
 int debug = -1;
 
