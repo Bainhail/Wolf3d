@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/04/22 10:40:10 by jchardin         ###   ########.fr        #
+#    Updated: 2019/04/22 11:36:25 by jchardin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,10 +79,14 @@ vpath %.c ./srcs/:./srcs/getmap:./srcs/matrice:./srcs/draw:./srcs/player:./srcs/
 $(OBJ_DIR)/%.o:	%.c
 				@mkdir $(OBJ_DIR) 2> /dev/null || true
 				@echo "Compiling $< ...\c"
-				@$(CC) $(CFLAGS) -o $@ -c $^ $(IFLAGS)
+				$(CC) $(CFLAGS) -o $@ -c $^ $(IFLAGS)
 				@echo " DONE"
 
+
 all:			lib $(NAME)
+
+debug: CC += -g
+debug: re
 
 lib:			libft sdl2 sdl2_image
 #freetype sdl2_ttf

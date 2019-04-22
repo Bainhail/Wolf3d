@@ -6,11 +6,25 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 17:34:35 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/22 11:03:00 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
+
+void			ft_quit(char *txt, t_print *s_win)
+{
+	ft_putstr(txt);
+	if (s_win->window[MAP_2D] != NULL)
+		SDL_DestroyWindow(s_win->window[MAP_2D]);
+	if (s_win->renderer[MAP_2D] != NULL)
+		SDL_DestroyRenderer(s_win->renderer[MAP_2D]);
+	if (s_win->window[MAP_3D] != NULL)
+		SDL_DestroyWindow(s_win->window[MAP_3D]);
+	if (s_win->renderer[MAP_3D] != NULL)
+		SDL_DestroyRenderer(s_win->renderer[MAP_3D]);
+	SDL_Quit();
+}
 
 void			ft_init_param_game(t_print *s_win)
 {
@@ -19,15 +33,24 @@ void			ft_init_param_game(t_print *s_win)
 
 void			ft_init_window_and_renderer(t_print *s_win)
 {
+	s_win->window[MAP_2D] =  NULL;
+	s_win->window[MAP_3D] =  NULL;
+	s_win->renderer[MAP_2D] =  NULL;
+	s_win->renderer[MAP_3D] =  NULL;
 	SDL_Init(SDL_INIT_EVERYTHING);
-	s_win->window[MAP_2D] = SDL_CreateWindow("Window 2D",
-SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
-	s_win->window[MAP_3D] = SDL_CreateWindow("Window 3D",
-SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN);
-	s_win->renderer[MAP_3D] = SDL_CreateRenderer(s_win->window[MAP_3D],
-0, SDL_RENDERER_SOFTWARE);
-	s_win->renderer[MAP_2D] = SDL_CreateRenderer(s_win->window[MAP_2D],
-0, SDL_RENDERER_SOFTWARE);
+	if (!(s_win->window[MAP_2D] = SDL_CreateWindow("Window 2D",
+SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN)))
+		ft_quit("Erreur alloc window\n", s_win);
+	if (!(s_win->window[MAP_3D] = SDL_CreateWindow("Window 3D",
+SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN)))
+		ft_quit("Erreur alloc window\n", s_win);
+		ft_quit("Erreur alloc window\n", s_win);
+	if (!(s_win->renderer[MAP_3D] = SDL_CreateRenderer(s_win->window[MAP_3D],
+0, SDL_RENDERER_SOFTWARE)))
+		ft_quit("Erreur alloc window\n", s_win);
+	if (!(s_win->renderer[MAP_2D] = SDL_CreateRenderer(s_win->window[MAP_2D],
+0, SDL_RENDERER_SOFTWARE)))
+		ft_quit("Erreur alloc window\n", s_win);
 }
 
 int				main(int ac, char **av)
@@ -47,7 +70,7 @@ int				main(int ac, char **av)
 	refresh_screen(&s_win);
 	SDL_RenderPresent(s_win.renderer[MAP_2D]);
 	ft_event_loop(&s_win);
-	ft_quit(&s_win);
+	ft_quit("", &s_win);
 	return (0);
 }
 
