@@ -4,3 +4,5 @@ wolf3d
 test
 .*
 tags
+sdl_main
+sdl_image
