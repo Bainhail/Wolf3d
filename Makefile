@@ -6,16 +6,15 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/04/22 10:32:47 by jchardin         ###   ########.fr        #
+#    Updated: 2019/04/22 10:40:10 by jchardin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	wolf3d
 
-CC			=	gcc -g
+CC			=	gcc
 
-CFLAGS		=	-Wall -Wextra
-#-Werror
+CFLAGS		=	-Wall -Wextra -Werror
 
 SRC			=	main.c						\
 				ft_pushback_str_to_tab.c	\
