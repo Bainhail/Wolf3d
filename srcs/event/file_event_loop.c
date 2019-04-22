@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 12:19:33 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/22 18:17:20 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/22 18:31:50 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void	ft_move(int move, t_print *w)
 
 void	ft_update_event(t_my_event *s_event, t_print *w, SDL_Event *event)
 {
-	if (event->type == SDL_QUIT)
+	if (event->window.event == SDL_WINDOWEVENT_CLOSE)
+		s_event->quit = SDL_TRUE;
+	if (event->type == SDL_WINDOWEVENT_CLOSE)
 		s_event->quit = SDL_TRUE;
 	else if (event->type == SDL_KEYDOWN)
 	{
@@ -49,8 +51,10 @@ void	ft_update_event(t_my_event *s_event, t_print *w, SDL_Event *event)
 		event->key.keysym.scancode == SDL_SCANCODE_D ? ft_move(TRIGO, w) : 0;
 		event->key.keysym.scancode == SDL_SCANCODE_A ? ft_move(ANTI, w) : 0;
 		event->key.keysym.scancode == SDL_SCANCODE_V ? w->m.debug *= -1 : 0;
-		s_event->key[event->key.keysym.scancode] = SDL_TRUE;
-		s_event->key[SDL_SCANCODE_ESCAPE] ? s_event->quit = SDL_TRUE : 0;
+		event->key.keysym.scancode == SDL_SCANCODE_ESCAPE ? s_event->quit = SDL_TRUE : 0;
+		
+		//s_event->key[event->key.keysym.scancode] = SDL_TRUE;
+		//s_event->key[SDL_SCANCODE_ESCAPE] ? s_event->quit = SDL_TRUE : 0;
 	}
 }
 
@@ -61,7 +65,7 @@ void	ft_init_event(t_my_event *s_event)
 	s_event->key[SDL_SCANCODE_S] = SDL_FALSE;
 	s_event->key[SDL_SCANCODE_D] = SDL_FALSE;
 	s_event->key[SDL_SCANCODE_A] = SDL_FALSE;
-	s_event.quit = SDL_FALSE;
+	s_event->quit = SDL_FALSE;
 }
 
 void	ft_event_loop(t_print *w)
