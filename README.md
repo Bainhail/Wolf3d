@@ -2,7 +2,7 @@
 -------------------------------------------------------------------------------------<br/>
 -->Wolf3d minimal todolist-----------------------------------------------------------<br/>
 -------------------------------------------------------------------------------------<br/>
---->makefile sans relinkage qui compile le code source et les diferentes librairies<br/>
+--->OKOK makefile sans relinkage qui compile le code source et les diferentes librairies<br/>
 --->gestion d'erreur<br/>
 -      -le programme quite proprement si un malloc indispensable ne se fait pas (exemple fenetre principale)<br/>
 --->zero leak<br/>
