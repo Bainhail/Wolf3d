@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/04/22 11:36:25 by jchardin         ###   ########.fr        #
+#    Updated: 2019/04/22 12:41:53 by jchardin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,52 +91,48 @@ debug: re
 lib:			libft sdl2 sdl2_image
 #freetype sdl2_ttf
 
-$(NAME):		$(OBJS) lib
-				@echo "Compiling Wolf3D... \c"
+$(NAME):		$(OBJS)
+				@echo "Compiling Wolf3D \c"
 				@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(IFLAGS) $(LDLIBS)
-				@echo "DONE"
+				@echo "==> DONE"
 
 libft:
-	@mkdir ./libraries 2> /dev/null || true
-	@if [ -d ./libraries/libft ]; \
-	then \
-		if [ -e ./libraries/libft/libft.a ]; \
-		then \
-			echo "LIBFT EXIST";	\
+	@mkdir ./libraries 2> /dev/null || true && \
+		if [ -e ./libraries/libft/libft.a ]; then \
+			echo "LIBFT ==> Nothing to be done (libft)";	\
 		else \
-			make -C ./libraries/libft; \
-		fi; \
-	else \
-		cp -r ./source_lib/libft ./libraries/ \
-		&& make -C ./libraries/libft; \
-	fi
+			rm -rf ./libraries/libft/	\
+			&& cp -r ./source_lib/libft ./libraries/ \
+			&& make -C ./libraries/libft  \
+			&& echo "LIBFT ==> Done"; \
+		fi
 
 sdl2:
-	@echo "Lib SDL2... \c"
-	@mkdir ./libraries 2> /dev/null || true
-	@if [ -e ./libraries/SDL2-2.0.9/lib/libSDL2.la ]; then	\
-		echo "Nothing to be done.";	\
+	@mkdir ./libraries 2> /dev/null || true && \
+	if [ -e ./libraries/SDL2-2.0.9/lib/libSDL2.la ]; then	\
+		echo "Lib SDL2 ==> Nothing to be done. (sdl2)";	\
 	else	\
 		rm -rf ./libraries/SDL2-2.0.9	\
 		&& tar xzf ./source_lib/SDL2-2.0.9.tar.gz -C ./libraries/	\
 		&& cd ./libraries/SDL2-2.0.9 ; ./configure	--prefix=$(shell pwd)/libraries/SDL2-2.0.9 \
 		&& $(MAKE)	\
-		&& $(MAKE) install;	\
-		echo "DONE";	\
-	fi;
+		&& $(MAKE) install	\
+		&& echo "Lib SDL2 ==> DONE";	\
+	fi
 
 sdl2_image:
-	@echo "Lib SDL2_image... \c"
-	@mkdir ./libraries 2> /dev/null || true
-	@if [ -e ./libraries/SDL2_image-2.0.4/lib/libSDL2_image.la ]; then	\
-		echo "Nothing to be done.";	\
+	@echo "Lib SDL2_image \c" && \
+	mkdir ./libraries 2> /dev/null || true && \
+	if [ -e ./libraries/SDL2_image-2.0.4/lib/libSDL2_image.la ]; then	\
+		echo "==> Nothing to be done.";	\
 	else	\
 		rm -rf ./libraries/SDL2_image-2.0.4	\
 		&& tar xzf ./source_lib/SDL2_image-2.0.4.tar.gz -C ./libraries/ \
 		&& cd ./libraries/SDL2_image-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries/SDL2_image-2.0.4 --with-sdl-prefix=$(shell pwd)/libraries/SDL2-2.0.9 \
 		&& $(MAKE) \
-		&& $(MAKE) install; \
-	fi;
+		&& $(MAKE) install \
+		&& echo "==> DONE";	\
+	fi
 
 # freetype:
 # 	@echo "Lib freetype... \c"
