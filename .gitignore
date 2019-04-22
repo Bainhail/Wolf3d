@@ -6,3 +6,5 @@ test
 tags
 sdl_main
 sdl_image
+*.o
+*.a
