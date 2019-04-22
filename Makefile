@@ -1,20 +1,12 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/04/22 12:41:53 by jchardin         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
-NAME		=	wolf3d
+#SDL
+SDL_MAIN_DOWNLOAD = https://www.libsdl.org/release/SDL2-2.0.8.tar.gz
+SDL_IMAGE_DOWNLOAD = https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.3.tar.gz
 
-CC			=	gcc
 
-CFLAGS		=	-Wall -Wextra -Werror
+NAME = wolf3d
+
+CC = gcc
 
 SRC			=	main.c						\
 				ft_pushback_str_to_tab.c	\
@@ -44,150 +36,101 @@ SRC			=	main.c						\
 				secteur_func.c				\
 				file_bmp_texture.c
 
-OBJ			=	$(SRC:.c=.o)
+OBJ = $(SRC:.c=.o)
 
-OBJ_DIR		=	./objs
+CFLAG = -Wall -Wextra -Werror
 
-INCLUDE_P	=	includes/							\
-				libraries/libft/					\
-				libraries/SDL2-2.0.9/include/		\
-				libraries/SDL2_image-2.0.4/include/	\
-				source_lib/libft
+INCLUDE =  -I ./includes/ 
+INCLUDE += -I ./sdl_image/SDL2_image-2.0.3/include/  
+INCLUDE += -I ./sdl_main/SDL2-2.0.8/include/ 
+INCLUDE += -I ./libft/
 
-IFLAGS		=	$(addprefix -I./, $(INCLUDE_P))
+DSRC = ./srcs
+DOBJ = ./objs
+OBJS = $(addprefix $(DOBJ)/, $(OBJ))
+SRCS = $(addprefix $(DSRC), $(SRC))
 
-OBJS		=	$(addprefix $(OBJ_DIR)/, $(OBJ))
+LFLAG =  -L sdl_main/SDL2-2.0.8/lib  -lSDL2 
+LFLAG += -L ./sdl_image/SDL2_image-2.0.3/lib -lSDL2_image 
+LFLAG += -L ./libft/ -lft
 
-LDFLAGS		=	-L./libraries/libft					\
-				-Llibraries/SDL2-2.0.9/lib			\
-				-Llibraries/SDL2_image-2.0.4/lib
-# 				-Llibraries/sdl2_ttf-2.0.15/lib
+.PHONY: all clean fclean re lib sdl_main sdl_image libft debug
 
-LFLAGS		=	-lft				\
-				-lSDL2				\
-				-lSDL2_image		\
-				-lm
-#				-framework OpenGL
-#				-lSDL2_ttf
+all:$(NAME)
 
-LDLIBS		=	$(LDFLAGS) $(LFLAGS)
+debug:CC += -g
+debug:clean
+debug:all
 
 vpath %.c ./srcs/:./srcs/getmap:./srcs/matrice:./srcs/draw:./srcs/player:./srcs/event
 
-#vpath %.h ./includes/:./libraries/libft:./libraries/SDL2-2.0.9/include:./libraries/SDL2_image-2.0.4/include:SDL2_ttf-2.0.15/include:./source_lib/libft
-
-$(OBJ_DIR)/%.o:	%.c
-				@mkdir $(OBJ_DIR) 2> /dev/null || true
-				@echo "Compiling $< ...\c"
-				$(CC) $(CFLAGS) -o $@ -c $^ $(IFLAGS)
-				@echo " DONE"
+$(DOBJ)/%.o:%.c
+	@mkdir $(DOBJ) 2> /dev/null || true
+	$(CC) -c $< -o $@ $(INCLUDE) $(CFLAG)
 
 
-all:			lib $(NAME)
-
-debug: CC += -g
-debug: re
-
-lib:			libft sdl2 sdl2_image
-#freetype sdl2_ttf
-
-$(NAME):		$(OBJS)
-				@echo "Compiling Wolf3D \c"
-				@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(IFLAGS) $(LDLIBS)
-				@echo "==> DONE"
-
-libft:
-	@mkdir ./libraries 2> /dev/null || true && \
-		if [ -e ./libraries/libft/libft.a ]; then \
-			echo "LIBFT ==> Nothing to be done (libft)";	\
-		else \
-			rm -rf ./libraries/libft/	\
-			&& cp -r ./source_lib/libft ./libraries/ \
-			&& make -C ./libraries/libft  \
-			&& echo "LIBFT ==> Done"; \
-		fi
-
-sdl2:
-	@mkdir ./libraries 2> /dev/null || true && \
-	if [ -e ./libraries/SDL2-2.0.9/lib/libSDL2.la ]; then	\
-		echo "Lib SDL2 ==> Nothing to be done. (sdl2)";	\
-	else	\
-		rm -rf ./libraries/SDL2-2.0.9	\
-		&& tar xzf ./source_lib/SDL2-2.0.9.tar.gz -C ./libraries/	\
-		&& cd ./libraries/SDL2-2.0.9 ; ./configure	--prefix=$(shell pwd)/libraries/SDL2-2.0.9 \
-		&& $(MAKE)	\
-		&& $(MAKE) install	\
-		&& echo "Lib SDL2 ==> DONE";	\
-	fi
-
-sdl2_image:
-	@echo "Lib SDL2_image \c" && \
-	mkdir ./libraries 2> /dev/null || true && \
-	if [ -e ./libraries/SDL2_image-2.0.4/lib/libSDL2_image.la ]; then	\
-		echo "==> Nothing to be done.";	\
-	else	\
-		rm -rf ./libraries/SDL2_image-2.0.4	\
-		&& tar xzf ./source_lib/SDL2_image-2.0.4.tar.gz -C ./libraries/ \
-		&& cd ./libraries/SDL2_image-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries/SDL2_image-2.0.4 --with-sdl-prefix=$(shell pwd)/libraries/SDL2-2.0.9 \
-		&& $(MAKE) \
-		&& $(MAKE) install \
-		&& echo "==> DONE";	\
-	fi
-
-# freetype:
-# 	@echo "Lib freetype... \c"
-# 	@mkdir ./libraries 2> /dev/null || true
-# 	@if [ -e ./libraries/freetype-2.4.11 ]; then	\
-# 		echo "Nothing to be done.";	\
-# 	else	\
-# 		rm -rf ./libraries/freetype-2.4.11	\
-# 		&& tar xzf ./source_lib/freetype-2.4.11.tar.gz -C ./libraries/ \
-# 		&& cd ./libraries/freetype-2.4.11 ; ./configure --prefix=$(shell pwd)/libraries/freetype-2.4.11 \
-# 		&& $(MAKE) \
-# 		&& $(MAKE) install; \
-# 	fi;
-
-# sdl2_ttf:
-# 	@echo "Lib sdl2_ttf... \c"
-# 	@mkdir ./libraries 2> /dev/null || true
-# 	@if [ -e ./libraries/SDL2_ttf-2.0.15 ]; then	\
-# 		echo "Nothing to be done.";	\
-# 	else	\
-# 		rm -rf ./libraries/SDL2_ttf-2.0.15	\
-# 		&& tar xzf ./source_lib/SDL2_ttf-2.0.15.tar.gz -C ./libraries/ \
-# 		&& cd ./libraries/SDL2_ttf-2.0.15 ;  ./configure --prefix=$(shell pwd)/libraries/SDL2_ttf-2.0.15 --with-sdl-prefix=$(shell pwd)/libraries/SDL2-2.0.9 \
-# 		&& $(MAKE) \
-# 		&& $(MAKE) install; \
-# 	fi;
+$(NAME):lib $(OBJS)
+	@$(CC) -o $(NAME) $(OBJS) $(CFLAG) $(LFLAG)
 
 clean:
-		make clean -C ./libraries/libft
-		make clean -C ./libraries/SDL2-2.0.9
-		make clean -C ./libraries/SDL2_image-2.0.4
-		rm -rf $(OBJ_DIR)
+	rm -rf $(DOBJ)
+	make clean -C ./libft
 
-fclean:	clean
-		make fclean -C ./libraries/libft
-		rm -rf $(NAME)
+fclean:clean
+	rm -rf $(NAME)
+	rm -rf ./sdl_main/
+	rm -rf ./sdl_image/
 
-fclnsdl:
-		rm -rf ./libraries/SDL2-2.0.9/lib/libSDL2.la
-		rm -rf ./libraries/SDL2_image-2.0.4/lib/libSDL2_image.la
+re:fclean $(NAME)
 
-re:		fclean all
+lib:libft sdl_main sdl_image
 
-resdl:	fclean fclnsdl all
+libft:
+	@echo "Libft ==> Compilation"
+	@make -C ./libft
+	@echo "Libft ==> Done"
 
-norme:	clear
-		@echo "La norme\n";
-		norminette $(SRC_Dir)
+sdl_main:
+	@if [ -d "./sdl_main/" ]; then \
+		echo "SDL (main) ==> Nothing to be done"; \
+		else \
+		mkdir sdl_main && \
+		echo "SDL (main) ==> Downloading SDL" && \
+		cd ./sdl_main && \
+		curl -s $(SDL_MAIN_DOWNLOAD) -O && \
+		echo "SDL (main) ==> Compilation SDL main" && \
+		tar xzf SDL2-2.0.8.tar.gz && \
+		cd SDL2-2.0.8 && \
+		./configure --prefix=$(shell pwd)/sdl_main/SDL2-2.0.8 > /dev/null 2>&1 && \
+		$(MAKE) > /dev/null 2>&1 &&  \
+		$(MAKE) install > /dev/null 2>&1 && \
+		echo "SDL (main) ==> DONE"; \
+		fi
 
-exe:
-	./$(NAME)
+
+sdl_image:
+	@if [ -d "./sdl_image/" ]; then \
+		echo "SDL (image) ==> Nothing to be done"; \
+		else \
+		mkdir sdl_image && \
+		echo "SDL (image) ==> Downloading SDL image" && \
+		cd ./sdl_image && \
+		curl -s $(SDL_IMAGE_DOWNLOAD) -O && \
+		echo "SDL (image) ==> Compilation SDL image" && \
+		tar xzf SDL2_image-2.0.3.tar.gz && \
+		cd SDL2_image-2.0.3 && \
+		./configure --prefix=$(shell pwd)/sdl_image/SDL2_image-2.0.3 --with-sdl-prefix=$(shell pwd)/sdl_main/SDL2-2.0.8  > /dev/null 2>&1 && \
+		$(MAKE)  > /dev/null 2>&1  &&  \
+		$(MAKE) install > /dev/null 2>&1  && \
+		echo "SDL (image) ==> DONE"; \
+		fi
+
+clear:
+	clear
+
+line:clear
+	find ./srcs -name '*.c' | xargs wc -l
 
 tag:
-	clear
-	ctags -R --exclude=.git --exclude=libraries --exclude=source_lib
+	ctags -R .
 
-
-.PHONY: all clean fclean fclnsdl re resdl

@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/04/22 11:03:00 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/22 18:00:40 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void			ft_quit(char *txt, t_print *s_win)
 	if (s_win->renderer[MAP_3D] != NULL)
 		SDL_DestroyRenderer(s_win->renderer[MAP_3D]);
 	SDL_Quit();
+	exit(1);
 }
 
 void			ft_init_param_game(t_print *s_win)

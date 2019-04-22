@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:32:51 by naali             #+#    #+#             */
-/*   Updated: 2019/03/14 13:50:41 by naali            ###   ########.fr       */
+/*   Updated: 2019/04/22 17:00:00 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <unistd.h>
 # include <SDL2/SDL.h>
 # include <math.h>
-# include "libft.h"
-# include "get_next_line.h"
-# include "getmap.h"
+# include <libft.h>
+# include <get_next_line.h>
+# include <getmap.h>
 
 #endif
