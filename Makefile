@@ -6,7 +6,7 @@
 #    By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/29 11:46:21 by jchardin          #+#    #+#              #
-#    Updated: 2019/04/06 15:27:32 by jchardin         ###   ########.fr        #
+#    Updated: 2019/04/22 10:32:47 by jchardin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,7 @@ $(OBJ_DIR)/%.o:	%.c
 				@$(CC) $(CFLAGS) -o $@ -c $^ $(IFLAGS)
 				@echo " DONE"
 
-all:			$(NAME)
+all:			lib $(NAME)
 
 lib:			libft sdl2 sdl2_image
 #freetype sdl2_ttf
@@ -165,7 +165,7 @@ clean:
 		make clean -C ./libraries/libft
 		make clean -C ./libraries/SDL2-2.0.9
 		make clean -C ./libraries/SDL2_image-2.0.4
-		rm -rf $(OBJS)
+		rm -rf $(OBJ_DIR)
 
 fclean:	clean
 		make fclean -C ./libraries/libft
