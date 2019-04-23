@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 12:19:33 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/22 18:31:50 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/23 11:15:46 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	ft_update_event(t_my_event *s_event, t_print *w, SDL_Event *event)
 		s_event->quit = SDL_TRUE;
 	else if (event->type == SDL_KEYDOWN)
 	{
-		event->key.keysym.scancode == SDL_SCANCODE_W ? ft_move(UP, w) : 0;
-		event->key.keysym.scancode == SDL_SCANCODE_S ? ft_move(DOWN, w) : 0;
-		event->key.keysym.scancode == SDL_SCANCODE_D ? ft_move(TRIGO, w) : 0;
-		event->key.keysym.scancode == SDL_SCANCODE_A ? ft_move(ANTI, w) : 0;
+		event->key.keysym.scancode == SDL_SCANCODE_UP ? ft_move(UP, w) : 0;
+		event->key.keysym.scancode == SDL_SCANCODE_DOWN ? ft_move(DOWN, w) : 0;
+		event->key.keysym.scancode == SDL_SCANCODE_RIGHT ? ft_move(TRIGO, w) : 0;
+		event->key.keysym.scancode == SDL_SCANCODE_LEFT ? ft_move(ANTI, w) : 0;
 		event->key.keysym.scancode == SDL_SCANCODE_V ? w->m.debug *= -1 : 0;
 		event->key.keysym.scancode == SDL_SCANCODE_ESCAPE ? s_event->quit = SDL_TRUE : 0;
 		
