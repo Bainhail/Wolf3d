@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/04/22 18:04:10 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/23 11:25:25 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void			ft_init_param_game(t_print *s_win)
 
 void			ft_init_window_and_renderer(t_print *s_win)
 {
-	s_win->window[MAP_2D] =  NULL;
-	s_win->window[MAP_3D] =  NULL;
-	s_win->renderer[MAP_2D] =  NULL;
-	s_win->renderer[MAP_3D] =  NULL;
+	s_win->window[MAP_2D] = NULL;
+	s_win->window[MAP_3D] = NULL;
+	s_win->renderer[MAP_2D] = NULL;
+	s_win->renderer[MAP_3D] = NULL;
 	SDL_Init(SDL_INIT_EVERYTHING);
 	if (!(s_win->window[MAP_2D] = SDL_CreateWindow("Window 2D",
 SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN)))

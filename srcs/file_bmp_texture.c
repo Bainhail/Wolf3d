@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 08:47:05 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/22 17:58:01 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/04/23 11:21:12 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void			ft_load_bmp(t_print *s_win)
 {
-
 	s_win->texture[NONE] = NULL;
 	s_win->texture[WEST_WALL] = NULL;
 	s_win->texture[EAST_WALL] = NULL;
