@@ -2,28 +2,16 @@
 -------------------------------------------------------------------------------------<br/>
 -->Wolf3d minimal todolist-----------------------------------------------------------<br/>
 -------------------------------------------------------------------------------------<br/>
---->gestion d'erreur<br/>
--      -le programme quite proprement si un malloc indispensable ne se fait pas (exemple fenetre principale)<br/>
+
+--->le programme quite proprement si un malloc indispensable ne se fait pas <br/>
 --->zero leak<br/>
--      -free de toutes les alocations lorsque le programme quite<br/>
+--->free de toutes les alocations lorsque le programme quite<br/>
 --->plus aucun crash possible et boucle infinie<br/>
 -      -division par zero<br/>
 -      -put pixel en dehors de la window<br/>
 -      -proteger l'entrer du programme (map invalide..)<br/>
--      -...<br/>
 --->fichiers sources a la norme42<br/>
   <br/>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   
