@@ -4,7 +4,7 @@
 -------------------------------------------------------------------------------------<br/>
 
 -      -le programme quite proprement si un malloc indispensable ne se fait pas
--      -zero leak
+-      -zero leak !!!!!!!!!!!!!!!!!!!!!!!!!
 -      -free de toutes les alocations lorsque le programme quite
 -      -plus aucun crash possible et boucle infinie
 -      -division par zero
