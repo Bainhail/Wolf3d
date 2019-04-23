@@ -1,13 +1,9 @@
-
 #SDL
 SDL_MAIN_DOWNLOAD = https://www.libsdl.org/release/SDL2-2.0.8.tar.gz
 SDL_IMAGE_DOWNLOAD = https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.3.tar.gz
 
-
 NAME = wolf3d
-
 CC = gcc
-
 SRC			=	main.c						\
 				ft_pushback_str_to_tab.c	\
 				mapfunc.c					\
@@ -37,23 +33,18 @@ SRC			=	main.c						\
 				file_bmp_texture.c
 
 OBJ = $(SRC:.c=.o)
-
 CFLAG = -Wall -Wextra -Werror
-
-INCLUDE =  -I ./includes/ 
-INCLUDE += -I ./sdl_image/SDL2_image-2.0.3/include/  
-INCLUDE += -I ./sdl_main/SDL2-2.0.8/include/ 
+INCLUDE =  -I ./includes/
+INCLUDE += -I ./sdl_image/SDL2_image-2.0.3/include/
+INCLUDE += -I ./sdl_main/SDL2-2.0.8/include/
 INCLUDE += -I ./libft/
-
 DSRC = ./srcs
 DOBJ = ./objs
 OBJS = $(addprefix $(DOBJ)/, $(OBJ))
 SRCS = $(addprefix $(DSRC), $(SRC))
-
-LFLAG =  -L sdl_main/SDL2-2.0.8/lib  -lSDL2 
-LFLAG += -L ./sdl_image/SDL2_image-2.0.3/lib -lSDL2_image 
+LFLAG =  -L sdl_main/SDL2-2.0.8/lib  -lSDL2
+LFLAG += -L ./sdl_image/SDL2_image-2.0.3/lib -lSDL2_image
 LFLAG += -L ./libft/ -lft
-
 .PHONY: all clean fclean re lib sdl_main sdl_image libft debug
 
 all:$(NAME)
@@ -106,7 +97,6 @@ sdl_main:
 		$(MAKE) install > /dev/null 2>&1 && \
 		echo "SDL (main) ==> DONE"; \
 		fi
-
 
 sdl_image:
 	@if [ -d "./sdl_image/" ]; then \
