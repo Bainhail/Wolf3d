@@ -11,6 +11,7 @@
 -      -put pixel en dehors de la window
 -      -proteger l'entrer du programme (map invalide..)
 -      -fichiers sources a la norme42
+-      -detection mur
   
   
   
