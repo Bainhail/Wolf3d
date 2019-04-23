@@ -3,15 +3,15 @@
 -->Wolf3d minimal todolist-----------------------------------------------------------<br/>
 -------------------------------------------------------------------------------------<br/>
 
---->le programme quite proprement si un malloc indispensable ne se fait pas <br/>
---->zero leak<br/>
---->free de toutes les alocations lorsque le programme quite<br/>
---->plus aucun crash possible et boucle infinie<br/>
--      -division par zero<br/>
--      -put pixel en dehors de la window<br/>
--      -proteger l'entrer du programme (map invalide..)<br/>
---->fichiers sources a la norme42<br/>
-  <br/>
+-      -le programme quite proprement si un malloc indispensable ne se fait pas
+-      -zero leak
+-      -free de toutes les alocations lorsque le programme quite
+-      -plus aucun crash possible et boucle infinie
+-      -division par zero
+-      -put pixel en dehors de la window
+-      -proteger l'entrer du programme (map invalide..)
+-      -fichiers sources a la norme42
+  
   
   
   
