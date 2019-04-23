@@ -70,6 +70,3 @@
   - Image ou renderer de la vu 1er personne
 
 - Editeur de map
-
-- Retirer le relinkage du MAKEFILE sur les libs
-
