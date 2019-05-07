@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/04/23 11:25:25 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/05/07 17:40:09 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,39 +24,20 @@ void			ft_init_window_and_renderer(t_print *s_win)
 	s_win->renderer[MAP_2D] = NULL;
 	s_win->renderer[MAP_3D] = NULL;
 	SDL_Init(SDL_INIT_EVERYTHING);
-	if (!(s_win->window[MAP_2D] = SDL_CreateWindow("Window 2D",
-SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN)))
+	if (!(s_win->window[MAP_2D] = SDL_CreateWindow("Window 2D", \
+									SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
+									WINX, WINY, SDL_WINDOW_SHOWN)))
 		ft_quit("Erreur alloc window\n", s_win);
-	if (!(s_win->window[MAP_3D] = SDL_CreateWindow("Window 3D",
-SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINX, WINY, SDL_WINDOW_SHOWN)))
+	if (!(s_win->window[MAP_3D] = SDL_CreateWindow("Window 3D", \
+									SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
+									WINX, WINY, SDL_WINDOW_SHOWN)))
 		ft_quit("Erreur alloc window\n", s_win);
-	if (!(s_win->renderer[MAP_3D] = SDL_CreateRenderer(s_win->window[MAP_3D],
-0, SDL_RENDERER_SOFTWARE)))
+	if (!(s_win->renderer[MAP_3D] = SDL_CreateRenderer(s_win->window[MAP_3D], \
+										0, SDL_RENDERER_SOFTWARE)))
 		ft_quit("Erreur alloc window\n", s_win);
-	if (!(s_win->renderer[MAP_2D] = SDL_CreateRenderer(s_win->window[MAP_2D],
-0, SDL_RENDERER_SOFTWARE)))
+	if (!(s_win->renderer[MAP_2D] = SDL_CreateRenderer(s_win->window[MAP_2D], \
+										0, SDL_RENDERER_SOFTWARE)))
 		ft_quit("Erreur alloc window\n", s_win);
-}
-
-int				main(int ac, char **av)
-{
-	t_print			s_win;
-
-	if (ac != 2)
-		return (0);
-	ft_init_param_game(&s_win);
-	ft_get_the_map(av, &s_win);
-	ft_init_window_and_renderer(&s_win);
-	SDL_RenderPresent(s_win.renderer[MAP_3D]);
-	ft_load_bmp(&s_win);
-	init_renderer(s_win.renderer[MAP_2D], &(s_win.m));
-	ft_init_player_pos(&s_win, &(s_win.player), &(s_win.m));
-	ft_raycast(&s_win, &(s_win.player), &(s_win.m), EST);
-	refresh_screen(&s_win);
-	SDL_RenderPresent(s_win.renderer[MAP_2D]);
-	ft_event_loop(&s_win);
-	ft_quit("", &s_win);
-	return (0);
 }
 
 void			refresh_screen(t_print *w)
@@ -115,4 +96,25 @@ void			print_tab(t_vertex **tab)
 		printf("\n");
 		y++;
 	}
+}
+
+int				main(int ac, char **av)
+{
+	t_print			s_win;
+
+	if (ac != 2)
+		return (0);
+	ft_init_param_game(&s_win);
+	ft_get_the_map(av, &s_win);
+	ft_init_window_and_renderer(&s_win);
+	SDL_RenderPresent(s_win.renderer[MAP_3D]);
+	ft_load_bmp(&s_win);
+	init_renderer(s_win.renderer[MAP_2D], &(s_win.m));
+	ft_init_player_pos(&s_win, &(s_win.player), &(s_win.m));
+	ft_raycast(&s_win, &(s_win.player), &(s_win.m), EST);
+	refresh_screen(&s_win);
+	SDL_RenderPresent(s_win.renderer[MAP_2D]);
+	ft_event_loop(&s_win);
+	ft_quit("", &s_win);
+	return (0);
 }

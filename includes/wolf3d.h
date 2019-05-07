@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/22 10:53:40 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/05/07 16:57:54 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ typedef struct	s_my_raycast
 	t_wall			wall_Y_colision;
 
 }				t_my_raycast;
-
 
 typedef struct		s_file
 {
