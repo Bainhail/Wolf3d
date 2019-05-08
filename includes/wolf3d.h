@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/05/07 16:57:54 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/08 15:18:02 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # include "includes.h"
 # include "t_struct.h"
 
-
 typedef enum		e_bool
 {
 	FALSE = 0,
@@ -42,33 +41,45 @@ typedef struct		s_secteur_rayon
 	int				actuel_y;
 }					t_secteur_rayon;
 
-typedef struct			s_my_event
+typedef struct		s_my_event
 {
-	SDL_bool			key[SDL_NUM_SCANCODES];
-	SDL_bool			quit;
-}						t_my_event;
+	SDL_bool		key[SDL_NUM_SCANCODES];
+	SDL_bool		quit;
+}					t_my_event;
 
-typedef enum e_move_player
+typedef enum		e_move_player
 {
 	UP,
 	DOWN,
 	TRIGO,
 	ANTI
-}			s_move_player;
+}					s_move_player;
 
+
+/*
+** a = coefficient directeur dans y = ax + b
+** b = pas dans l'equation y = ax + b
+** x = coordonnee x du 1er point
+** y = coordonnee y du 1er point
+** dirx = indication de la direction de la droite selon x
+** diry = indication de la direction de la droite selon y
+** ymin = permet de connaitre le debut
+** ymax = et la fin des calculs de x selon y
+** dans l'equation x = (y - b) / a
+*/
 typedef struct		s_wall
 {
-	double			a;// coefficient directeur dans y = ax + b
-	double			b;// pas du coefficient de y = ax + b
-	double			x;// coordonnee x du 1er point
-	double			y;// coordonnee y du 1er point
-	double			dirx;// indication pour la direction de la droite selon x
-	double			diry;// indication pour la direction de la droite selon y
+	double			a;
+	double			b;
+	double			x;
+	double			y;
+	double			dirx;
+	double			diry;
 	double			ymin;
 	double			ymax;
 }					t_wall;
 
-typedef struct	s_my_raycast
+typedef struct		s_my_raycast
 {
 	double			window_x;
 	double			angle;
@@ -87,14 +98,20 @@ typedef struct	s_my_raycast
 	t_wall			wall_X_colision;
 	t_wall			wall_Y_colision;
 
-}				t_my_raycast;
+}					t_my_raycast;
 
+/*
+** fd => FileDescriptor
+** nbl => Nombre de ligne lu
+** line => ligne renvoye par GNL
+** tbline => tableau des lignes lu
+*/
 typedef struct		s_file
 {
-	int				fd;//       File Descriptor
-	int				nbl;//      Nombre de ligne
-	char			*line;//    Ligne renvoyer par GNL
-	char			**tbline;// Tableau des lignes mis bout a bout
+	int				fd;
+	int				nbl;
+	char			*line;
+	char			**tbline;
 }					t_file;
 
 typedef struct		s_sgmt
@@ -108,38 +125,49 @@ typedef struct		s_sgmt
 	int				maxX;
 }					t_sgmt;
 
+/*
+** f => Chemin du fichier
+** x => x maximum de la carte
+** y => y maximum de la carte
+** z => z maximum de la carte
+** xcase => Largeur X d'une case
+** ycase => Hauteur Y d'une case
+** tab => Tableau contenant toutes les coordonnees de la carte
+*/
 typedef struct		s_map
 {
-	t_file		f;//     Path du fichier
-	int			xmax;//  X max de la carte
-	int			ymax;//  Y max de la carte
-	int			zmax;//  Z max de la carte
-	float		xcase;// Largeur d'une case
-	float		ycase;// Hauteur d'une case
-	t_vertex	**tab;// Tableau contenant toute les coordonnees de la carte
-
-
-	int			debug;
+	t_file			f;
+	int				xmax;
+	int				ymax;
+	int				zmax;
+	float			xcase;
+	float			ycase;
+	t_vertex		**tab;
+	int				debug;
 }					t_map;
 
 /*
-** On sait que y = (a * x) + b
-** par equivalence:
-** x = (y - b) / a
+** x et y => Case actuelle du joueur
+** pos => position de l'oeil du personnage
+** fov => cone de vu du personnage en degre
+** flg_dir => orientation
+** dir => orientation en vecteur
+** s1, s2 et s3 sommet du triangle du personnage sur la carte
+** dist => distance de vu maximum du personnage
+** wl => correspond au mur vu
 */
-
 typedef struct		s_player
 {
 	int				x;
 	int				y;
-	t_vertex		pos;//  Remplace posX posY eye (Centre du personnage)
-	int				fov; // 60
-	int				flg_dir;//Flag de Direction (NORD SUD EST OUEST)
-	t_vertex		dir;//  (Nord:[0:-1:0]) (Sud=[0:1:0]) (Est=[1:0:0]) (Ouest=[-1:0:0])
-	t_vertex		s1;//   Sommet 1 triangle personnage
-	t_vertex		s2;//   Sommet 2 triangle personnage
-	t_vertex		s3;//   Sommet 3 triangle personnage
-	double			dist;// Distance de vu max du joueur
+	t_vertex		pos;
+	int				fov;
+	int				flg_dir;
+	t_vertex		dir;
+	t_vertex		s1;
+	t_vertex		s2;
+	t_vertex		s3;
+	double			dist;
 	t_wall			wl;
 }					t_player;
 
@@ -199,4 +227,5 @@ void			ft_load_bmp(t_print *p);
 void			ft_init_player_pos(t_print *w, t_player *p, t_map *m);
 void			wall_x_detect_calcul_x(t_player *player, t_map *map, t_my_raycast *rc);
 void			wall_x_detect_calcul_y(t_player *player, t_my_raycast *rc);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:51:54 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 17:21:51 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/05/08 16:12:39 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int			ft_get_wall_orientation(t_my_raycast *rc)
 		rc->orientation = X_COLISION;
 	else
 		rc->orientation = Y_COLISION;
-	if (rc->orientation == X_COLISION &&
-		cos(conv_deg_to_rad(rc->angle)) > 0)
+	if (rc->orientation == X_COLISION \
+			&& cos(conv_deg_to_rad(rc->angle)) > 0)
 		rc->orientation = EAST_WALL;
 	else if (rc->orientation == X_COLISION)
 		rc->orientation = WEST_WALL;
-	else if (rc->orientation == Y_COLISION &&
-			sin(conv_deg_to_rad(rc->angle)) > 0)
+	else if (rc->orientation == Y_COLISION \
+				&& sin(conv_deg_to_rad(rc->angle)) > 0)
 		rc->orientation = SOUTH_WALL;
 	else if (rc->orientation == Y_COLISION)
 		rc->orientation = NORTH_WALL;
@@ -34,18 +34,18 @@ int			ft_get_wall_orientation(t_my_raycast *rc)
 void		ft_load_texture_ft_orientation(t_print *w, t_my_raycast *s_raycast)
 {
 	if (s_raycast->orientation == EAST_WALL)
-		SDL_RenderCopy(w->renderer[MAP_3D], w->texture[EAST_WALL],
-								&(s_raycast->srcrect), &(s_raycast->dstrect));
+		SDL_RenderCopy(w->renderer[MAP_3D], w->texture[EAST_WALL], \
+						&(s_raycast->srcrect), &(s_raycast->dstrect));
 	else if (s_raycast->orientation == WEST_WALL)
-		SDL_RenderCopy(w->renderer[MAP_3D], w->texture[WEST_WALL],
-								&(s_raycast->srcrect), &(s_raycast->dstrect));
+		SDL_RenderCopy(w->renderer[MAP_3D], w->texture[WEST_WALL], \
+						&(s_raycast->srcrect), &(s_raycast->dstrect));
 	else if (s_raycast->orientation == SOUTH_WALL)
-		SDL_RenderCopy(w->renderer[MAP_3D], w->texture[SOUTH_WALL],
-								&(s_raycast->srcrect), &(s_raycast->dstrect));
+		SDL_RenderCopy(w->renderer[MAP_3D], w->texture[SOUTH_WALL], \
+						&(s_raycast->srcrect), &(s_raycast->dstrect));
 	else if (s_raycast->orientation == NORTH_WALL)
-		SDL_RenderCopy(w->renderer[MAP_3D], w->texture[NORTH_WALL],
-								&(s_raycast->srcrect), &(s_raycast->dstrect));
+		SDL_RenderCopy(w->renderer[MAP_3D], w->texture[NORTH_WALL], \
+						&(s_raycast->srcrect), &(s_raycast->dstrect));
 	else
-		SDL_RenderCopy(w->renderer[MAP_3D], w->texture[NONE],
-								&(s_raycast->srcrect), &(s_raycast->dstrect));
+		SDL_RenderCopy(w->renderer[MAP_3D], w->texture[NONE], \
+						&(s_raycast->srcrect), &(s_raycast->dstrect));
 }

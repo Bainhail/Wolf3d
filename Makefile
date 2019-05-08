@@ -1,9 +1,22 @@
+#******************************************************************************#
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: naali <marvin@42.fr>                       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/05/08 14:49:52 by naali             #+#    #+#              #
+#    Updated: 2019/05/08 15:51:26 by naali            ###   ########.fr        #
+#                                                                              #
+#******************************************************************************#
+
 #SDL
 SDL_MAIN_DOWNLOAD = https://www.libsdl.org/release/SDL2-2.0.8.tar.gz
 SDL_IMAGE_DOWNLOAD = https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.3.tar.gz
 
-NAME = wolf3d
-CC = gcc
+NAME		=	wolf3d
+CC			=	gcc
+
 SRC			=	main.c						\
 				ft_pushback_str_to_tab.c	\
 				mapfunc.c					\
@@ -32,19 +45,19 @@ SRC			=	main.c						\
 				secteur_func.c				\
 				file_bmp_texture.c
 
-OBJ = $(SRC:.c=.o)
-CFLAG = -Wall -Wextra -Werror
-INCLUDE =  -I ./includes/
-INCLUDE += -I ./sdl_image/SDL2_image-2.0.3/include/
-INCLUDE += -I ./sdl_main/SDL2-2.0.8/include/
-INCLUDE += -I ./libft/
-DSRC = ./srcs
-DOBJ = ./objs
-OBJS = $(addprefix $(DOBJ)/, $(OBJ))
-SRCS = $(addprefix $(DSRC), $(SRC))
-LFLAG =  -L sdl_main/SDL2-2.0.8/lib  -lSDL2
-LFLAG += -L ./sdl_image/SDL2_image-2.0.3/lib -lSDL2_image
-LFLAG += -L ./libft/ -lft
+OBJ			=	$(SRC:.c=.o)
+CFLAG		=	-Wall -Wextra -Werror
+INCLUDE		=	-I ./includes/
+INCLUDE		+=	-I ./sdl_image/SDL2_image-2.0.3/include/
+INCLUDE		+=	-I ./sdl_main/SDL2-2.0.8/include/
+INCLUDE		+=	-I ./libft/
+DSRC		=	./srcs
+DOBJ		=	./objs
+OBJS		=	$(addprefix $(DOBJ)/, $(OBJ))
+SRCS		=	$(addprefix $(DSRC), $(SRC))
+LFLAG		=	-L sdl_main/SDL2-2.0.8/lib  -lSDL2
+LFLAG		+=	-L ./sdl_image/SDL2_image-2.0.3/lib -lSDL2_image
+LFLAG		+=	-L ./libft/ -lft -lm
 .PHONY: all clean fclean re lib sdl_main sdl_image libft debug
 
 all:$(NAME)
@@ -53,7 +66,7 @@ debug:CC += -g
 debug:clean
 debug:all
 
-vpath %.c ./srcs/:./srcs/getmap:./srcs/matrice:./srcs/draw:./srcs/player:./srcs/event
+vpath %.c ./srcs/:./srcs/getmap:./srcs/matrice:./srcs/draw:./srcs/player:./srcs/event:./srcs/files
 
 $(DOBJ)/%.o:%.c
 	@mkdir $(DOBJ) 2> /dev/null || true
@@ -123,4 +136,3 @@ line:clear
 
 tag:
 	ctags -R .
-

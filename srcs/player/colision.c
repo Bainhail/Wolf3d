@@ -6,14 +6,14 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:48:48 by naali             #+#    #+#             */
-/*   Updated: 2019/04/11 17:25:07 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/05/08 16:10:12 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
 
-int		ft_colision_detection(t_map *m, t_my_raycast *rc, double corx,
-															double cory)
+int		ft_colision_detection(t_map *m, t_my_raycast *rc, \
+								double corx, double cory)
 {
 	int		x;
 	int		y;

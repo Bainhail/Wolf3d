@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/05/07 17:40:09 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/08 15:47:56 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,20 @@ void			ft_init_window_and_renderer(t_print *s_win)
 	s_win->renderer[MAP_3D] = NULL;
 	SDL_Init(SDL_INIT_EVERYTHING);
 	if (!(s_win->window[MAP_2D] = SDL_CreateWindow("Window 2D", \
-									SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
-									WINX, WINY, SDL_WINDOW_SHOWN)))
+											SDL_WINDOWPOS_CENTERED, \
+											SDL_WINDOWPOS_CENTERED, \
+											WINX, WINY, SDL_WINDOW_SHOWN)))
 		ft_quit("Erreur alloc window\n", s_win);
 	if (!(s_win->window[MAP_3D] = SDL_CreateWindow("Window 3D", \
-									SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
-									WINX, WINY, SDL_WINDOW_SHOWN)))
+											SDL_WINDOWPOS_CENTERED, \
+											SDL_WINDOWPOS_CENTERED, \
+											WINX, WINY, SDL_WINDOW_SHOWN)))
 		ft_quit("Erreur alloc window\n", s_win);
 	if (!(s_win->renderer[MAP_3D] = SDL_CreateRenderer(s_win->window[MAP_3D], \
-										0, SDL_RENDERER_SOFTWARE)))
+											0, SDL_RENDERER_SOFTWARE)))
 		ft_quit("Erreur alloc window\n", s_win);
 	if (!(s_win->renderer[MAP_2D] = SDL_CreateRenderer(s_win->window[MAP_2D], \
-										0, SDL_RENDERER_SOFTWARE)))
+											0, SDL_RENDERER_SOFTWARE)))
 		ft_quit("Erreur alloc window\n", s_win);
 }
 
@@ -77,25 +79,6 @@ int				init_renderer(SDL_Renderer *r, t_map *m)
 		y++;
 	}
 	return (0);
-}
-
-void			print_tab(t_vertex **tab)
-{
-	int		x;
-	int		y;
-
-	y = 0;
-	while (y < 10)
-	{
-		x = 0;
-		while (x < 18)
-		{
-			printf("%.1f\t", tab[y][x].z);
-			x++;
-		}
-		printf("\n");
-		y++;
-	}
 }
 
 int				main(int ac, char **av)
