@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/05/08 16:14:04 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/09 15:24:35 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,22 @@ static void		init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 	wl->ymax = wl->y;
 }
 
-/*
-** voir wall_y_detect
-** je c pas ce ke c <-- ymin permet a la detection de savoir ou
-** commencer si le pas est negatif
-** je c pas ce ke c <-- ymax permet a la detection de savoir ou
-** commencer si le pas est positif
-** voir wall_y_detect
-*/
 static void		print_view(t_print *w, t_player *p, \
 							t_my_raycast *rc, t_vertex *wall)
 {
 	if (rc->dist_col_x > rc->dist_col_y)
 	{
-		wall->x = rc->wall_Y_colision.x;
-		wall->y = rc->wall_Y_colision.y;
-		rc->x = rc->wall_Y_colision.x;
-		rc->y = rc->wall_Y_colision.y;
+		wall->x = rc->wall_y_colision.x;
+		wall->y = rc->wall_y_colision.y;
+		rc->x = rc->wall_y_colision.x;
+		rc->y = rc->wall_y_colision.y;
 	}
 	else
 	{
-		wall->x = rc->wall_X_colision.x;
-		wall->y = rc->wall_X_colision.y;
-		rc->x = rc->wall_X_colision.x;
-		rc->y = rc->wall_X_colision.y;
+		wall->x = rc->wall_x_colision.x;
+		wall->y = rc->wall_x_colision.y;
+		rc->x = rc->wall_x_colision.x;
+		rc->y = rc->wall_x_colision.y;
 	}
 	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 0, 50);
 	print_line(w, w->renderer[MAP_2D], p->pos, *wall);

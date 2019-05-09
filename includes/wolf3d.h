@@ -6,13 +6,12 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/05/08 15:18:02 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/09 15:23:24 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef		WOLF3D_H
-# define	WOLF3D_H
+#ifndef WOLF3D_H
+# define WOLF3D_H
 
 # define WINX 800
 # define WINY 600
@@ -36,7 +35,7 @@ typedef enum		e_bool
 typedef struct		s_secteur_rayon
 {
 	int				precedent_x;
-	int 			precedent_y;
+	int				precedent_y;
 	int				actuel_x;
 	int				actuel_y;
 }					t_secteur_rayon;
@@ -53,8 +52,7 @@ typedef enum		e_move_player
 	DOWN,
 	TRIGO,
 	ANTI
-}					s_move_player;
-
+}					t_move_player;
 
 /*
 ** a = coefficient directeur dans y = ax + b
@@ -95,9 +93,8 @@ typedef struct		s_my_raycast
 	double			step_cte_x;
 	double			step_cte_y;
 	int				colision;
-	t_wall			wall_X_colision;
-	t_wall			wall_Y_colision;
-
+	t_wall			wall_x_colision;
+	t_wall			wall_y_colision;
 }					t_my_raycast;
 
 /*
@@ -122,7 +119,7 @@ typedef struct		s_sgmt
 	int				ystep;
 	int				x;
 	int				y;
-	int				maxX;
+	int				maxx;
 }					t_sgmt;
 
 /*
@@ -171,13 +168,13 @@ typedef struct		s_player
 	t_wall			wl;
 }					t_player;
 
-typedef enum	e_renderer
+typedef enum		e_renderer
 {
 	MAP_2D,
 	MAP_3D,
-}				s_renderer;
+}					t_renderer;
 
-typedef enum	e_orientation_wall
+typedef enum		e_orientation_wall
 {
 	Y_COLISION,
 	X_COLISION,
@@ -186,8 +183,7 @@ typedef enum	e_orientation_wall
 	EAST_WALL,
 	WEST_WALL,
 	NONE,
-}				s_orientation_wall;
-
+}					t_orientation_wall;
 
 typedef struct		s_print
 {
@@ -197,35 +193,43 @@ typedef struct		s_print
 	SDL_Texture		*texture[10];
 	SDL_Window		*window[10];
 	SDL_Renderer	*ren_flg;
-
 }					t_print;
 
-int				file_to_tab(char *path, t_map *m);
-int				draw_square(SDL_Renderer *r, t_map *m, int x, int y);
-void			print_line(t_print *w, SDL_Renderer *r, t_vertex start, t_vertex end);
-void			ft_event_loop(t_print *w);
-int				init_renderer(SDL_Renderer *r, t_map *m);
-void			calc_player_pos(t_map *m, t_player *p, int x, int y);
-void			refresh_player_pos(t_map *m, t_player *p);
-void			refresh_screen(t_print *w);
-SDL_Texture		*loadBMP(SDL_Renderer *tmp_renderer, char *path);
-void			ft_quit(char *str, t_print *s_win);
-int				ft_get_the_map(char **av, t_print *p);
-void			ft_raycast(t_print *w, t_player *p, t_map *m, int alpha);
-double			dist_calc(double xa, double ya, double xb, double yb);
-double			recalc_ray_distance(double dist, int win_step);
-int				ft_colision_detection(t_map *m, t_my_raycast *rc, double corx, double cory);
-double			wall_y_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *rc);
-double			wall_x_detect(t_print *w, t_player *p, t_map *m, t_my_raycast *rc);
-int				ft_get_wall_orientation(t_my_raycast *rc);
-void			ft_load_texture_ft_orientation(t_print *w, t_my_raycast *s_raycast);
-void			ft_init_texture_wall_position(t_map *m, t_my_raycast *s_raycast);
-void			ft_draw_wall(t_print *w, t_map *m, t_my_raycast *rc);
-void			ft_get_secteur_rayon(int x, int y, t_map *m, t_my_raycast *s_raycast);
-void			ft_init_secteur_rayon(t_player *p, t_map *m, t_my_raycast *rc);
-void			ft_load_bmp(t_print *p);
-void			ft_init_player_pos(t_print *w, t_player *p, t_map *m);
-void			wall_x_detect_calcul_x(t_player *player, t_map *map, t_my_raycast *rc);
-void			wall_x_detect_calcul_y(t_player *player, t_my_raycast *rc);
+int					file_to_tab(char *path, t_map *m);
+int					draw_square(SDL_Renderer *r, t_map *m, int x, int y);
+void				print_line(t_print *w, SDL_Renderer *r, \
+								t_vertex start, t_vertex end);
+void				ft_event_loop(t_print *w);
+int					init_renderer(SDL_Renderer *r, t_map *m);
+void				calc_player_pos(t_map *m, t_player *p, int x, int y);
+void				refresh_player_pos(t_map *m, t_player *p);
+void				refresh_screen(t_print *w);
+SDL_Texture			*loadbmp(SDL_Renderer *tmp_renderer, char *path);
+void				ft_quit(char *str, t_print *s_win);
+int					ft_get_the_map(char **av, t_print *p);
+void				ft_raycast(t_print *w, t_player *p, t_map *m, int alpha);
+double				dist_calc(double xa, double ya, double xb, double yb);
+double				recalc_ray_distance(double dist, int win_step);
+int					ft_colision_detection(t_map *m, t_my_raycast *rc, \
+											double corx, double cory);
+double				wall_y_detect(t_print *w, t_player *p, \
+									t_map *m, t_my_raycast *rc);
+double				wall_x_detect(t_print *w, t_player *p, \
+									t_map *m, t_my_raycast *rc);
+int					ft_get_wall_orientation(t_my_raycast *rc);
+void				ft_load_texture_ft_orientation(t_print *w, \
+													t_my_raycast *s_raycast);
+void				ft_init_texture_wall_position(t_map *m, \
+													t_my_raycast *s_raycast);
+void				ft_draw_wall(t_print *w, t_map *m, t_my_raycast *rc);
+void				ft_get_secteur_rayon(int x, int y, \
+										t_map *m, t_my_raycast *s_raycast);
+void				ft_init_secteur_rayon(t_player *p, t_map *m, \
+											t_my_raycast *rc);
+void				ft_load_bmp(t_print *p);
+void				ft_init_player_pos(t_print *w, t_player *p, t_map *m);
+void				wall_x_detect_calcul_x(t_player *player, t_map *map, \
+											t_my_raycast *rc);
+void				wall_x_detect_calcul_y(t_player *player, t_my_raycast *rc);
 
 #endif

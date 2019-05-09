@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 15:36:30 by naali             #+#    #+#             */
-/*   Updated: 2019/03/18 14:40:13 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/09 15:14:11 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ t_matrice		set_x_matrice(double angle_degree);
 t_matrice		set_y_matrice(double angle_degree);
 t_matrice		set_z_matrice(double angle_degree);
 t_vertex		rotate_around_new_center(t_vertex *point, \
-										 t_vertex *center, \
-										 double degree);
+											t_vertex *center, \
+											double degree);
 
 /*
 ** Fichier:

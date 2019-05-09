@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wall_checking.c                                    :+:      :+:    :+:   */
+/*   wall_checking_x.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/29 14:41:27 by naali             #+#    #+#             */
-/*   Updated: 2019/05/08 16:13:29 by naali            ###   ########.fr       */
+/*   Created: 2019/05/09 15:04:19 by naali             #+#    #+#             */
+/*   Updated: 2019/05/09 15:25:39 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ double			wall_x_detect(t_print *s_win, t_player *player, \
 		{
 			rc->dist_col_x = dist_calc(player->pos.x, player->pos.y, \
 										rc->x, rc->y);
-			rc->wall_X_colision.x = rc->x;
-			rc->wall_X_colision.y = rc->y;
+			rc->wall_x_colision.x = rc->x;
+			rc->wall_x_colision.y = rc->y;
 			return (rc->dist_col_x);
 		}
 		wall_x_detect_calcul_x(player, map, rc);
@@ -81,79 +81,4 @@ void			wall_x_detect_calcul_x(t_player *player, t_map *map, \
 		rc->x = rc->x + (map->xcase * player->wl.dirx);
 	else
 		rc->x = rc->x + rc->step_cte_x;
-}
-
-static void		init_wall_y(t_player *player, t_map *map, t_my_raycast *rc)
-{
-	rc->colision = FALSE;
-	rc->dist_col_y = 0;
-	if (player->wl.diry > 0)
-		rc->y = ((int)(player->wl.ymin / map->ycase));
-	else
-		rc->y = ((int)(player->wl.ymax / map->ycase));
-	rc->y = rc->y * map->ycase + ((player->wl.diry > 0) ? map->ycase : 0);
-	rc->step_cte_y = map->ycase * player->wl.diry;
-}
-
-void			ft_wall_y_detect_calucl_x(t_player *player, t_my_raycast *rc)
-{
-	float			precision;
-
-	precision = 0.00001;
-	if ((rc->angle < (0.0 + precision) \
-			&& (rc->angle > (0.0 - precision))) \
-			|| (rc->angle < (180.0 + precision) \
-			&& (rc->angle > (180.0 - precision))))
-	{
-		rc->x = 99999999;
-		rc->y = 99999999;
-	}
-	else if ((rc->angle < (90.0 + precision) \
-				&& (rc->angle > (90.0 - precision))) \
-				|| (rc->angle < (270.0 + precision) \
-				&& (rc->angle > (270.0 - precision))))
-		rc->x = player->pos.x;
-	else
-		rc->x = (rc->y - player->wl.b) / player->wl.a;
-}
-
-void			ft_wall_y_detect_y_calcul(t_player *player, t_map *map, \
-											t_my_raycast *rc)
-{
-	float			precision;
-
-	precision = 0.00001;
-	if ((rc->angle < (0.0 + precision) \
-			&& (rc->angle > (0.0 - precision))) \
-			|| (rc->angle < (180.0 + precision) \
-			&& (rc->angle > (180.0 - precision))))
-		rc->y = rc->y;
-	else if ((rc->angle < (90.0 + precision) \
-				&& (rc->angle > (90.0 - precision))) \
-				|| (rc->angle < (270.0 + precision) \
-				&& (rc->angle > (270.0 - precision))))
-		rc->y = rc->y + (map->ycase * player->wl.diry);
-	else
-		rc->y = rc->y + rc->step_cte_y;
-}
-
-double			wall_y_detect(t_print *s_win, t_player *player, \
-								t_map *map, t_my_raycast *rc)
-{
-	init_wall_y(player, map, rc);
-	while (rc->colision == FALSE)
-	{
-		ft_wall_y_detect_calucl_x(player, rc);
-		if ((rc->colision = ft_colision_detection(&(s_win->m), rc,
-			player->wl.dirx, player->wl.diry)) == TRUE)
-		{
-			rc->dist_col_y = dist_calc(player->pos.x, \
-										player->pos.y, rc->x, rc->y);
-			rc->wall_Y_colision.x = rc->x;
-			rc->wall_Y_colision.y = rc->y;
-			return (rc->dist_col_y);
-		}
-		ft_wall_y_detect_y_calcul(player, map, rc);
-	}
-	return (rc->dist_col_y);
 }

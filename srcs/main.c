@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/05/08 15:47:56 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/09 17:52:09 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void			ft_init_window_and_renderer(t_print *s_win)
 	if (!(s_win->window[MAP_2D] = SDL_CreateWindow("Window 2D", \
 											SDL_WINDOWPOS_CENTERED, \
 											SDL_WINDOWPOS_CENTERED, \
-											WINX, WINY, SDL_WINDOW_SHOWN)))
+											WINX, WINY, SDL_WINDOW_HIDDEN)))
 		ft_quit("Erreur alloc window\n", s_win);
 	if (!(s_win->window[MAP_3D] = SDL_CreateWindow("Window 3D", \
 											SDL_WINDOWPOS_CENTERED, \
@@ -95,8 +95,8 @@ int				main(int ac, char **av)
 	init_renderer(s_win.renderer[MAP_2D], &(s_win.m));
 	ft_init_player_pos(&s_win, &(s_win.player), &(s_win.m));
 	ft_raycast(&s_win, &(s_win.player), &(s_win.m), EST);
-	refresh_screen(&s_win);
 	SDL_RenderPresent(s_win.renderer[MAP_2D]);
+	refresh_screen(&s_win);
 	ft_event_loop(&s_win);
 	ft_quit("", &s_win);
 	return (0);

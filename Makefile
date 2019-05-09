@@ -6,7 +6,7 @@
 #    By: naali <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/08 14:49:52 by naali             #+#    #+#              #
-#    Updated: 2019/05/08 15:51:26 by naali            ###   ########.fr        #
+#    Updated: 2019/05/09 15:06:33 by naali            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -38,7 +38,8 @@ SRC			=	main.c						\
 				file_ft_quit.c 				\
 				file_ft_get_the_map.c		\
 				calcul_distance.c			\
-				wall_checking.c				\
+				wall_checking_x.c			\
+				wall_checking_y.c			\
 				colision.c					\
 				orientation.c				\
 				draw_wall.c					\

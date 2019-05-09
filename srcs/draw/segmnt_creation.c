@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 11:23:00 by jchardin          #+#    #+#             */
-/*   Updated: 2019/04/23 11:23:04 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/05/09 15:25:08 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		init_sgmt(t_sgmt *l, t_vertex start, t_vertex end)
 	l->ystep = (start.y < end.y) ? 1 : -1;
 	l->x = (int)(start.x);
 	l->y = (int)(start.y);
-	l->maxX = (int)(end.x);
+	l->maxx = (int)(end.x);
 }
 
 static void		change_vertex(int swp, t_vertex *start, t_vertex *end)
@@ -48,7 +48,7 @@ static void		print_line1(t_print *w, int swp, t_vertex start, t_vertex end)
 	t_sgmt	l;
 
 	init_sgmt(&l, start, end);
-	while (++l.x < (l.maxX - 1))
+	while (++l.x < (l.maxx - 1))
 	{
 		if (swp >= 0)
 			SDL_RenderDrawPoint(w->ren_flg, l.y, l.x);
