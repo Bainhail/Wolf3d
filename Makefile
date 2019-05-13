@@ -6,7 +6,7 @@
 #    By: naali <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/08 14:49:52 by naali             #+#    #+#              #
-#    Updated: 2019/05/09 15:06:33 by naali            ###   ########.fr        #
+#    Updated: 2019/05/13 16:08:18 by naali            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -34,6 +34,9 @@ SRC			=	main.c						\
 				mult_matrice.c				\
 				t_vertex.c					\
 				file_event_loop.c			\
+				move.c						\
+				move_correction.c			\
+				event_trigger.c				\
 				file_3d_map.c 				\
 				file_ft_quit.c 				\
 				file_ft_get_the_map.c		\

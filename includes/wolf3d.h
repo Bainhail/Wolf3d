@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/05/09 15:23:24 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/13 17:03:07 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,5 +231,13 @@ void				ft_init_player_pos(t_print *w, t_player *p, t_map *m);
 void				wall_x_detect_calcul_x(t_player *player, t_map *map, \
 											t_my_raycast *rc);
 void				wall_x_detect_calcul_y(t_player *player, t_my_raycast *rc);
+void				ft_enable_mouse_motion(int boolean, int *mouse);
+void				ft_map_trigger(t_print *w);
+int					ft_correction_pos(double x, double y, t_print *w);
+void				ft_apply_correction(t_print *w, double x, double y);
+
+void				ft_mouse_move(int rot, t_print *w);
+void				ft_move_leftright(int move, t_print *w);
+void				ft_move(int move, t_print *w);
 
 #endif
