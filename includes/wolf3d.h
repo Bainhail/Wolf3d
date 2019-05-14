@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/05/13 17:03:07 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/14 16:58:35 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define OUEST 180
 # define WALL 100
 # define EYE 300
+# define XCASE 50
+# define YCASE 50
 
 # include "includes.h"
 # include "t_struct.h"

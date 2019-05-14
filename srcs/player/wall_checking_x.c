@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 15:04:19 by naali             #+#    #+#             */
-/*   Updated: 2019/05/09 15:25:39 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/14 14:28:05 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void			wall_x_detect_calcul_x(t_player *player, t_map *map, \
 {
 	float			precision;
 
+	(void)map;
 	precision = 0.00001;
 	if ((rc->angle < (90.0 + precision) && (rc->angle > (90.0 - precision))) \
 			|| (rc->angle < (270.0 + precision) \
