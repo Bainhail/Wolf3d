@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 09:44:41 by naali             #+#    #+#             */
-/*   Updated: 2019/04/03 09:57:09 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/05/15 14:51:39 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void			ft_init_player_pos(t_print *w, t_player *p, t_map *m)
 				print_line(w, w->renderer[MAP_2D], p->s1, p->s2);
 				print_line(w, w->renderer[MAP_2D], p->s1, p->s3);
 				print_line(w, w->renderer[MAP_2D], p->s3, p->s2);
+				return ;
 			}
 			j++;
 		}

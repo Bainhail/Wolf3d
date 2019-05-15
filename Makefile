@@ -6,7 +6,7 @@
 #    By: naali <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/08 14:49:52 by naali             #+#    #+#              #
-#    Updated: 2019/05/13 16:08:18 by naali            ###   ########.fr        #
+#    Updated: 2019/05/15 15:19:47 by jchardin         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -136,7 +136,7 @@ clear:
 	clear
 
 line:clear
-	find ./srcs -name '*.c' | xargs wc -l
+	#find ./srcs -name '*.c' | xargs wc -l
 
 tag:
 	ctags -R .

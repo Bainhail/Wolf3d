@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/05/14 15:03:58 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/15 16:12:09 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,11 @@ int				main(int ac, char **av)
 
 	if (ac != 2)
 		return (0);
+	if (ft_get_the_map(av, &s_win) == -1)
+		return (-1);
+	if (ft_check_if_player(s_win.m))
+		return (-1);
 	ft_init_param_game(&s_win);
-	ft_get_the_map(av, &s_win);
 	ft_init_window_and_renderer(&s_win);
 	SDL_RenderPresent(s_win.renderer[MAP_3D]);
 	ft_load_bmp(&s_win);

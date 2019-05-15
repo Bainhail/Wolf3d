@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 16:03:56 by naali             #+#    #+#             */
-/*   Updated: 2019/05/14 17:01:01 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/15 15:15:27 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,19 @@ void	ft_move(int move, t_print *w)
 
 	if (move == UP)
 	{
-		x = w->player.pos.x + cos(conv_deg_to_rad(w->player.flg_dir)) * 5;
-		y = w->player.pos.y + sin(conv_deg_to_rad(w->player.flg_dir)) * 5;
+		x = w->player.pos.x + cos(conv_deg_to_rad(w->player.flg_dir)) *
+			(20 * (w->m.xcase / 50));
+		y = w->player.pos.y + sin(conv_deg_to_rad(w->player.flg_dir)) *
+			(20 * (w->m.xcase / 50));
 		if (ft_correction_pos(x, y, w) == TRUE)
 			ft_apply_correction(w, x, y);
 	}
 	else if (move == DOWN)
 	{
-		x = w->player.pos.x - cos(conv_deg_to_rad(w->player.flg_dir)) * 5;
-		y = w->player.pos.y - sin(conv_deg_to_rad(w->player.flg_dir)) * 5;
+		x = w->player.pos.x - cos(conv_deg_to_rad(w->player.flg_dir)) *
+			(20 * (w->m.xcase / 50));
+		y = w->player.pos.y - sin(conv_deg_to_rad(w->player.flg_dir)) *
+			(20 * (w->m.xcase / 50));
 		if (ft_correction_pos(x, y, w) == TRUE)
 			ft_apply_correction(w, x, y);
 	}

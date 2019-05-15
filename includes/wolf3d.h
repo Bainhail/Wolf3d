@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/05/14 16:58:35 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/15 16:11:09 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,11 @@
 # define EYE 300
 # define XCASE 50
 # define YCASE 50
+# define TRUE 1
+# define FALSE 0
 
 # include "includes.h"
 # include "t_struct.h"
-
-typedef enum		e_bool
-{
-	FALSE = 0,
-	TRUE = 1,
-}					t_bool;
 
 typedef struct		s_secteur_rayon
 {
@@ -241,5 +237,6 @@ void				ft_apply_correction(t_print *w, double x, double y);
 void				ft_mouse_move(int rot, t_print *w);
 void				ft_move_leftright(int move, t_print *w);
 void				ft_move(int move, t_print *w);
+int					ft_check_if_player(t_map m);
 
 #endif

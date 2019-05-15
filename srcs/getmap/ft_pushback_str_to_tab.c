@@ -6,11 +6,11 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 15:55:10 by naali             #+#    #+#             */
-/*   Updated: 2019/03/07 10:45:12 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/15 16:10:35 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes.h"
+#include <wolf3d.h>
 
 int				tablen(char **tab)
 {
@@ -69,4 +69,27 @@ char			**ft_pushback_str_to_tab(char ***tab, char **s1)
 	free_useless(tab, s1, tmax);
 	ntab[++i] = 0;
 	return (ntab);
+}
+
+int				ft_check_if_player(t_map m)
+{
+	int		x;
+	int		y;
+
+	y = 0;
+	while (y < m.ymax)
+	{
+		x = 0;
+		while (x < m.xmax)
+		{
+			if (m.tab[y][x].z == -42)
+			{
+				return (0);
+			}
+			x++;
+		}
+		y++;
+	}
+	ft_putstr("manque le joueur\n");
+	return (1);
 }

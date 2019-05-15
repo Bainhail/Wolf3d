@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:55:35 by naali             #+#    #+#             */
-/*   Updated: 2019/05/14 17:05:00 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/15 15:14:54 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,10 @@ void		ft_init_texture_wall_position(t_map *m, t_my_raycast *s_raycast)
 double		ft_calc_hmp(double distance_ray)
 {
 	double	hmp;
+
 	hmp = (((double)EYE * (double)WALL) / distance_ray) / 2.0;
-	if (hmp > 300.0)
-		return (300.0);
+	if (hmp > 1200.0)
+		return (1200.0);
 	return (hmp);
 }
 

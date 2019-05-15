@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 13:24:08 by naali             #+#    #+#             */
-/*   Updated: 2019/05/07 17:03:53 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/15 15:49:07 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ static int			check_line(char **l, int *fd)
 		while ((*l)[i] >= 0)
 		{
 			i++;
-			if ((*l)[i] == '\0')
+			if ((*l)[i] == '\0' && i < 5001)
 				return (0);
 		}
 		if ((*l) != NULL)
 			free(*l);
 		if ((*fd) > 0)
-			close(*fd);
+			*fd = close(*fd);
 	}
 	return (-1);
 }
@@ -115,7 +115,7 @@ int					file_to_tab(char *path, t_map *m)
 		m->f.tbline = ft_pushback_str_to_tab(&(m->f.tbline), &(m->f.line));
 		m->f.nbl++;
 	}
-	if (m->f.tbline == NULL)
+	if (m->f.tbline == NULL || m->f.nbl > 5000)
 		return (-1);
 	m->tab = split_nb_to_tab1(m->f.tbline, m);
 	m->f.line != NULL ? free(m->f.line) : 0;
