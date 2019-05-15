@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/05/15 16:12:09 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/05/15 17:19:55 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void			refresh_screen(t_print *w)
 	SDL_RenderPresent(w->renderer[MAP_3D]);
 }
 
-int				init_renderer(SDL_Renderer *r, t_map *m)
+void			init_renderer(SDL_Renderer *r, t_map *m)
 {
 	int		x;
 	int		y;
@@ -72,13 +72,11 @@ int				init_renderer(SDL_Renderer *r, t_map *m)
 		x = 0;
 		while (x < m->xmax)
 		{
-			if (draw_square(r, m, x, y) == -1)
-				return (-1);
+			draw_square(r, m, x, y);
 			x++;
 		}
 		y++;
 	}
-	return (0);
 }
 
 int				main(int ac, char **av)

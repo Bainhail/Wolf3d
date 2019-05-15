@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/05/15 16:11:09 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/05/15 17:20:10 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ typedef struct		s_print
 }					t_print;
 
 int					file_to_tab(char *path, t_map *m);
-int					draw_square(SDL_Renderer *r, t_map *m, int x, int y);
+void				draw_square(SDL_Renderer *r, t_map *m, int x, int y);
 void				print_line(t_print *w, SDL_Renderer *r, \
 								t_vertex start, t_vertex end);
 void				ft_event_loop(t_print *w);

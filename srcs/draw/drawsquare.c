@@ -6,13 +6,13 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 11:39:03 by naali             #+#    #+#             */
-/*   Updated: 2019/03/27 11:43:28 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/05/15 17:20:20 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
 
-int			draw_square(SDL_Renderer *r, t_map *m, int x, int y)
+void			draw_square(SDL_Renderer *r, t_map *m, int x, int y)
 {
 	int		ytmp;
 	int		xct;
@@ -37,5 +37,4 @@ int			draw_square(SDL_Renderer *r, t_map *m, int x, int y)
 		}
 		x++;
 	}
-	return (0);
 }
