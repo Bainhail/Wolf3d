@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/05/15 17:20:10 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/23 09:31:14 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,17 +194,20 @@ typedef struct		s_print
 }					t_print;
 
 int					file_to_tab(char *path, t_map *m);
+int					ft_get_the_map(char **av, t_print *p);
+
 void				draw_square(SDL_Renderer *r, t_map *m, int x, int y);
 void				print_line(t_print *w, SDL_Renderer *r, \
 								t_vertex start, t_vertex end);
+
 void				ft_event_loop(t_print *w);
-int					init_renderer(SDL_Renderer *r, t_map *m);
 void				calc_player_pos(t_map *m, t_player *p, int x, int y);
 void				refresh_player_pos(t_map *m, t_player *p);
 void				refresh_screen(t_print *w);
+
+void				init_renderer(SDL_Renderer *r, t_map *m);
 SDL_Texture			*loadbmp(SDL_Renderer *tmp_renderer, char *path);
 void				ft_quit(char *str, t_print *s_win);
-int					ft_get_the_map(char **av, t_print *p);
 void				ft_raycast(t_print *w, t_player *p, t_map *m, int alpha);
 double				dist_calc(double xa, double ya, double xb, double yb);
 double				recalc_ray_distance(double dist, int win_step);
@@ -229,8 +232,10 @@ void				ft_init_player_pos(t_print *w, t_player *p, t_map *m);
 void				wall_x_detect_calcul_x(t_player *player, t_map *map, \
 											t_my_raycast *rc);
 void				wall_x_detect_calcul_y(t_player *player, t_my_raycast *rc);
+
 void				ft_enable_mouse_motion(int boolean, int *mouse);
 void				ft_map_trigger(t_print *w);
+
 int					ft_correction_pos(double x, double y, t_print *w);
 void				ft_apply_correction(t_print *w, double x, double y);
 
@@ -238,5 +243,7 @@ void				ft_mouse_move(int rot, t_print *w);
 void				ft_move_leftright(int move, t_print *w);
 void				ft_move(int move, t_print *w);
 int					ft_check_if_player(t_map m);
+int					ft_check_line_and_push(t_map *m);
+int					check_line(char **l, int *fd);
 
 #endif

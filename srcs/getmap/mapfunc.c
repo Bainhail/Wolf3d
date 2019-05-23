@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 13:24:08 by naali             #+#    #+#             */
-/*   Updated: 2019/05/15 15:49:07 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/23 12:44:53 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static t_vertex		**split_nb_to_tab1(char **tab, t_map *m)
 	return (tabnb);
 }
 
-static int			check_line(char **l, int *fd)
+int					check_line(char **l, int *fd)
 {
 	int		i;
 
@@ -76,7 +76,7 @@ static int			check_line(char **l, int *fd)
 		while ((*l)[i] >= 0)
 		{
 			i++;
-			if ((*l)[i] == '\0' && i < 5001)
+			if ((*l)[i] == '\0' && i < (WINX * 2 + 1))
 				return (0);
 		}
 		if ((*l) != NULL)
@@ -110,12 +110,15 @@ int					file_to_tab(char *path, t_map *m)
 	}
 	while (get_next_line(m->f.fd, &(m->f.line)) > 0)
 	{
-		if (check_line(&(m->f.line), &(m->f.fd)) == -1)
+		if (ft_check_line_and_push(m) == -1)
 			return (-1);
-		m->f.tbline = ft_pushback_str_to_tab(&(m->f.tbline), &(m->f.line));
+/* 		if (check_line(&(m->f.line), &(m->f.fd)) == -1) */
+/* 			return (-1); */
+/* 		if ((m->f.tbline = ft_pushback_str_to_tab(&(m->f.tbline), &(m->f.line))) == NULL) */
+/* 			return (-1); */
 		m->f.nbl++;
 	}
-	if (m->f.tbline == NULL || m->f.nbl > 5000)
+	if (m->f.tbline == NULL || m->f.nbl > WINY)
 		return (-1);
 	m->tab = split_nb_to_tab1(m->f.tbline, m);
 	m->f.line != NULL ? free(m->f.line) : 0;

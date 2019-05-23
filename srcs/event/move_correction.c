@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 16:01:44 by naali             #+#    #+#             */
-/*   Updated: 2019/05/13 16:03:03 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/23 09:39:14 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ void	ft_apply_correction(t_print *w, double x, double y)
 {
 	w->player.pos.x = x;
 	w->player.pos.y = y;
-	refresh_screen(w);
+//	refresh_screen(w);
 }

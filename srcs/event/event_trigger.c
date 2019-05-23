@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 15:59:37 by naali             #+#    #+#             */
-/*   Updated: 2019/05/13 17:00:44 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/23 09:38:57 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ void	ft_map_trigger(t_print *w)
 		SDL_HideWindow(w->window[MAP_2D]);
 		show = 0;
 	}
-	refresh_screen(w);
+//	refresh_screen(w);
 }

@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 15:55:10 by naali             #+#    #+#             */
-/*   Updated: 2019/05/15 16:10:35 by jchardin         ###   ########.fr       */
+/*   Updated: 2019/05/23 09:28:42 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ int				tablen(char **tab)
 	while (tab[i] != 0)
 		i = i + 1;
 	return (i);
+}
+
+int				ft_check_line_and_push(t_map *m)
+{
+	if (check_line(&(m->f.line), &(m->f.fd)) == -1)
+		return (-1);
+	if ((m->f.tbline = ft_pushback_str_to_tab(&(m->f.tbline), &(m->f.line)))\
+		== NULL)
+		return (-1);
+	return (0);
 }
 
 void			free_useless(char ***tab, char **s1, int tmax)
