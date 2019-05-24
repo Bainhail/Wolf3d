@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/05/24 14:53:23 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/24 15:39:00 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ typedef enum		e_orientation_wall
 	SOUTH_WALL,
 	EAST_WALL,
 	WEST_WALL,
+	CEILLING,
 	NONE,
 }					t_orientation_wall;
 

@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/05/24 15:00:38 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/24 15:36:41 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,21 @@ void			ft_init_window_and_renderer(t_print *s_win)
 		ft_quit("Erreur alloc window\n", s_win);
 }
 
+void    ft_draw_wall_and_ceilling(t_print *w)
+{
+	SDL_Rect        srcrect;
+	SDL_Rect        dstrect;    srcrect.x = 0;
+
+	srcrect.y = 0;
+	srcrect.w = 54;
+	srcrect.h = 42;
+	dstrect.x = 0;
+	dstrect.y = 0;
+	dstrect.w = WINX;
+	dstrect.h = WINY / 2;
+	SDL_RenderCopy(w->renderer[MAP_3D], w->texture[CEILLING], &(srcrect), &(dstrect));
+}
+
 void			refresh_screen(t_print *w)
 {
 	refresh_player_pos(&(w->m), &(w->player));
@@ -50,6 +65,7 @@ void			refresh_screen(t_print *w)
 	SDL_RenderClear(w->renderer[MAP_3D]);
 	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 255, 255, 100);
 	SDL_RenderClear(w->renderer[MAP_2D]);
+	ft_draw_wall_and_ceilling(w);
 	ft_raycast(w, &(w->player), &(w->m), w->player.flg_dir);
 	SDL_SetRenderDrawColor(w->renderer[MAP_3D], 0, 0, 0, 100);
 	SDL_RenderPresent(w->renderer[MAP_3D]);
