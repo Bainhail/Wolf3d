@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 16:01:44 by naali             #+#    #+#             */
-/*   Updated: 2019/05/24 14:54:41 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/24 16:12:17 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,20 @@
 
 static void		position_calc_front(double *x, double *y, int angle, t_print *w)
 {
-	*x = w->player.pos.x + cos(conv_deg_to_rad(w->player.flg_dir + angle)) *
-		(20 * (w->m.xcase / 50));
-	*y = w->player.pos.y + sin(conv_deg_to_rad(w->player.flg_dir + angle)) *
-		(20 * (w->m.xcase / 50));
+	if (angle == 0)
+	{
+		*x = w->player.pos.x + cos(conv_deg_to_rad(w->player.flg_dir + angle)) *
+			(30 * (w->m.xcase / 50));
+		*y = w->player.pos.y + sin(conv_deg_to_rad(w->player.flg_dir + angle)) *
+			(30 * (w->m.xcase / 50));
+	}
+	else
+	{
+		*x = w->player.pos.x + cos(conv_deg_to_rad(w->player.flg_dir + angle)) *
+			(20 * (w->m.xcase / 50));
+		*y = w->player.pos.y + sin(conv_deg_to_rad(w->player.flg_dir + angle)) *
+			(20 * (w->m.xcase / 50));
+	}
 }
 
 int				ft_correction_pos_front(double x, double y, t_print *w)
@@ -47,10 +57,20 @@ int				ft_correction_pos_front(double x, double y, t_print *w)
 
 static void		position_calc_back(double *x, double *y, int angle, t_print *w)
 {
-	*x = w->player.pos.x - cos(conv_deg_to_rad(w->player.flg_dir + angle)) *
-		(20 * (w->m.xcase / 50));
-	*y = w->player.pos.y - sin(conv_deg_to_rad(w->player.flg_dir + angle)) *
-		(20 * (w->m.xcase / 50));
+	if (angle == 0)
+	{
+		*x = w->player.pos.x - cos(conv_deg_to_rad(w->player.flg_dir + angle)) *
+			(30 * (w->m.xcase / 50));
+		*y = w->player.pos.y - sin(conv_deg_to_rad(w->player.flg_dir + angle)) *
+			(30 * (w->m.xcase / 50));
+	}
+	else
+	{
+		*x = w->player.pos.x - cos(conv_deg_to_rad(w->player.flg_dir + angle)) *
+			(20 * (w->m.xcase / 50));
+		*y = w->player.pos.y - sin(conv_deg_to_rad(w->player.flg_dir + angle)) *
+			(20 * (w->m.xcase / 50));
+	}
 }
 
 int				ft_correction_pos_back(double x, double y, t_print *w)
