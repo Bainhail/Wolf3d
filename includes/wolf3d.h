@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/05/23 09:31:14 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/24 14:53:23 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ typedef struct		s_print
 	SDL_Texture		*texture[10];
 	SDL_Window		*window[10];
 	SDL_Renderer	*ren_flg;
+	int				show;
 }					t_print;
 
 int					file_to_tab(char *path, t_map *m);
@@ -234,9 +235,11 @@ void				wall_x_detect_calcul_x(t_player *player, t_map *map, \
 void				wall_x_detect_calcul_y(t_player *player, t_my_raycast *rc);
 
 void				ft_enable_mouse_motion(int boolean, int *mouse);
-void				ft_map_trigger(t_print *w);
+void				ft_map_trigger(t_print *w, int boolean);
 
 int					ft_correction_pos(double x, double y, t_print *w);
+int					ft_correction_pos_front(double x, double y, t_print *w);
+int					ft_correction_pos_back(double x, double y, t_print *w);
 void				ft_apply_correction(t_print *w, double x, double y);
 
 void				ft_mouse_move(int rot, t_print *w);

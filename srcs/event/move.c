@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 16:03:56 by naali             #+#    #+#             */
-/*   Updated: 2019/05/23 11:56:32 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/24 14:54:20 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	ft_move_leftright(int move, t_print *w)
 	while (w->player.flg_dir < 0)
 		w->player.flg_dir += 360;
 	w->player.flg_dir = w->player.flg_dir % 360;
-//	refresh_screen(w);
 }
 
 void	ft_move(int move, t_print *w)
@@ -37,23 +36,29 @@ void	ft_move(int move, t_print *w)
 	double	x;
 	double	y;
 
+	x = 0;
+	y = 0;
 	if (move == UP)
 	{
-		x = w->player.pos.x + cos(conv_deg_to_rad(w->player.flg_dir)) *
-			(2 * (w->m.xcase / 50));
-		y = w->player.pos.y + sin(conv_deg_to_rad(w->player.flg_dir)) *
-			(2 * (w->m.xcase / 50));
-		if (ft_correction_pos(x, y, w) == TRUE)
+		if (ft_correction_pos_front(x, y, w) == TRUE)
+		{
+			x = w->player.pos.x + cos(conv_deg_to_rad(w->player.flg_dir)) *
+				(2 * (w->m.xcase / 50));
+			y = w->player.pos.y + sin(conv_deg_to_rad(w->player.flg_dir)) *
+				(2 * (w->m.xcase / 50));
 			ft_apply_correction(w, x, y);
+		}
 	}
 	else if (move == DOWN)
 	{
-		x = w->player.pos.x - cos(conv_deg_to_rad(w->player.flg_dir)) *
-			(2 * (w->m.xcase / 50));
-		y = w->player.pos.y - sin(conv_deg_to_rad(w->player.flg_dir)) *
-			(2 * (w->m.xcase / 50));
-		if (ft_correction_pos(x, y, w) == TRUE)
+		if (ft_correction_pos_back(x, y, w) == TRUE)
+		{
+			x = w->player.pos.x - cos(conv_deg_to_rad(w->player.flg_dir)) *
+				(2 * (w->m.xcase / 50));
+			y = w->player.pos.y - sin(conv_deg_to_rad(w->player.flg_dir)) *
+				(2 * (w->m.xcase / 50));
 			ft_apply_correction(w, x, y);
+		}
 	}
 	else if (move == TRIGO || move == ANTI)
 		ft_move_leftright(move, w);

@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/05/09 15:24:35 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/24 15:24:56 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void		init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 }
 
 static void		print_view(t_print *w, t_player *p, \
-							t_my_raycast *rc, t_vertex *wall)
+						   t_my_raycast *rc, t_vertex *wall)
 {
 	if (rc->dist_col_x > rc->dist_col_y)
 	{
@@ -49,8 +49,12 @@ static void		print_view(t_print *w, t_player *p, \
 		rc->x = rc->wall_x_colision.x;
 		rc->y = rc->wall_x_colision.y;
 	}
-	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 0, 50);
-	print_line(w, w->renderer[MAP_2D], p->pos, *wall);
+	if (w->show == 1 && (rc->window_x == 0 || rc->window_x == WINX - 1))
+	{
+		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 66, 194, 244, 50);
+		/* SDL_RenderDrawPoint(w->renderer[MAP_2D], wall->x, wall->y); */
+		print_line(w, w->renderer[MAP_2D], p->pos, *wall);
+	}
 }
 
 void			ft_raycast(t_print *s_win, t_player *s_player, \

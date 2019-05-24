@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:55:35 by naali             #+#    #+#             */
-/*   Updated: 2019/05/23 12:36:35 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/23 13:37:03 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ double		ft_calc_hmp(double distance_ray)
 
 void		ft_draw_wall(t_print *w, t_map *m, t_my_raycast *rc)
 {
-	t_vertex	w_up;
-	t_vertex	w_bot;
+//	t_vertex	w_up;
+//	t_vertex	w_bot;
 	double		distance_ray;
 	float		precision;
 
@@ -83,8 +83,8 @@ void		ft_draw_wall(t_print *w, t_map *m, t_my_raycast *rc)
 		distance_ray = (rc->dist_col_y / m->ycase) * 50;
 	distance_ray = recalc_ray_distance(distance_ray, rc->window_x);
 	rc->hmp = ft_calc_hmp(distance_ray);
-	w_up = init_vtex(rc->window_x, ((double)WINY / 2.0) - rc->hmp, 0);
-	w_bot = init_vtex(rc->window_x, ((double)WINY / 2.0) + rc->hmp, 0);
+//	w_up = init_vtex(rc->window_x, ((double)WINY / 2.0) - rc->hmp, 0);
+//	w_bot = init_vtex(rc->window_x, ((double)WINY / 2.0) + rc->hmp, 0);
 	SDL_SetRenderDrawColor(w->renderer[MAP_3D], 50, 50, 200, 75);
 //	print_line(w, w->renderer[MAP_3D], init_vtex(rc->window_x, 0, 0), w_up);
 	SDL_SetRenderDrawColor(w->renderer[MAP_3D], 200, 200, 200, 75);

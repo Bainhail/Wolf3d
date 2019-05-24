@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/05/15 17:19:55 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/24 15:00:38 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void			ft_init_param_game(t_print *s_win)
 {
+	s_win->show = 0;
 	s_win->player.fov = 60.0;
 }
 
@@ -44,21 +45,24 @@ void			ft_init_window_and_renderer(t_print *s_win)
 
 void			refresh_screen(t_print *w)
 {
-	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 0, 0, 100);
-	SDL_SetRenderDrawColor(w->renderer[MAP_3D], 0, 0, 0, 100);
-	SDL_RenderClear(w->renderer[MAP_2D]);
-	SDL_RenderClear(w->renderer[MAP_3D]);
-	init_renderer(w->renderer[MAP_2D], &(w->m));
 	refresh_player_pos(&(w->m), &(w->player));
-	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 0, 50);
-	print_line(w, w->renderer[MAP_2D], w->player.s1, w->player.s2);
-	print_line(w, w->renderer[MAP_2D], w->player.s1, w->player.s3);
-	print_line(w, w->renderer[MAP_2D], w->player.s3, w->player.s2);
-	ft_raycast(w, &(w->player), &(w->m), w->player.flg_dir);
-	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 0, 0, 100);
 	SDL_SetRenderDrawColor(w->renderer[MAP_3D], 0, 0, 0, 100);
-	SDL_RenderPresent(w->renderer[MAP_2D]);
+	SDL_RenderClear(w->renderer[MAP_3D]);
+	SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 255, 255, 100);
+	SDL_RenderClear(w->renderer[MAP_2D]);
+	ft_raycast(w, &(w->player), &(w->m), w->player.flg_dir);
+	SDL_SetRenderDrawColor(w->renderer[MAP_3D], 0, 0, 0, 100);
 	SDL_RenderPresent(w->renderer[MAP_3D]);
+	if (w->show == 1)
+	{
+		init_renderer(w->renderer[MAP_2D], &(w->m));
+		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 255, 0, 0, 50);
+		print_line(w, w->renderer[MAP_2D], w->player.s1, w->player.s2);
+		print_line(w, w->renderer[MAP_2D], w->player.s1, w->player.s3);
+		print_line(w, w->renderer[MAP_2D], w->player.s3, w->player.s2);
+		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 0, 0, 0, 100);
+		SDL_RenderPresent(w->renderer[MAP_2D]);
+	}
 }
 
 void			init_renderer(SDL_Renderer *r, t_map *m)
@@ -72,7 +76,8 @@ void			init_renderer(SDL_Renderer *r, t_map *m)
 		x = 0;
 		while (x < m->xmax)
 		{
-			draw_square(r, m, x, y);
+			if (m->tab[y][x].z > 0)
+				draw_square(r, m, x, y);
 			x++;
 		}
 		y++;
