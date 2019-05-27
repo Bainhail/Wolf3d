@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:30:52 by naali             #+#    #+#             */
-/*   Updated: 2019/05/24 15:24:56 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/27 11:20:44 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,25 @@ static void		init_coef(t_vertex *pos_joueur, t_wall *wl, double alpha)
 	wl->ymax = wl->y;
 }
 
+static t_vertex	calc_for_map(t_vertex *pm, t_vertex *pos, t_vertex *wall_old)
+{
+	t_vertex	wall;
+
+	wall.x = pm->x + (wall_old->x - pos->x);
+	wall.y = pm->y + (wall_old->y - pos->y);
+	wall.z = 0.0;
+	return (wall);
+}
+
 static void		print_view(t_print *w, t_player *p, \
 						   t_my_raycast *rc, t_vertex *wall)
 {
+	t_vertex	pos_map;
+	t_vertex	wall_map;
+
+	pos_map.x = (5.0 * (double)(WIN2D / 10)) + ((double)(WIN2D / 10) / 2);
+	pos_map.y = (5.0 * (double)(WIN2D / 10)) + ((double)(WIN2D / 10) / 2);
+	pos_map.z = 0.0;
 	if (rc->dist_col_x > rc->dist_col_y)
 	{
 		wall->x = rc->wall_y_colision.x;
@@ -52,8 +68,8 @@ static void		print_view(t_print *w, t_player *p, \
 	if (w->show == 1 && (rc->window_x == 0 || rc->window_x == WINX - 1))
 	{
 		SDL_SetRenderDrawColor(w->renderer[MAP_2D], 66, 194, 244, 50);
-		/* SDL_RenderDrawPoint(w->renderer[MAP_2D], wall->x, wall->y); */
-		print_line(w, w->renderer[MAP_2D], p->pos, *wall);
+		wall_map = calc_for_map(&pos_map, &p->pos, wall);
+		print_line(w, w->renderer[MAP_2D], pos_map, wall_map);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 09:44:41 by naali             #+#    #+#             */
-/*   Updated: 2019/05/15 17:12:05 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/27 11:19:35 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,25 @@ void			ft_init_player_pos(t_print *w, t_player *p, t_map *m)
 {
 	int		i;
 	int		j;
+	int		found;
 
 	i = 0;
+	found = 0;
+	(void)w;
 	while (i < m->ymax)
 	{
 		j = 0;
 		while (j < m->xmax)
 		{
-			if (m->tab[i][j].z == PLAYER)
+			if ((int)(m->tab[i][j].z) == PLAYER && found == 0)
 			{
 				m->tab[i][j].z = 0;
 				p->flg_dir = EST;
 				calc_player_pos(m, p, j, i);
-				print_line(w, w->renderer[MAP_2D], p->s1, p->s2);
-				print_line(w, w->renderer[MAP_2D], p->s1, p->s3);
-				print_line(w, w->renderer[MAP_2D], p->s3, p->s2);
-				return ;
+				found = 1;
 			}
+			else if ((int)(m->tab[i][j].z) < 0)
+				m->tab[i][j].z = 0;
 			j++;
 		}
 		i++;

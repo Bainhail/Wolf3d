@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:58:06 by jchardin          #+#    #+#             */
-/*   Updated: 2019/05/24 15:39:00 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/27 11:14:41 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define WINX 800
 # define WINY 600
+# define WIN2D 300
 # define PLAYER -42
 # define NORD 90
 # define SUD -90
@@ -22,10 +23,9 @@
 # define OUEST 180
 # define WALL 100
 # define EYE 300
-# define XCASE 50
-# define YCASE 50
 # define TRUE 1
 # define FALSE 0
+# define ERREUR -1
 
 # include "includes.h"
 # include "t_struct.h"
@@ -198,16 +198,16 @@ typedef struct		s_print
 int					file_to_tab(char *path, t_map *m);
 int					ft_get_the_map(char **av, t_print *p);
 
-void				draw_square(SDL_Renderer *r, t_map *m, int x, int y);
+void				draw_square(SDL_Renderer *r, t_player *p/* t_map *m */, int x, int y);
 void				print_line(t_print *w, SDL_Renderer *r, \
 								t_vertex start, t_vertex end);
 
 void				ft_event_loop(t_print *w);
 void				calc_player_pos(t_map *m, t_player *p, int x, int y);
-void				refresh_player_pos(t_map *m, t_player *p);
+void				refresh_player_pos(t_player *p);
 void				refresh_screen(t_print *w);
 
-void				init_renderer(SDL_Renderer *r, t_map *m);
+void				init_renderer(SDL_Renderer *r, t_map *m, t_player *p);
 SDL_Texture			*loadbmp(SDL_Renderer *tmp_renderer, char *path);
 void				ft_quit(char *str, t_print *s_win);
 void				ft_raycast(t_print *w, t_player *p, t_map *m, int alpha);

@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 12:19:33 by jchardin          #+#    #+#             */
-/*   Updated: 2019/05/24 14:22:30 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/27 09:32:12 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 void	ft_list_event(t_my_event *s_event, t_print *w, \
 						const Uint8 *event, int *mouse)
 {
-	(void)s_event;
-	/* event[SDL_SCANCODE_O] == 1 ? \ */
-	/* 	ft_enable_mouse_motion(SDL_TRUE, mouse) : 0; */
-	/* event[SDL_SCANCODE_P] == 1 ? \ */
-	/* 	ft_enable_mouse_motion(SDL_FALSE, mouse) : 0; */
 	event[SDL_SCANCODE_W] == 1 ? ft_move(UP, w) : 0;
 	event[SDL_SCANCODE_UP] == 1 ? ft_move(UP, w) : 0;
 	event[SDL_SCANCODE_S] == 1 ? ft_move(DOWN, w) : 0;
@@ -33,7 +28,6 @@ void	ft_list_event(t_my_event *s_event, t_print *w, \
 	}
 	event[SDL_SCANCODE_M] == 1 ? ft_map_trigger(w, SDL_TRUE) : 0;
 	event[SDL_SCANCODE_N] == 1 ? ft_map_trigger(w, SDL_FALSE) : 0;
-	/* event[SDL_SCANCODE_V] == 1 ? w->m.debug *= -1 : 0; */
 	event[SDL_SCANCODE_ESCAPE] == 1 ? s_event->quit = SDL_TRUE : 0;
 }
 
@@ -77,16 +71,12 @@ void	ft_event_loop(t_print *w)
 					ft_enable_mouse_motion(SDL_TRUE, &mouse) : 0;
 				event.key.keysym.scancode == SDL_SCANCODE_P ? \
 					ft_enable_mouse_motion(SDL_FALSE, &mouse) : 0;
-				/* event.key.keysym.sym == SDLK_m ? ft_map_trigger(w) : 0; */
 				event.key.keysym.scancode == SDL_SCANCODE_V ? w->m.debug *= -1 : 0;
-				/* event.key.keysym.scancode == SDL_SCANCODE_ESCAPE ? s_event.quit = \ */
-				/* 	SDL_TRUE : 0; */
 			}
 			ft_update_event(&s_event, w, key_state, mouse);
 		}
 		refresh_screen(w);
 		SDL_Delay(1);
-//		SDL_FlushEvents(SDL_WINDOWEVENT, SDL_MOUSEWHEEL);
 		SDL_FlushEvent(SDL_KEYDOWN);
 		SDL_FlushEvent(SDL_KEYUP);
 	}

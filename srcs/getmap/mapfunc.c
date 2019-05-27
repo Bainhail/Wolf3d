@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 13:24:08 by naali             #+#    #+#             */
-/*   Updated: 2019/05/23 12:44:53 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/27 09:57:16 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,6 @@ int					file_to_tab(char *path, t_map *m)
 	{
 		if (ft_check_line_and_push(m) == -1)
 			return (-1);
-/* 		if (check_line(&(m->f.line), &(m->f.fd)) == -1) */
-/* 			return (-1); */
-/* 		if ((m->f.tbline = ft_pushback_str_to_tab(&(m->f.tbline), &(m->f.line))) == NULL) */
-/* 			return (-1); */
 		m->f.nbl++;
 	}
 	if (m->f.tbline == NULL || m->f.nbl > WINY)
@@ -123,7 +119,7 @@ int					file_to_tab(char *path, t_map *m)
 	m->tab = split_nb_to_tab1(m->f.tbline, m);
 	m->f.line != NULL ? free(m->f.line) : 0;
 	m->f.fd > 0 ? close(m->f.fd) : 0;
-	m->xcase = (double)WINX / (double)(m->xmax);
-	m->ycase = (double)WINY / (double)(m->ymax);
+	m->xcase = (double)(WIN2D / 10);
+	m->ycase = (double)(WIN2D / 10);
 	return (0);
 }
