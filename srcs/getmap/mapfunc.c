@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 13:24:08 by naali             #+#    #+#             */
-/*   Updated: 2019/05/27 09:57:16 by naali            ###   ########.fr       */
+/*   Updated: 2019/05/27 13:07:21 by naali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int					check_line(char **l, int *fd)
 		while ((*l)[i] >= 0)
 		{
 			i++;
-			if ((*l)[i] == '\0' && i < (WINX * 2 + 1))
+			if ((*l)[i] == '\0' && i < 10001)
 				return (0);
 		}
 		if ((*l) != NULL)
@@ -114,7 +114,7 @@ int					file_to_tab(char *path, t_map *m)
 			return (-1);
 		m->f.nbl++;
 	}
-	if (m->f.tbline == NULL || m->f.nbl > WINY)
+	if (m->f.tbline == NULL || m->f.nbl > 5000)
 		return (-1);
 	m->tab = split_nb_to_tab1(m->f.tbline, m);
 	m->f.line != NULL ? free(m->f.line) : 0;
