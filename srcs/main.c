@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 12:31:57 by naali             #+#    #+#             */
-/*   Updated: 2019/05/27 11:13:50 by naali            ###   ########.fr       */
+/*   Updated: 2019/07/13 13:48:09 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ void			ft_init_window_and_renderer(t_print *s_win)
 		ft_quit("Erreur alloc window\n", s_win);
 }
 
-void    ft_draw_wall_and_ceilling(t_print *w)
+void			ft_draw_wall_and_ceilling(t_print *w)
 {
-	SDL_Rect        srcrect;
-	SDL_Rect        dstrect;    srcrect.x = 0;
+	SDL_Rect	srcrect;
+	SDL_Rect	dstrect;
 
+	srcrect.x = 0;
 	srcrect.y = 0;
 	srcrect.w = 54;
 	srcrect.h = 42;
@@ -55,7 +56,8 @@ void    ft_draw_wall_and_ceilling(t_print *w)
 	dstrect.y = 0;
 	dstrect.w = WINX;
 	dstrect.h = WINY / 2;
-	SDL_RenderCopy(w->renderer[MAP_3D], w->texture[CEILLING], &(srcrect), &(dstrect));
+	SDL_RenderCopy(w->renderer[MAP_3D], w->texture[CEILLING], &(srcrect),
+			&(dstrect));
 }
 
 void			refresh_screen(t_print *w)

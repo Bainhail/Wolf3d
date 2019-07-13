@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 16:01:44 by naali             #+#    #+#             */
-/*   Updated: 2019/05/26 21:36:56 by naali            ###   ########.fr       */
+/*   Updated: 2019/07/13 13:33:06 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,15 @@ int				ft_correction_pos_back(double x, double y, t_print *w)
 			if (y > 0.01 && x > 0.01 \
 				&& (int)(y / w->m.ycase) < w->m.ymax \
 				&& (int)(x / w->m.xcase) < w->m.xmax \
-				&& w->m.tab[(int)(y / w->m.ycase)][(int)(x / w->m.xcase)].z == 0)
+				&& w->m.tab[(int)(y / w->m.ycase)][(int)(x / w->m.xcase)].z ==
+				0)
 				return (TRUE);
 		}
 	}
 	return (FALSE);
 }
 
-void	ft_apply_correction(t_print *w, double x, double y)
+void			ft_apply_correction(t_print *w, double x, double y)
 {
 	w->player.pos.x = x;
 	w->player.pos.y = y;

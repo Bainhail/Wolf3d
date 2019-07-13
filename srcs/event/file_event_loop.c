@@ -6,7 +6,7 @@
 /*   By: jchardin <jerome.chardin@outlook.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 12:19:33 by jchardin          #+#    #+#             */
-/*   Updated: 2019/05/27 09:32:12 by naali            ###   ########.fr       */
+/*   Updated: 2019/07/13 13:31:22 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	ft_list_event(t_my_event *s_event, t_print *w, \
 	event[SDL_SCANCODE_ESCAPE] == 1 ? s_event->quit = SDL_TRUE : 0;
 }
 
-void	ft_update_event(t_my_event *s_event, t_print *w, const Uint8 *event, int mouse)
+void	ft_update_event(t_my_event *s_event, t_print *w, const Uint8 *event,
+		int mouse)
 {
 	int				x;
 
