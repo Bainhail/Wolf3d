@@ -6,7 +6,7 @@
 /*   By: naali <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:55:35 by naali             #+#    #+#             */
-/*   Updated: 2019/05/28 17:52:21 by naali            ###   ########.fr       */
+/*   Updated: 2019/07/13 13:30:10 by jchardin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ int			ft_calcule_delta_texture(t_map *m, t_my_raycast *s_raycast)
 		if (s_raycast->orientation == EAST_WALL)
 			le_delta = (int)s_raycast->y % (int)(m->ycase > 0 ? m->ycase : 1);
 		else
-			le_delta = (int)m->ycase - ((int)s_raycast->y % (int)(m->ycase > 0 ? m->ycase : 1));
+			le_delta = (int)m->ycase - ((int)s_raycast->y %
+					(int)(m->ycase > 0 ? m->ycase : 1));
 		s_raycast->dstrect.w = m->ycase;
 	}
 	else
 	{
 		if (s_raycast->orientation == NORTH_WALL)
-			le_delta = (int)(s_raycast->x + 1.0) % (int)(m->xcase > 1 ? m->xcase : 1);
+			le_delta = (int)(s_raycast->x + 1.0) %
+				(int)(m->xcase > 1 ? m->xcase : 1);
 		else
 			le_delta = (int)m->xcase - ((int)(s_raycast->x + 1.0) %
 			(int)(m->xcase + 1.0 > 1 ? m->xcase + 1.0 : 1));
